@@ -1,0 +1,279 @@
+{
+  "version": "2.0",
+  "description": "Regulation tree configuration split across PU's 4 native objects: Regulations & Standards (L1), Regulation Category (L2), Regulation Sub-Category (L3), Provision (L4). Each object gets only the properties relevant to its level.",
+  "import_sequence_note": "Import order: L1 first, then L2, L3, L4 — each level references its parent via parent_system_id in the import template.",
+  "defaults": {
+    "required": false,
+    "hidden": false,
+    "read_only": false,
+    "track_changes": false
+  },
+  "objects": [
+    {
+      "object_name": "Regulations & Standards",
+      "pu_object_type": "Tree (TR) — Level 1",
+      "import_sequence": 2,
+      "standard_property_mappings": [
+        { "standard_property": "[Name]", "maps_to": "name", "import_column": "Name" },
+        { "standard_property": "[Description]", "maps_to": "description", "import_column": "Description" },
+        { "standard_property": "[External ID]", "maps_to": "system_id", "import_column": "External ID" }
+      ],
+      "import_template": {
+        "name": "VendorShield - Regulations Import",
+        "item_type": "Regulations & Standards",
+        "key_column": "External ID",
+        "import_options": { "inserts": true, "updates": true },
+        "automated_import": true,
+        "columns": ["Name", "Description", "External ID", "display_id", "type", "jurisdiction", "issuing_body", "effective_date", "version", "source_url", "status", "scf_mapped", "scf_version", "last_synced_at", "sync_source"]
+      },
+      "steps": [
+        {
+          "step": "create_property", "name": "SH_Identification", "property_type": "Section Header",
+          "display_tab": { "Label": "Identification" }
+        },
+        {
+          "step": "create_property", "name": "display_id", "property_type": "Text - Short (100 chars)",
+          "details_tab": { "Required": true },
+          "display_tab": { "Label": "Display ID", "Tooltip": "Human-readable ID, e.g. 'NIST CSF 2.0'" }
+        },
+        {
+          "step": "create_property", "name": "SH_Regulation_Details", "property_type": "Section Header",
+          "display_tab": { "Label": "Regulation Details" }
+        },
+        {
+          "step": "create_property", "name": "type", "property_type": "Reference Data – Select One",
+          "details_tab": { "Required": true },
+          "display_tab": { "Label": "Regulation Type" },
+          "notes": ["Reference Data type: 'Regulation Type'"]
+        },
+        {
+          "step": "create_property", "name": "jurisdiction", "property_type": "Reference Data – Select One",
+          "details_tab": { "Required": true },
+          "display_tab": { "Label": "Jurisdiction" },
+          "notes": ["Reference Data type: 'Jurisdiction'"]
+        },
+        {
+          "step": "create_property", "name": "issuing_body", "property_type": "Reference Data – Select One",
+          "display_tab": { "Label": "Issuing Body" },
+          "notes": ["Reference Data type: 'Issuing Body'"]
+        },
+        {
+          "step": "create_property", "name": "effective_date", "property_type": "Date - Calendar",
+          "display_tab": { "Label": "Effective Date" }
+        },
+        {
+          "step": "create_property", "name": "version", "property_type": "Text - Short (100 chars)",
+          "display_tab": { "Label": "Version" }
+        },
+        {
+          "step": "create_property", "name": "source_url", "property_type": "Text - Long (4,000 chars)",
+          "display_tab": { "Label": "Source URL", "Display Format": "hyperlink" }
+        },
+        {
+          "step": "create_property", "name": "status", "property_type": "Reference Data – Select One",
+          "details_tab": { "Required": true, "Track Changes": true },
+          "display_tab": { "Label": "Status" },
+          "notes": ["Reference Data type: 'Regulation Status'"]
+        },
+        {
+          "step": "create_property", "name": "SH_SCF_Crosswalk", "property_type": "Section Header",
+          "display_tab": { "Label": "SCF Crosswalk" }
+        },
+        {
+          "step": "create_property", "name": "scf_mapped", "property_type": "Pick List - Yes/No",
+          "display_tab": { "Label": "SCF Mapped" }
+        },
+        {
+          "step": "create_property", "name": "scf_version", "property_type": "Text - Short (100 chars)",
+          "display_tab": { "Label": "SCF Version" }
+        },
+        {
+          "step": "create_property", "name": "SH_Sync", "property_type": "Section Header",
+          "display_tab": { "Label": "Synchronization" }
+        },
+        {
+          "step": "create_property", "name": "last_synced_at", "property_type": "Date - Timestamp",
+          "details_tab": { "Read Only": true },
+          "display_tab": { "Label": "Last Synced At" }
+        },
+        {
+          "step": "create_property", "name": "sync_source", "property_type": "Text - Short (100 chars)",
+          "details_tab": { "Read Only": true },
+          "display_tab": { "Label": "Sync Source" }
+        }
+      ]
+    },
+    {
+      "object_name": "Regulation Category",
+      "pu_object_type": "Tree (TR) — Level 2, child of Regulations & Standards",
+      "import_sequence": 3,
+      "standard_property_mappings": [
+        { "standard_property": "[Name]", "maps_to": "name", "import_column": "Name" },
+        { "standard_property": "[Description]", "maps_to": "description", "import_column": "Description" },
+        { "standard_property": "[External ID]", "maps_to": "system_id", "import_column": "External ID" }
+      ],
+      "import_template": {
+        "name": "VendorShield - Regulation Categories Import",
+        "item_type": "Regulation Category",
+        "key_column": "External ID",
+        "import_options": { "inserts": true, "updates": true },
+        "automated_import": true,
+        "columns": ["Name", "Description", "External ID", "display_id", "sort_order", "last_synced_at", "sync_source"],
+        "parent_column_note": "Import template needs a parent reference column mapping to the parent Regulation's External ID. Check PU's available columns for 'Parent' or 'Regulation' relationship field."
+      },
+      "steps": [
+        {
+          "step": "create_property", "name": "SH_Identification", "property_type": "Section Header",
+          "display_tab": { "Label": "Identification" }
+        },
+        {
+          "step": "create_property", "name": "display_id", "property_type": "Text - Short (100 chars)",
+          "details_tab": { "Required": true },
+          "display_tab": { "Label": "Display ID", "Tooltip": "Category identifier, e.g. 'GV' for Govern" }
+        },
+        {
+          "step": "create_property", "name": "sort_order", "property_type": "Number – Integer",
+          "display_tab": { "Label": "Sort Order" }
+        },
+        {
+          "step": "create_property", "name": "SH_Sync", "property_type": "Section Header",
+          "display_tab": { "Label": "Synchronization" }
+        },
+        {
+          "step": "create_property", "name": "last_synced_at", "property_type": "Date - Timestamp",
+          "details_tab": { "Read Only": true },
+          "display_tab": { "Label": "Last Synced At" }
+        },
+        {
+          "step": "create_property", "name": "sync_source", "property_type": "Text - Short (100 chars)",
+          "details_tab": { "Read Only": true },
+          "display_tab": { "Label": "Sync Source" }
+        }
+      ]
+    },
+    {
+      "object_name": "Regulation Sub-Category",
+      "pu_object_type": "Tree (TR) — Level 3, child of Regulation Category",
+      "import_sequence": 4,
+      "standard_property_mappings": [
+        { "standard_property": "[Name]", "maps_to": "name", "import_column": "Name" },
+        { "standard_property": "[Description]", "maps_to": "description", "import_column": "Description" },
+        { "standard_property": "[External ID]", "maps_to": "system_id", "import_column": "External ID" }
+      ],
+      "import_template": {
+        "name": "VendorShield - Regulation Sub-Categories Import",
+        "item_type": "Regulation Sub-Category",
+        "key_column": "External ID",
+        "import_options": { "inserts": true, "updates": true },
+        "automated_import": true,
+        "columns": ["Name", "Description", "External ID", "display_id", "sort_order", "last_synced_at", "sync_source"],
+        "parent_column_note": "Import template needs a parent reference column mapping to the parent Category's External ID."
+      },
+      "steps": [
+        {
+          "step": "create_property", "name": "SH_Identification", "property_type": "Section Header",
+          "display_tab": { "Label": "Identification" }
+        },
+        {
+          "step": "create_property", "name": "display_id", "property_type": "Text - Short (100 chars)",
+          "details_tab": { "Required": true },
+          "display_tab": { "Label": "Display ID", "Tooltip": "Sub-category identifier, e.g. 'GV.OC'" }
+        },
+        {
+          "step": "create_property", "name": "sort_order", "property_type": "Number – Integer",
+          "display_tab": { "Label": "Sort Order" }
+        },
+        {
+          "step": "create_property", "name": "SH_Sync", "property_type": "Section Header",
+          "display_tab": { "Label": "Synchronization" }
+        },
+        {
+          "step": "create_property", "name": "last_synced_at", "property_type": "Date - Timestamp",
+          "details_tab": { "Read Only": true },
+          "display_tab": { "Label": "Last Synced At" }
+        },
+        {
+          "step": "create_property", "name": "sync_source", "property_type": "Text - Short (100 chars)",
+          "details_tab": { "Read Only": true },
+          "display_tab": { "Label": "Sync Source" }
+        }
+      ]
+    },
+    {
+      "object_name": "Provision",
+      "pu_object_type": "Tree (TR) — Level 4, child of Regulation Sub-Category",
+      "import_sequence": 5,
+      "standard_property_mappings": [
+        { "standard_property": "[Name]", "maps_to": "name", "import_column": "Name" },
+        { "standard_property": "[Description]", "maps_to": "description", "import_column": "Description" },
+        { "standard_property": "[External ID]", "maps_to": "system_id", "import_column": "External ID" }
+      ],
+      "import_template": {
+        "name": "VendorShield - Provisions Import",
+        "item_type": "Provision",
+        "key_column": "External ID",
+        "import_options": { "inserts": true, "updates": true },
+        "automated_import": true,
+        "columns": ["Name", "Description", "External ID", "display_id", "sort_order", "requirement_text", "assessment_guidance", "criticality", "scf_control_ids", "last_synced_at", "sync_source"],
+        "parent_column_note": "Import template needs a parent reference column mapping to the parent Sub-Category's External ID."
+      },
+      "steps": [
+        {
+          "step": "create_property", "name": "SH_Identification", "property_type": "Section Header",
+          "display_tab": { "Label": "Identification" }
+        },
+        {
+          "step": "create_property", "name": "display_id", "property_type": "Text - Short (100 chars)",
+          "details_tab": { "Required": true },
+          "display_tab": { "Label": "Display ID", "Tooltip": "Provision identifier, e.g. 'GV.OC-01'" }
+        },
+        {
+          "step": "create_property", "name": "sort_order", "property_type": "Number – Integer",
+          "display_tab": { "Label": "Sort Order" }
+        },
+        {
+          "step": "create_property", "name": "SH_Provision_Details", "property_type": "Section Header",
+          "display_tab": { "Label": "Provision Details" }
+        },
+        {
+          "step": "create_property", "name": "requirement_text", "property_type": "Text - Memo (32,000 chars)",
+          "display_tab": { "Label": "Requirement Text", "Tooltip": "Actual regulatory language verbatim" }
+        },
+        {
+          "step": "create_property", "name": "assessment_guidance", "property_type": "Text - Memo (32,000 chars)",
+          "display_tab": { "Label": "Assessment Guidance" }
+        },
+        {
+          "step": "create_property", "name": "criticality", "property_type": "Reference Data – Select One",
+          "display_tab": { "Label": "Criticality" },
+          "notes": ["Reference Data type: 'Criticality'"]
+        },
+        {
+          "step": "create_property", "name": "scf_control_ids", "property_type": "Text - Long (4,000 chars)",
+          "display_tab": { "Label": "SCF Control IDs", "Tooltip": "Pipe-delimited SCF control IDs — the crosswalk key linking provisions to questions" }
+        },
+        {
+          "step": "create_property", "name": "SH_Sync", "property_type": "Section Header",
+          "display_tab": { "Label": "Synchronization" }
+        },
+        {
+          "step": "create_property", "name": "last_synced_at", "property_type": "Date - Timestamp",
+          "details_tab": { "Read Only": true },
+          "display_tab": { "Label": "Last Synced At" }
+        },
+        {
+          "step": "create_property", "name": "sync_source", "property_type": "Text - Short (100 chars)",
+          "details_tab": { "Read Only": true },
+          "display_tab": { "Label": "Sync Source" }
+        }
+      ]
+    }
+  ],
+  "property_count_summary": {
+    "Regulations & Standards": "16 steps (4 section headers + 12 properties)",
+    "Regulation Category": "6 steps (2 section headers + 4 properties)",
+    "Regulation Sub-Category": "6 steps (2 section headers + 4 properties)",
+    "Provision": "11 steps (3 section headers + 8 properties)",
+    "Total": "39 steps across 4 objects"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "processunity": {
+    "token_url": "https://app.processunity.net/<tenant>/token",
+    "report_url": "https://app.processunity.net/<tenant>/api/importexport/export/<report_id>",
+    "grant_type": "password",
+    "username": "directwebservice",
+    "processunityUserName": "<your_service_account_username>",
+    "processunityPassword": "<your_service_account_password>",
+    "password": "<your_api_key_guid>"
+  }
+}

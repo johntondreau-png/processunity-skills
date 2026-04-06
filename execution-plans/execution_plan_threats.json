@@ -1,0 +1,265 @@
+{
+  "version": "1.0",
+  "object": "Threats",
+  "object_notes": "Uses PU's native Threats subject area (Grid object). No renaming needed.",
+  "environment_url": "https://app.processunity.net/ocean",
+  "import_sequence": 5,
+  "description": "Threat catalog populated from MITRE ATT&CK and CWE. Threats are linked to Questions via the threat_ids field on the Question object. Severity uses the shared Criticality reference data.",
+  "defaults": {
+    "required": false,
+    "hidden": false,
+    "read_only": false,
+    "track_changes": false
+  },
+  "design_notes": [
+    "PU's native Threats object is a Grid (GR) — flat list, no hierarchy.",
+    "The [Name] standard property holds the threat name (e.g., 'Valid Accounts').",
+    "The [Description] standard property holds the full threat description.",
+    "The [External ID] standard property maps to system_id for import upsert.",
+    "Threats are imported BEFORE Questions so that threat_ids on Questions can reference valid Threat system_ids.",
+    "mitigating_control_groups uses pipe-delimited values from the Control Group reference data."
+  ],
+  "standard_property_mappings": [
+    {
+      "standard_property": "[Name]",
+      "maps_to": "name",
+      "format": "{DisplayID} {ThreatName}",
+      "notes": "E.g., 'T-MITRE-T1078 Valid Accounts'."
+    },
+    {
+      "standard_property": "[Description]",
+      "maps_to": "description",
+      "notes": "Full description of the threat technique or weakness."
+    },
+    {
+      "standard_property": "[External ID]",
+      "maps_to": "system_id",
+      "notes": "Immutable upsert key. E.g., 'T-MITRE-T1078' or 'T-CWE-89'."
+    }
+  ],
+  "steps": [
+    {
+      "step": "create_property",
+      "name": "SH_Threat_Identity",
+      "property_type": "Section Header",
+      "details_tab": {
+        "Name": "SH_Threat_Identity",
+        "Property Type": "Section Header"
+      },
+      "display_tab": {
+        "Label": "Threat Identity",
+        "Tooltip": "Core identifiers and classification for this threat"
+      },
+      "notes": ["Section header for identification properties"]
+    },
+    {
+      "step": "create_property",
+      "name": "display_id",
+      "property_type": "Text - Short (100 chars)",
+      "details_tab": {
+        "Name": "display_id",
+        "Property Type": "Text - Short (100 chars)",
+        "Required": true,
+        "Hidden": false,
+        "Read Only": false,
+        "Track Changes": false
+      },
+      "display_tab": {
+        "Label": "Display ID",
+        "Report Label": "Display ID",
+        "Tooltip": "Human-readable threat identifier. E.g., 'T1078' for MITRE or 'CWE-89' for CWE."
+      },
+      "rules_tab": {},
+      "notes": ["Required. The native technique/weakness ID from the source catalog."]
+    },
+    {
+      "step": "create_property",
+      "name": "catalog",
+      "property_type": "Reference Data – Select One",
+      "details_tab": {
+        "Name": "catalog",
+        "Property Type": "Reference Data – Select One",
+        "Required": true,
+        "Hidden": false,
+        "Read Only": false,
+        "Track Changes": false
+      },
+      "display_tab": {
+        "Label": "Catalog",
+        "Report Label": "Catalog",
+        "Tooltip": "Source threat catalog: MITRE_ATTACK or CWE."
+      },
+      "rules_tab": {},
+      "notes": ["Uses Reference Data: 'Threat Catalog'. Required to distinguish threat sources."]
+    },
+    {
+      "step": "create_property",
+      "name": "category",
+      "property_type": "Text - Short (100 chars)",
+      "details_tab": {
+        "Name": "category",
+        "Property Type": "Text - Short (100 chars)",
+        "Required": false,
+        "Hidden": false,
+        "Read Only": false,
+        "Track Changes": false
+      },
+      "display_tab": {
+        "Label": "Category",
+        "Report Label": "Category",
+        "Tooltip": "MITRE ATT&CK tactic (e.g., 'Defense Evasion', 'Credential Access') or CWE category."
+      },
+      "rules_tab": {},
+      "notes": ["Free text since the MITRE tactic list evolves. Could be converted to Reference Data if stability is desired."]
+    },
+    {
+      "step": "create_property",
+      "name": "SH_Threat_Details",
+      "property_type": "Section Header",
+      "details_tab": {
+        "Name": "SH_Threat_Details",
+        "Property Type": "Section Header"
+      },
+      "display_tab": {
+        "Label": "Threat Details",
+        "Tooltip": "Severity, mitigation, and external references"
+      },
+      "notes": ["Section header for detail properties"]
+    },
+    {
+      "step": "create_property",
+      "name": "severity",
+      "property_type": "Reference Data – Select One",
+      "details_tab": {
+        "Name": "severity",
+        "Property Type": "Reference Data – Select One",
+        "Required": false,
+        "Hidden": false,
+        "Read Only": false,
+        "Track Changes": false
+      },
+      "display_tab": {
+        "Label": "Severity",
+        "Report Label": "Severity",
+        "Tooltip": "Severity rating: Critical, High, Medium, Low, or Informational."
+      },
+      "rules_tab": {},
+      "notes": ["Uses Reference Data: 'Criticality' (shared with Provisions). Consider conditional coloring."]
+    },
+    {
+      "step": "create_property",
+      "name": "mitre_url",
+      "property_type": "Text - Long (4,000 chars)",
+      "details_tab": {
+        "Name": "mitre_url",
+        "Property Type": "Text - Long (4,000 chars)",
+        "Required": false,
+        "Hidden": false,
+        "Read Only": false,
+        "Track Changes": false
+      },
+      "display_tab": {
+        "Label": "MITRE URL",
+        "Report Label": "MITRE URL",
+        "Tooltip": "Link to the MITRE ATT&CK or CWE page for this threat.",
+        "Display Format": "hyperlink"
+      },
+      "rules_tab": {},
+      "notes": ["Set display format to hyperlink. E.g., 'https://attack.mitre.org/techniques/T1078/'."]
+    },
+    {
+      "step": "create_property",
+      "name": "mitigating_control_groups",
+      "property_type": "Text - Long (4,000 chars)",
+      "details_tab": {
+        "Name": "mitigating_control_groups",
+        "Property Type": "Text - Long (4,000 chars)",
+        "Required": false,
+        "Hidden": false,
+        "Read Only": false,
+        "Track Changes": false
+      },
+      "display_tab": {
+        "Label": "Mitigating Control Groups",
+        "Report Label": "Mitigating Control Groups",
+        "Tooltip": "Pipe-delimited Control Group names that help mitigate this threat. E.g., 'Identity & Access Management|Network Security'."
+      },
+      "rules_tab": {},
+      "notes": ["Pipe-delimited values from the Control Group reference data. Text field (not Reference Data) to support many-to-many without a junction object."]
+    },
+    {
+      "step": "create_property",
+      "name": "cwe_rank",
+      "property_type": "Number – Integer",
+      "details_tab": {
+        "Name": "cwe_rank",
+        "Property Type": "Number – Integer",
+        "Required": false,
+        "Hidden": false,
+        "Read Only": false,
+        "Track Changes": false
+      },
+      "display_tab": {
+        "Label": "CWE Rank",
+        "Report Label": "CWE Rank",
+        "Tooltip": "Position in the CWE Top 25 Most Dangerous Software Weaknesses list. Blank for non-CWE threats."
+      },
+      "rules_tab": {},
+      "notes": ["Only applicable to CWE catalog entries. Null for MITRE ATT&CK threats."]
+    },
+    {
+      "step": "create_property",
+      "name": "SH_Sync",
+      "property_type": "Section Header",
+      "details_tab": {
+        "Name": "SH_Sync",
+        "Property Type": "Section Header"
+      },
+      "display_tab": {
+        "Label": "Synchronization",
+        "Tooltip": "VendorShield sync tracking"
+      },
+      "notes": ["Section header for sync properties"]
+    },
+    {
+      "step": "create_property",
+      "name": "last_synced_at",
+      "property_type": "Date - Timestamp",
+      "details_tab": {
+        "Name": "last_synced_at",
+        "Property Type": "Date - Timestamp",
+        "Required": false,
+        "Hidden": false,
+        "Read Only": true,
+        "Track Changes": false
+      },
+      "display_tab": {
+        "Label": "Last Synced At",
+        "Report Label": "Last Synced At",
+        "Tooltip": "When VendorShield last pushed/updated this threat."
+      },
+      "rules_tab": {},
+      "notes": ["Read-only. Set by VendorShield integration."]
+    },
+    {
+      "step": "create_property",
+      "name": "sync_source",
+      "property_type": "Text - Short (100 chars)",
+      "details_tab": {
+        "Name": "sync_source",
+        "Property Type": "Text - Short (100 chars)",
+        "Required": false,
+        "Hidden": false,
+        "Read Only": true,
+        "Track Changes": false
+      },
+      "display_tab": {
+        "Label": "Sync Source",
+        "Report Label": "Sync Source",
+        "Tooltip": "Origin system. E.g., 'VendorShield'."
+      },
+      "rules_tab": {},
+      "notes": ["Read-only. Set by VendorShield integration."]
+    }
+  ]
+}

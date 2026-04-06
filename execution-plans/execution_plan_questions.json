@@ -1,0 +1,372 @@
+{
+  "version": "1.0",
+  "object": "Questions",
+  "object_notes": "This is a CUSTOM object. In PU, rename a Grid (GR) subject area to 'Questions' — or use a spare custom object if available. This is NOT the native Questionnaires object, which has a fixed template structure unsuitable for a standalone question library.",
+  "environment_url": "https://app.processunity.net/ocean",
+  "import_sequence": 6,
+  "description": "Standalone question library with SCF crosswalk linkage. Questions map to Provisions via shared scf_control_ids (STRM). Each question has assessment metadata, AI answerability scoring, and threat linkage.",
+  "defaults": {
+    "required": false,
+    "hidden": false,
+    "read_only": false,
+    "track_changes": false
+  },
+  "design_notes": [
+    "Questions exist independently of any specific assessment or questionnaire template.",
+    "The scf_control_ids field is the universal join key — matching SCF control IDs on Provisions create the crosswalk.",
+    "AI Answerability indicates how much of the response can be auto-generated from an evidence vault.",
+    "threat_ids links questions to the Threat catalog via pipe-delimited Threat system_ids.",
+    "The [Name] standard property should hold the question short title (e.g., 'Q-IAM-001 MFA Enforcement').",
+    "The [External ID] standard property maps to system_id for import upsert."
+  ],
+  "standard_property_mappings": [
+    {
+      "standard_property": "[Name]",
+      "maps_to": "name / short title",
+      "format": "{DisplayID} {ControlName}",
+      "notes": "Human-readable label combining the display ID and control name."
+    },
+    {
+      "standard_property": "[Description]",
+      "maps_to": "question_text (short summary)",
+      "notes": "Brief summary of the question. Full question text goes in the dedicated question_text property."
+    },
+    {
+      "standard_property": "[External ID]",
+      "maps_to": "system_id",
+      "notes": "Immutable upsert key. Must be unique. E.g., 'Q-IAM-001'."
+    }
+  ],
+  "steps": [
+    {
+      "step": "create_property",
+      "name": "SH_Question_Identity",
+      "property_type": "Section Header",
+      "details_tab": {
+        "Name": "SH_Question_Identity",
+        "Property Type": "Section Header"
+      },
+      "display_tab": {
+        "Label": "Question Identity",
+        "Tooltip": "Core identifiers and classification for this question"
+      },
+      "notes": ["Section header for identification properties"]
+    },
+    {
+      "step": "create_property",
+      "name": "display_id",
+      "property_type": "Text - Short (100 chars)",
+      "details_tab": {
+        "Name": "display_id",
+        "Property Type": "Text - Short (100 chars)",
+        "Required": true,
+        "Hidden": false,
+        "Read Only": false,
+        "Track Changes": false
+      },
+      "display_tab": {
+        "Label": "Display ID",
+        "Report Label": "Display ID",
+        "Tooltip": "Human-readable question identifier. E.g., 'Q-IAM-001'."
+      },
+      "rules_tab": {},
+      "notes": ["Required. Must be unique across the question library."]
+    },
+    {
+      "step": "create_property",
+      "name": "question_text",
+      "property_type": "Text - Memo (32,000 chars)",
+      "details_tab": {
+        "Name": "question_text",
+        "Property Type": "Text - Memo (32,000 chars)",
+        "Required": true,
+        "Hidden": false,
+        "Read Only": false,
+        "Track Changes": false
+      },
+      "display_tab": {
+        "Label": "Question Text",
+        "Report Label": "Question Text",
+        "Tooltip": "The full question text as presented to vendors during assessment."
+      },
+      "rules_tab": {},
+      "notes": ["Required. Memo type to accommodate lengthy, multi-part questions."]
+    },
+    {
+      "step": "create_property",
+      "name": "control_name",
+      "property_type": "Text - Short (100 chars)",
+      "details_tab": {
+        "Name": "control_name",
+        "Property Type": "Text - Short (100 chars)",
+        "Required": false,
+        "Hidden": false,
+        "Read Only": false,
+        "Track Changes": false
+      },
+      "display_tab": {
+        "Label": "Control Name",
+        "Report Label": "Control Name",
+        "Tooltip": "Short name of the control this question assesses. E.g., 'MFA Enforcement', 'Data Encryption at Rest'."
+      },
+      "rules_tab": {},
+      "notes": ["Human-friendly control label for reporting and grouping."]
+    },
+    {
+      "step": "create_property",
+      "name": "SH_Classification",
+      "property_type": "Section Header",
+      "details_tab": {
+        "Name": "SH_Classification",
+        "Property Type": "Section Header"
+      },
+      "display_tab": {
+        "Label": "Classification & Scoring",
+        "Tooltip": "Control group, weight, AI scoring, and response metadata"
+      },
+      "notes": ["Section header for classification properties"]
+    },
+    {
+      "step": "create_property",
+      "name": "control_group",
+      "property_type": "Reference Data – Select One",
+      "details_tab": {
+        "Name": "control_group",
+        "Property Type": "Reference Data – Select One",
+        "Required": true,
+        "Hidden": false,
+        "Read Only": false,
+        "Track Changes": false
+      },
+      "display_tab": {
+        "Label": "Control Group",
+        "Report Label": "Control Group",
+        "Tooltip": "Top-level control domain this question belongs to. Drives dashboard grouping and risk roll-ups."
+      },
+      "rules_tab": {},
+      "notes": ["Uses Reference Data: 'Control Group'. Required for reporting and filtering."]
+    },
+    {
+      "step": "create_property",
+      "name": "weight",
+      "property_type": "Number – Decimal",
+      "details_tab": {
+        "Name": "weight",
+        "Property Type": "Number – Decimal",
+        "Required": false,
+        "Hidden": false,
+        "Read Only": false,
+        "Track Changes": false
+      },
+      "display_tab": {
+        "Label": "Weight",
+        "Report Label": "Weight",
+        "Tooltip": "Relative importance weight for scoring. Higher weight = more impact on risk score. Default: 1.0."
+      },
+      "rules_tab": {},
+      "notes": ["Used in weighted scoring calculations. Typically 0.5 to 3.0. Default 1.0."]
+    },
+    {
+      "step": "create_property",
+      "name": "ai_answerability",
+      "property_type": "Reference Data – Select One",
+      "details_tab": {
+        "Name": "ai_answerability",
+        "Property Type": "Reference Data – Select One",
+        "Required": false,
+        "Hidden": false,
+        "Read Only": false,
+        "Track Changes": false
+      },
+      "display_tab": {
+        "Label": "AI Answerability",
+        "Report Label": "AI Answerability",
+        "Tooltip": "How amenable this question is to AI-assisted response generation. High = auto-answer from evidence vault. Medium = AI drafts, SME reviews. Low = requires human judgment."
+      },
+      "rules_tab": {},
+      "notes": ["Uses Reference Data: 'AI Answerability'. Drives automation routing in VendorShield."]
+    },
+    {
+      "step": "create_property",
+      "name": "evidence_types",
+      "property_type": "Text - Long (4,000 chars)",
+      "details_tab": {
+        "Name": "evidence_types",
+        "Property Type": "Text - Long (4,000 chars)",
+        "Required": false,
+        "Hidden": false,
+        "Read Only": false,
+        "Track Changes": false
+      },
+      "display_tab": {
+        "Label": "Evidence Types",
+        "Report Label": "Evidence Types",
+        "Tooltip": "Pipe-delimited list of accepted evidence types. E.g., 'SOC 2 Report|Penetration Test|Policy Document'."
+      },
+      "rules_tab": {},
+      "notes": ["Pipe-delimited values. Used by AI to identify relevant evidence documents in the vault."]
+    },
+    {
+      "step": "create_property",
+      "name": "response_type",
+      "property_type": "Reference Data – Select One",
+      "details_tab": {
+        "Name": "response_type",
+        "Property Type": "Reference Data – Select One",
+        "Required": true,
+        "Hidden": false,
+        "Read Only": false,
+        "Track Changes": false
+      },
+      "display_tab": {
+        "Label": "Response Type",
+        "Report Label": "Response Type",
+        "Tooltip": "Expected response format: Yes/No/Partial/NA, Yes/No, Narrative, Numeric, Date, or File Upload."
+      },
+      "rules_tab": {},
+      "notes": ["Uses Reference Data: 'Response Type'. Required. Determines how the question is rendered in assessments."]
+    },
+    {
+      "step": "create_property",
+      "name": "source",
+      "property_type": "Reference Data – Select One",
+      "details_tab": {
+        "Name": "source",
+        "Property Type": "Reference Data – Select One",
+        "Required": false,
+        "Hidden": false,
+        "Read Only": false,
+        "Track Changes": false
+      },
+      "display_tab": {
+        "Label": "Source",
+        "Report Label": "Source",
+        "Tooltip": "Origin of this question: GRX (Global Risk Exchange baseline), Expanded (VendorShield extended set), or Custom (organization-specific)."
+      },
+      "rules_tab": {},
+      "notes": ["Uses Reference Data: 'Question Source'."]
+    },
+    {
+      "step": "create_property",
+      "name": "SH_SCF_Crosswalk",
+      "property_type": "Section Header",
+      "details_tab": {
+        "Name": "SH_SCF_Crosswalk",
+        "Property Type": "Section Header"
+      },
+      "display_tab": {
+        "Label": "SCF Crosswalk",
+        "Tooltip": "Secure Controls Framework mapping — links questions to provisions"
+      },
+      "notes": ["Section header for crosswalk properties"]
+    },
+    {
+      "step": "create_property",
+      "name": "scf_control_ids",
+      "property_type": "Text - Long (4,000 chars)",
+      "details_tab": {
+        "Name": "scf_control_ids",
+        "Property Type": "Text - Long (4,000 chars)",
+        "Required": false,
+        "Hidden": false,
+        "Read Only": false,
+        "Track Changes": false
+      },
+      "display_tab": {
+        "Label": "SCF Control IDs",
+        "Report Label": "SCF Control IDs",
+        "Tooltip": "Pipe-delimited SCF control IDs this question maps to. This is the universal join key — matching IDs on Provisions create the Question↔Provision crosswalk. E.g., 'IAC-06|IAC-01'."
+      },
+      "rules_tab": {},
+      "notes": ["CRITICAL: This is the crosswalk anchor. Questions and Provisions that share SCF control IDs are linked. Populated by VendorShield from the SCF STRM."]
+    },
+    {
+      "step": "create_property",
+      "name": "SH_Threat_Linkage",
+      "property_type": "Section Header",
+      "details_tab": {
+        "Name": "SH_Threat_Linkage",
+        "Property Type": "Section Header"
+      },
+      "display_tab": {
+        "Label": "Threat Linkage",
+        "Tooltip": "Links to the threat catalog"
+      },
+      "notes": ["Section header for threat-related properties"]
+    },
+    {
+      "step": "create_property",
+      "name": "threat_ids",
+      "property_type": "Text - Long (4,000 chars)",
+      "details_tab": {
+        "Name": "threat_ids",
+        "Property Type": "Text - Long (4,000 chars)",
+        "Required": false,
+        "Hidden": false,
+        "Read Only": false,
+        "Track Changes": false
+      },
+      "display_tab": {
+        "Label": "Threat IDs",
+        "Report Label": "Threat IDs",
+        "Tooltip": "Pipe-delimited system_ids of Threats this question helps mitigate. E.g., 'T-MITRE-T1078|T-MITRE-T1110'."
+      },
+      "rules_tab": {},
+      "notes": ["Links to Threat objects via their system_id. Pipe-delimited for many-to-many."]
+    },
+    {
+      "step": "create_property",
+      "name": "SH_Sync",
+      "property_type": "Section Header",
+      "details_tab": {
+        "Name": "SH_Sync",
+        "Property Type": "Section Header"
+      },
+      "display_tab": {
+        "Label": "Synchronization",
+        "Tooltip": "VendorShield sync tracking"
+      },
+      "notes": ["Section header for sync properties"]
+    },
+    {
+      "step": "create_property",
+      "name": "last_synced_at",
+      "property_type": "Date - Timestamp",
+      "details_tab": {
+        "Name": "last_synced_at",
+        "Property Type": "Date - Timestamp",
+        "Required": false,
+        "Hidden": false,
+        "Read Only": true,
+        "Track Changes": false
+      },
+      "display_tab": {
+        "Label": "Last Synced At",
+        "Report Label": "Last Synced At",
+        "Tooltip": "When VendorShield last pushed/updated this question."
+      },
+      "rules_tab": {},
+      "notes": ["Read-only. Set by VendorShield integration."]
+    },
+    {
+      "step": "create_property",
+      "name": "sync_source",
+      "property_type": "Text - Short (100 chars)",
+      "details_tab": {
+        "Name": "sync_source",
+        "Property Type": "Text - Short (100 chars)",
+        "Required": false,
+        "Hidden": false,
+        "Read Only": true,
+        "Track Changes": false
+      },
+      "display_tab": {
+        "Label": "Sync Source",
+        "Report Label": "Sync Source",
+        "Tooltip": "Origin system. E.g., 'VendorShield'."
+      },
+      "rules_tab": {},
+      "notes": ["Read-only. Set by VendorShield integration."]
+    }
+  ]
+}

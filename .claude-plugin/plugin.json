@@ -1,0 +1,17 @@
+{
+  "name": "processunity-skills",
+  "version": "1.0.0",
+  "description": "Complete AI skill suite for ProcessUnity: configure instances, build reports, design data models, import data, enrich vendors, and run agentic TPRM workflows — all through guided AI-driven automation.",
+  "author": {
+    "name": "Johnny Tondreau"
+  },
+  "keywords": [
+    "processunity",
+    "tprm",
+    "vendor-risk",
+    "configuration",
+    "grc",
+    "enrichment",
+    "agentic"
+  ]
+}

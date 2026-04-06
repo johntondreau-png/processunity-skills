@@ -1,0 +1,156 @@
+{
+  "version": "1.1",
+  "description": "Reference Data types and values for VendorShield regulation tree configuration",
+  "import_sequence": 0,
+  "workflow": [
+    "STEP 1: Navigate to Settings → General → Reference Data",
+    "STEP 2: Click the 'Type' column header or filter to see all existing Reference Data types",
+    "STEP 3: For each type below, check if it already exists. If it does, review existing values and add only the missing ones. If it doesn't exist, create the new type first, then add all values.",
+    "STEP 4: When creating properties (execution_plan_regulations_tree.json, etc.), Reference Data properties point to these types by name.",
+    "STEP 5: When importing data, the import column contains the display value (e.g., 'Framework') — PU resolves it against the Reference Data type automatically."
+  ],
+  "notes": [
+    "Reference Data types and values must exist BEFORE creating properties that reference them.",
+    "Some types (like 'Criticality') may already exist in the environment — always check first.",
+    "Values are case-sensitive in PU. Ensure consistent casing across import templates.",
+    "The 'Type' field in Reference Data is essentially the list/category name.",
+    "Each value under a type becomes a selectable option in any 'Reference Data – Select One' property that points to that type."
+  ],
+  "pre_check": {
+    "description": "Before adding anything, inventory existing Reference Data types in the environment.",
+    "steps": [
+      "Navigate to Settings → General → Reference Data",
+      "Note all existing Type names",
+      "For types that already exist below, compare values — only add net-new values",
+      "For types that don't exist, create the Type first, then add values"
+    ]
+  },
+  "reference_data_types": [
+    {
+      "type_name": "Jurisdiction",
+      "likely_exists": false,
+      "values": [
+        "US", "US-NY", "US-CA", "US-MA", "EU", "UK", "International",
+        "APAC", "Canada", "Australia", "Brazil", "India", "Singapore",
+        "UAE", "South Africa", "Japan", "South Korea"
+      ],
+      "used_by_properties": [
+        {"object": "Regulations & Standards", "property": "jurisdiction"}
+      ],
+      "import_column": "jurisdiction",
+      "import_note": "Import value must match a value in this list exactly (case-sensitive)."
+    },
+    {
+      "type_name": "Issuing Body",
+      "likely_exists": false,
+      "values": [
+        "NIST", "AICPA", "ISO/IEC", "PCI SSC", "HHS/OCR",
+        "European Parliament", "European Commission", "European Council",
+        "NYDFS", "FFIEC", "OCC", "FRB", "FDIC", "CISA", "MITRE", "ENISA", "ICO"
+      ],
+      "used_by_properties": [
+        {"object": "Regulations & Standards", "property": "issuing_body"}
+      ],
+      "import_column": "issuing_body",
+      "import_note": "Import value must match a value in this list exactly."
+    },
+    {
+      "type_name": "Regulation Type",
+      "likely_exists": false,
+      "values": ["Law", "Regulation", "Framework", "Standard", "Directive", "Guideline"],
+      "used_by_properties": [
+        {"object": "Regulations & Standards", "property": "type"}
+      ],
+      "import_column": "type",
+      "import_note": "Import value must match a value in this list exactly."
+    },
+    {
+      "type_name": "Regulation Status",
+      "likely_exists": false,
+      "values": ["Active", "Draft", "Superseded", "Pending", "Under Review"],
+      "used_by_properties": [
+        {"object": "Regulations & Standards", "property": "status"}
+      ],
+      "import_column": "status",
+      "import_note": "Import value must match a value in this list exactly."
+    },
+    {
+      "type_name": "Criticality",
+      "likely_exists": true,
+      "likely_exists_note": "Many PU environments have a Criticality or Severity type already. Check existing values before adding.",
+      "values": ["Critical", "High", "Medium", "Low", "Informational"],
+      "used_by_properties": [
+        {"object": "Regulations & Standards", "property": "criticality", "notes": "L4 Provisions only"},
+        {"object": "Threats", "property": "severity"}
+      ],
+      "import_column": "criticality (Provisions) / severity (Threats)",
+      "import_note": "Shared across objects. If the environment already has this type with different value names, update the import templates to match."
+    },
+    {
+      "type_name": "AI Answerability",
+      "likely_exists": false,
+      "values": [
+        "High - Auto-answer from evidence vault",
+        "Medium - AI drafts response, SME reviews",
+        "Low - Requires human judgment"
+      ],
+      "used_by_properties": [
+        {"object": "Questions", "property": "ai_answerability"}
+      ],
+      "import_column": "ai_answerability",
+      "import_note": "Deferred — will be used when Questions/Questionnaire object is configured."
+    },
+    {
+      "type_name": "Control Group",
+      "likely_exists": false,
+      "values": [
+        "Identity & Access Management", "Data Protection & Privacy",
+        "Network Security", "Endpoint & Device Security",
+        "Vulnerability Management", "Application Security",
+        "Incident Response & BCP", "Threat Management",
+        "Human Resource Security", "Artificial Intelligence",
+        "Physical & Environmental", "ESG & Sustainability",
+        "Financial Viability", "Geopolitical & Concentration",
+        "Nth-Party & Supply Chain", "Regulatory & Legal"
+      ],
+      "used_by_properties": [
+        {"object": "Questions", "property": "control_group"}
+      ],
+      "import_column": "control_group",
+      "import_note": "Deferred — will be used when Questions/Questionnaire object is configured."
+    },
+    {
+      "type_name": "Response Type",
+      "likely_exists": false,
+      "values": [
+        "Yes/No/Partial/NA", "Yes/No", "Narrative",
+        "Numeric", "Date", "File Upload"
+      ],
+      "used_by_properties": [
+        {"object": "Questions", "property": "response_type"}
+      ],
+      "import_column": "response_type",
+      "import_note": "Deferred — will be used when Questions/Questionnaire object is configured."
+    },
+    {
+      "type_name": "Question Source",
+      "likely_exists": false,
+      "values": ["GRX", "Expanded", "Custom"],
+      "used_by_properties": [
+        {"object": "Questions", "property": "source"}
+      ],
+      "import_column": "source",
+      "import_note": "Deferred — will be used when Questions/Questionnaire object is configured."
+    },
+    {
+      "type_name": "Threat Catalog",
+      "likely_exists": false,
+      "values": ["MITRE_ATTACK", "CWE"],
+      "used_by_properties": [
+        {"object": "Threats", "property": "catalog"}
+      ],
+      "import_column": "catalog",
+      "import_note": "Import value must match a value in this list exactly."
+    }
+  ]
+}
