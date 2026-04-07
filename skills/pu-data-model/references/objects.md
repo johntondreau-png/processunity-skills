@@ -97,3 +97,113 @@ These exist on all objects automatically:
 - Any Subject Area → Assessments (via Auditable Entity trait)
 - Any object → Any other object (via Related Items, configured through Roles)
 - Custom Reports → Dashboards (reports with charts can be added to dashboards)
+
+### Relationships and Multi-Level Reports
+
+**Critical rule**: Multi-level reports can ONLY join two objects that have an **existing relationship** configured between them. If no relationship exists in the data model, a multi-level report across those objects will return zero rows.
+
+Each relationship has a **name** (e.g., "Fourth Parties (Vendor Fourth Party)", "Assessments (Assessment Scope)", "Vendor Services (Child)"). When building a multi-level report, you select the relationship name — not just the object type. The same pair of objects can have **multiple distinct relationships** (e.g., Agreement → Legal Entity via "Legal Entities Making Use of This Agreement" vs "LEI of the entity providing ICT services").
+
+**Common multi-level report joins in practice:**
+
+| Level 1 | Level 2 | Relationship Name Pattern | Use Case |
+|---------|---------|--------------------------|----------|
+| Vendor | Vendor Service | Vendor Services (Child) | Service portfolio per vendor |
+| Vendor | Assessment | Assessments (Assessment Scope) | Assessment history per vendor |
+| Vendor | Fourth Party | Fourth Parties (Vendor Fourth Party) | Subcontractor chain |
+| Vendor | Individual | Individuals (Vendor) | Contacts per vendor |
+| Vendor | Issue | Issues (Issue) | Issues per vendor |
+| Vendor | Metric | Metrics (Related Metric) | KPIs per vendor |
+| Vendor | Legal Entity | Legal Entities (Legal Entity) | Entity hierarchy |
+| Agreement | Legal Entity | Legal Entities (Legal Entity) | Entities on a contract |
+| Agreement | Vendor Service | DORA Linked Service(s) | Services under agreement |
+| Issue | Assessment | Assessments (Issue) | Assessment context for issues |
+| Issue | Vendor | Vendors (Issue) | Vendor context for issues |
+| Assessment | Vendor | Vendors (Assessment Scope) | Vendor being assessed |
+| Assessment | Vendor Service | Related Vendor Service | Service being assessed |
+| Questionnaire Question | Questionnaire Response | Questionnaire Responses (...) | Response data per question |
+| Vendor Service | Service Add On | Service Add Ons (Related...) | Service detail breakdown |
+| Vendor Service | Fourth Party | Fourth Parties (Vendor Fourth Party) | Fourth parties per service |
+| Role | Individual | Individuals (Person Assigned to Role) | People in a role |
+| Team | Individual | Individuals (Person Assigned to Team) | People on a team |
+
+**3+ level reports** are possible (up to 4 levels) — each level adds another hop through a relationship. Example: Agreement → Vendor Service → Service Add On → Fourth Party.
+
+## Aggregate Property Types
+
+Aggregate properties pull summarized data from related records. PU uses numeric codes internally:
+
+| Code | Name | Returns | Description |
+|------|------|---------|-------------|
+| 1 | **Count** | Number | Count of related records matching a filter. AggregateProperty is typically `Id`. |
+| 2 | **Sum** | Number | Sum of a numeric property across related records. |
+| 3 | **Average** | Number | Average of a numeric property across related records. |
+| 4 | **Min / First** | Text or Number | Minimum or first value from related records. |
+| 5 | **Lookup** | Text | Reads a single property value from a parent/related record. Most common type — denormalizes a field from a related object. |
+| 6 | **List** | Text | Concatenates a property from ALL related records into a delimited list. |
+| 7 | **Max / Last** | Text, Number, or Date | Maximum or most recent value from related records. Supports complex filter expressions. |
+
+**Aggregate configuration fields:**
+- **AggregateItemType** — The relationship to aggregate through (e.g., "Vendors (Assessment Scope)", "Vendor Services (Child)")
+- **AggregateProperty** — The property to read/count/sum from the related object
+- **AggregateFilterProperty** / **AggregateFilterValue** — Optional filter expression to limit which related records are included
+- **AggregateDateProperty** — For periodic snapshot tracking (weekly/monthly)
+- **AggregateObjectType** — The target object type being aggregated
+
+**Common aggregate patterns:**
+- **Count with filter**: `Count of Issues where [State] = "Open"` on Vendor
+- **Lookup (denormalize)**: `Vendor Name from Vendors (Assessment Scope)` on Assessment
+- **List (concatenate)**: `All Fourth Party Names from Fourth Parties (Vendor Fourth Party)` on Vendor
+- **Last with filter**: `Last Completed Assessment Date from Assessments where [Completion Date] != ""` on Vendor
+- **Sum**: `Total Scored Questions from Questionnaire Sections (Child)` on Questionnaire
+
+## Platform License Limits (Typical)
+
+These limits govern what can be configured per instance. Actual values vary by license tier.
+
+| Limit | Typical Value | Notes |
+|-------|--------------|-------|
+| Max Active Users | 15-500+ | Per license tier |
+| Max Active Vendor Records | 1,000-50,000+ | Per license tier |
+| Max Custom Properties | 1,000 | Global across all objects |
+| Max Custom Properties Per Object | 400 | Hard ceiling per object type |
+| Max Aggregated Properties Per Object | 50 | Aggregate fields are expensive |
+| Max Track Changes Per Object | 50 | Audit trail fields |
+| Max Import Rows | 20,000 | Per import API call |
+| Max Report Rows | 500,000 | Backend limit |
+| Max Report Cells Onscreen | 20,000 | Browser rendering limit |
+| Max Export Size | ~50 MB | CSV/Excel export |
+| Web Service Rate Limit | 360 / 3,600 sec | 6 requests/minute for API |
+| Custom Report Cache | 5 days | Reports are cached, not real-time |
+| Max Notifications Per Object | 20 | Email/workflow notifications |
+| Max Automated Actions | 200 total, 20/object | Workflow automations |
+
+## Solution Fingerprints (System Settings)
+
+Which features are enabled tells you what "solution" an instance is running. Key feature flags:
+
+| Feature Flag | VRM | CSRM | DORA | GRC |
+|-------------|-----|------|------|-----|
+| Vendors | Yes | Yes | Yes | — |
+| Vendor Services | Yes | — | Yes | — |
+| Vendor Requests | Yes | — | Yes | — |
+| Assessments | Yes | Yes | Yes | Yes |
+| Questionnaires | Yes | Yes | Yes | Yes |
+| Issues | Yes | Yes | Yes | Yes |
+| Agreements | — | — | Yes | — |
+| Fourth Parties | — | — | Yes | — |
+| Facilities | — | — | Yes | — |
+| Legal Entity (Custom Object) | — | — | Yes | — |
+| CIF (Custom Object) | — | — | Yes | — |
+| Risks | — | — | — | Yes |
+| Controls | — | — | — | Yes |
+| Assets | — | Yes | — | — |
+| Threats | — | Yes | — | — |
+| Incidents | — | Yes | — | — |
+| Policies & Procedures | — | — | — | Yes |
+| Regulations & Standards | — | — | — | Yes |
+| GRX Connector | Yes | — | — | — |
+| BitSight Connector | Yes | — | — | — |
+| RiskRecon Connector | Yes | — | — | — |
+
+This is useful for scoping configuration work — check system settings first to understand what solution modules are active before designing properties or reports.

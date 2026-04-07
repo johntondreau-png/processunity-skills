@@ -33,6 +33,83 @@ PU's Custom Report facility is a **home-grown analytics engine** for the semanti
 - Charts can be added to **Dashboards** (max 16 charts per dashboard)
 - The same chart can appear multiple times on a dashboard with different Run Time Filters
 
+## Multi-Level Reports and Relationship Joins
+
+### The Critical Rule
+
+**Multi-level reports can ONLY join two objects that have an existing, named relationship configured between them in the data model.** If no relationship exists, the report will return zero rows — no error, just empty results.
+
+This is the single most important concept in PU reporting. Before designing any multi-level report, verify the relationship exists in **Settings > Subject Areas > [Object] > Related Items/Roles**.
+
+### How Relationship Joins Work
+
+When you add a Level 2 to a report, you don't just pick an object type — you pick a **named relationship**. The same pair of objects can have **multiple distinct relationships**, each returning different data. For example:
+
+- Agreement → Legal Entity via **"Legal Entities Making Use of This Agreement"** — returns entities that USE the agreement
+- Agreement → Legal Entity via **"(DORA_03.03.0020) - LEI of the entity providing ICT services"** — returns entities that PROVIDE services under the agreement
+
+Choosing the wrong relationship returns the wrong data (or nothing).
+
+### Multi-Level Report Configuration Fields
+
+| Field | Meaning |
+|-------|---------|
+| **Level 1 Object** | The primary/parent object — report rows start here |
+| **Level 2 Object** | The related/child object — adds detail rows per Level 1 record |
+| **Level 2 Relationship** | The named relationship path from Level 1 to Level 2. This is NOT optional — it determines which records join. |
+| **Level 3/4 Object** | Additional hops through further relationships (up to 4 levels) |
+
+### Common Relationship Patterns
+
+| Level 1 | Level 2 | Relationship Name | Use Case |
+|---------|---------|-------------------|----------|
+| Vendor | Vendor Service | Child / Vendor Services | Service portfolio per vendor |
+| Vendor | Assessment | Assessment Scope | Assessment history per vendor |
+| Vendor | Fourth Party | Vendor Fourth Party | Subcontractor mapping |
+| Vendor | Legal Entity | Legal Entities (Legal Entity) | Entity hierarchy per vendor |
+| Vendor | Issue | Issues (Issue) | Issues per vendor |
+| Agreement | Legal Entity | Legal Entities Making Use of This Agreement | Entities on contract |
+| Agreement | Vendor Service | DORA Linked Service(s) | Services under agreement |
+| Assessment | Vendor | Vendors (Assessment Scope) | Vendor being assessed |
+| Questionnaire Question | Questionnaire Response | Questionnaire Responses | Response data per question |
+| Vendor Service | Service Add On | Service Add Ons (Related) | Service detail breakdown |
+| Vendor Service | Fourth Party | Vendor Fourth Party | Fourth parties per service |
+| Legal Entity Contract | Agreement | Contractual arrangement reference | Contracts per entity |
+
+### Deep Multi-Level Reports (3-4 Levels)
+
+Each level adds another hop through a relationship chain. Example:
+- **Level 1**: Agreement → **Level 2**: Vendor Service (via "DORA Linked Service(s)") → **Level 3**: Service Add On → **Level 4**: Fourth Party
+
+Plan each hop carefully — verify the relationship exists at each level before building.
+
+### Report Categories and Naming Conventions
+
+Reports in a production instance fall into functional categories. Common patterns observed:
+
+| Pattern | Purpose | Example |
+|---------|---------|---------|
+| **IMPORT** prefix | Data ingestion reports — ordered sequence for loading data | DORA IMPORT 1: LEGAL ENTITY |
+| **EXCEL_** prefix | Export templates — maps to external report formats | EXCEL_DORA_RT.01.01 |
+| **DASH:** prefix | Dashboard source reports — optimized for chart rendering | DASH: DORA Vendors |
+| **BTN:** prefix | Button-driven operational reports — triggered from record actions | BTN: AGREEMENT: SERVICE: Relate |
+| **📃** prefix | User-facing operational reports | 📃 D. DORA Fourth Parties |
+| Alphabetic prefix (A., B., C.) | Ordered report sets within a category | DORA - A. Legal Entity Master |
+
+Report categories act as folders — organize reports logically so administrators can find them.
+
+### Report Pipeline Pattern
+
+For regulatory reporting or data migration, build reports as an **ordered pipeline**:
+
+1. **IMPORT reports** (numbered sequence) — reports whose output maps to import templates, used for initial data loading
+2. **Operational reports** (lettered/named) — day-to-day data views for administrators and users
+3. **EXCEL export reports** — formatted to match external regulatory templates (column names match regulator requirements)
+4. **DASH reports** — chart-optimized reports feeding dashboard tiles
+5. **BTN reports** — operational reports triggered from record action buttons
+
+This pipeline pattern ensures data flows in → gets worked → flows out in the required format.
+
 ## Chart Types Reference
 
 ### Standard Charts (require Group + Total)

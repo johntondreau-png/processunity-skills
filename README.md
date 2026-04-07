@@ -6,7 +6,7 @@ Built as a [Claude Code](https://claude.ai/code) plugin.
 
 ## What's Inside
 
-### Skills (10)
+### Skills (11)
 
 | Skill | Purpose |
 |-------|---------|
@@ -18,9 +18,10 @@ Built as a [Claude Code](https://claude.ai/code) plugin.
 | **pu-agentic-pipeline** | BYOAI agentic workflows using PU's Reports + Import APIs as the AI data pipeline |
 | **pu-enrich** | Enrich vendor data from 9 external intelligence sources (sanctions, cyber, ESG, financial, etc.) |
 | **pu-configuration** | Configure regulation trees, assessment questions, threat catalogs, and SCF crosswalks |
+| **pu-dora** | Implement EU DORA compliance -- Register of Information, 7 RTS templates, EBA taxonomy codes, full object/report pipeline |
 | **vendor-lookup** | Query your ProcessUnity vendor portfolio for risk profiles by name |
 
-### Commands (6)
+### Commands (7)
 
 | Command | Usage |
 |---------|-------|
@@ -29,6 +30,7 @@ Built as a [Claude Code](https://claude.ai/code) plugin.
 | `/pu-status` | Check current configuration state of a PU object |
 | `/pu-import` | Import data into ProcessUnity via API |
 | `/pu-enrich` | Run vendor data enrichment pipeline |
+| `/pu-dora` | Implement DORA compliance in a ProcessUnity instance |
 | `/vendor` | Look up a vendor's risk profile |
 
 ### Execution Plans (4)
@@ -126,6 +128,7 @@ processunity-skills/
 │   ├── pu-agentic-pipeline/     # AI-powered read/reason/write workflows
 │   ├── pu-enrich/               # Vendor data enrichment from external APIs
 │   ├── pu-configuration/        # Regulation trees, questions, threats, SCF
+│   ├── pu-dora/                 # DORA compliance implementation
 │   └── vendor-lookup/           # Vendor risk profile lookup
 ├── execution-plans/             # Pre-built JSON configuration plans
 ├── config.json.example          # Credential template (copy to config.json)

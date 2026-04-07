@@ -12,6 +12,8 @@
     "configuration",
     "grc",
     "enrichment",
-    "agentic"
+    "agentic",
+    "dora",
+    "regulatory-compliance"
   ]
 }

@@ -95,3 +95,153 @@ When multiple objects need the same classification:
 4. **Trend Report** — Historical Data Report showing risk scores over time. Chart: Line.
 5. Create a Custom Dashboard, add all four charts, resize and arrange.
 6. Publish to executive roles.
+
+## Pattern: Conditional Display / Conditional Edit
+
+Properties can be shown/hidden or made editable/read-only based on the value of another property. This reduces visual clutter and progressively discloses fields only when relevant.
+
+**Configuration:** Set on the property's **View Access** tab (ConditionalDisplayProperty / ConditionalDisplayValue) and **Edit Access** tab (ConditionalEditProperty / ConditionalEditValue).
+
+### Sub-pattern: State-Gating
+Show fields only after a workflow milestone is reached.
+- Show scoring fields when `[Questionnaire Submitted?] = "Yes"`
+- Show cancellation details when `[Status] = "X. Cancelled"`
+- Show deactivation fields when `[Service Status] = "B - Inactive"`
+
+### Sub-pattern: Scope-Type Filtering
+Show fields relevant only to the current object mode.
+- Show questionnaire fields when `[Scope Type] = "Questionnaire"`
+- Show regulatory fields when `[DORA?] = "Yes"`
+- Show branch fields when `[Branch?] = "Yes"`
+
+### Sub-pattern: Multi-Value Matching
+Use pipe `|` for OR conditions in a single conditional display value.
+- Show field when `[Status] = "2. Under Review|C. Complete|X. Cancelled"`
+- Edit field when `[State] = "In Process|Planned"`
+
+### Sub-pattern: Polymorphic Objects
+Reference Data uses conditional display to behave like multiple object types.
+- Show country fields when `[Type] = "Country"`
+- Show workflow fields when `[Type] = "Assessment Workflow Type"`
+
+### Sub-pattern: Role-Based Progressive Disclosure
+Show different property groups based on record classification.
+- Show vendor contact fields when `[Vendor Contact] = "Yes"`
+- Show technical fields when `[Technical Service?] = "Yes"`
+
+### Sub-pattern: Section Header Gating
+Use conditional display on Section Header properties to show/hide entire groups of fields at once. All properties below a Section Header visually belong to it — if the header is hidden, the section effectively disappears.
+- Section Header `DORA (RT.05.01)` conditional on `[DORA?] = "Yes"` → entire DORA section appears only when needed
+
+## Pattern: Auto Update Rules
+
+Auto Update Rules set property values automatically. Two event types:
+
+### ValueChange Events
+Fire when any watched field changes. The **AutoUpdateExpression** lists watched fields (pipe-delimited). The **AutoUpdateValue** computes the new value.
+
+**Composite Name Generation:**
+- Watch: `[Request ID]+"|"+[Requester]+"|"+[Vendor Name]+"|"+[Request Date]`
+- Value: `[Vendor Name] + " - " + [Assessment Type] + " - " + TOSTRING([Start Date], "MMM yyyy")`
+
+**Cascading Field from Aggregate:**
+- Watch: `[Primary Contact Agg]` (aggregate from child records)
+- Value: `[Primary Contact Agg]` (copies aggregate value into editable field)
+
+**Date Math on Trigger:**
+- Watch: `[Last Completed Assessment Date]`
+- Value: `DAYSADD([Last Completed Assessment Date], [Assessment Frequency (Days)])`
+
+### Conditional Events
+Fire when a condition evaluates to true. **AutoUpdateExpression** is the boolean condition. **AutoUpdateValue** is set once when condition first becomes true.
+
+**Timestamp Capture:**
+- Condition: `[Assessment Sent Date] != ""`
+- Value: `TIMESTAMP()`
+
+**User Capture ([Me]):**
+- Condition: `[Assessment Submitted Date] != "" AND [Submit By] = ""`
+- Value: `[Me]`
+- The `AND [field] = ""` prevents overwriting (one-time capture).
+
+**Snapshot at Completion:**
+- Condition: `[Completion Date] != ""`
+- Value: `[# Issues (Active/Open)]`
+
+**Boolean Flag Toggle:**
+- Condition: `[DORA Identification Code] != ""`
+- Value: `"Yes"`
+
+**State Machine:**
+- Condition: Watches multiple date fields via ValueChange
+- Value: Multi-branch CASE expression deriving status from which dates are populated
+- Example: Status progresses Prepare → With Respondent → Analyst Review → Completed based on sent/submitted/completion dates
+
+## Pattern: Color Coding for Visual Indicators
+
+Dynamic color expressions make risk levels, statuses, and scores instantly recognizable.
+
+### Standard Risk Color Palette
+
+| Hex | Meaning |
+|-----|---------|
+| `#AE312E` | Critical / Very Weak / Red |
+| `#d05656` | Very Weak (lighter red) |
+| `#F88438` | High / Orange |
+| `#F7CF47` | Medium / Yellow |
+| `#f3e896` | Fair (light yellow) |
+| `#85d581` | Strong (light green) |
+| `#B5D551` | Good / Active |
+| `#388E46` | Very Strong / Dark green |
+| `#F3F3F3` | Cancelled / Grey |
+
+### Color Expression Patterns
+
+**5-Tier Text Rating:**
+```
+CASEX([Value], "Very Weak","#d05656", "Weak","#fabd78", "Fair","#f3e896", "Strong","#85d581", "Very Strong","#64B150","")
+```
+
+**4-Tier Numeric Score:**
+```
+CASE([Value]>=90,"#008000", [Value]>=70,"#F5E33A", [Value]>=50,"#F88438", "#AE312E")
+```
+
+**Populated/Empty Indicator:**
+```
+IF(!ISNULL([Value]), "#B5D551", "")
+```
+
+## Pattern: External ID Shadow for Reference Data
+
+When a Reference Data relationship stores a display name but you need the underlying code (e.g., EBA taxonomy code) in reports:
+
+1. Create a **hidden Text - Aggregate** (Lookup, Type 5) companion property
+2. Set AggregateProperty to `External Id` on the Reference Data object
+3. Set AggregateItemType to the same relationship as the Reference Data pick list
+4. The aggregate reads the External ID (code) from the selected Reference Data record
+5. Reports can now output the code directly without expression parsing
+
+**Example:** Property `(DORA_05.01.0070) - Type of person` is a Reference Data pick list showing "Legal person". Its companion `(DORA_05.01.0070) - Type of person - External ID` is a hidden aggregate that stores `eba_CT:x200` — the EBA taxonomy code needed for regulatory export reports.
+
+## Pattern: Blank Date Sentinel
+
+When date fields may be empty but need to sort/filter correctly:
+
+1. Create a **hidden Text - Calculated** property
+2. Expression: `IF([Source Date]="","9999-12-31",[Source Date])`
+3. Use the sentinel property for sorting (empty dates sort to end instead of beginning)
+4. Use in report filters to distinguish "never happened" from "happened in the past"
+
+## Pattern: Regulatory Compliance Flag + Section Gating
+
+For regulatory overlays (DORA, SOX, GDPR) that add fields to existing objects:
+
+1. Add a **flag property** (Pick List Yes/No) to each affected object — e.g., `[DORA?]`
+2. Add **Section Header** properties named after regulatory sections — e.g., `DORA (RT.05.01)`
+3. Set conditional display on all Section Headers: show when `[DORA?] = "Yes"`
+4. Add regulatory-specific properties below each Section Header
+5. Properties inherit the visual grouping of their Section Header
+6. Result: Non-regulated records show clean, standard forms; regulated records show additional compliance sections
+
+This pattern keeps the base object clean while allowing regulatory modules to be toggled on/off per record.

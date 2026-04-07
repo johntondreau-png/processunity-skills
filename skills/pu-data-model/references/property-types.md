@@ -139,12 +139,144 @@ When creating properties in the PU admin UI, use these exact strings in the Prop
 - Choose a team → `Team – Select One` / `Select Many`
 - Link to other records → `Object - Select One` / `Select Many` (or `Vendor` / `Reference Data` types)
 
+## Conditional Display / Conditional Edit
+
+Properties can be shown/hidden or made editable/read-only based on the value of another property. This is configured via **View Access** and **Edit Access** tabs.
+
+**ConditionalDisplayProperty / ConditionalDisplayValue** — The property appears on the form only when the condition is met.
+**ConditionalEditProperty / ConditionalEditValue** — The property is editable only when the condition is met (otherwise read-only).
+
+### Common Conditional Display Patterns
+
+**State-gating**: Show fields only after a workflow milestone
+- Show scoring fields when `[Questionnaire Submitted?] = "Yes"`
+- Show cancellation details when `[Status] = "X. Cancelled"`
+- Show deactivation fields when `[Service Status] = "B - Inactive"`
+
+**Scope-type filtering**: Show fields relevant to the current mode
+- Show questionnaire fields when `[Scope Type] = "Questionnaire"`
+- Show DORA fields when `[DORA?] = "Yes"`
+
+**Multi-value matching**: Use pipe `|` for OR conditions
+- Show field when `[Status] = "2. Under Review|C. Complete|X. Cancelled"`
+- Edit field when `[State] = "In Process|Planned"`
+
+**Polymorphic objects**: Reference Data uses conditional display to behave like multiple object types
+- Show country fields when `[Type] = "Country"`
+- Show workflow fields when `[Type] = "Assessment Workflow Type"`
+
+**Role-based progressive disclosure**: Show contact-type vs system-type fields
+- Show vendor contact fields when `[Vendor Contact] = "Yes"`
+- Show system access fields when `[System Access] = "Yes"`
+
+## Auto Update Rules
+
+Auto Update Rules set property values automatically when conditions are met. Two event types:
+
+### ValueChange
+Fires when any of the watched fields change. The **AutoUpdateExpression** lists the fields to watch (pipe-delimited). The **AutoUpdateValue** is the expression that computes the new value.
+
+**Pattern: Composite Name Generation**
+- Watch: `[Request ID]+"|"+[Requester]+"|"+[Vendor Name]+"|"+[Request Date]`
+- Value: `[Vendor Name] + " - " + [Assessment Type] + " - " + TOSTRING([Start Date], "MMM yyyy")`
+
+**Pattern: Cascading Field from Aggregate**
+- Watch: `[Primary Contact Agg]` (an aggregate lookup from child records)
+- Value: `[Primary Contact Agg]` (copies the aggregate value into a regular field)
+
+**Pattern: Date Math on Trigger**
+- Watch: `[Last Completed Assessment Date]`
+- Value: `DAYSADD([Last Completed Assessment Date], [Assessment Frequency (Days)])`
+
+### Conditional
+Fires when a condition expression evaluates to true. The **AutoUpdateExpression** is the boolean condition. The **AutoUpdateValue** is set once when the condition first becomes true.
+
+**Pattern: Timestamp Capture**
+- Condition: `[Assessment Sent Date] != ""`
+- Value: `TIMESTAMP()`
+- Captures the exact moment a milestone is reached.
+
+**Pattern: User Capture ([Me])**
+- Condition: `[Assessment Submitted Date] != "" AND [Submit By] = ""`
+- Value: `[Me]`
+- Records who performed the action. The `AND [field] = ""` prevents overwriting (one-time capture).
+
+**Pattern: Snapshot at Completion**
+- Condition: `[Completion Date] != ""`
+- Value: `[# Issues (Active/Open)]`
+- Freezes a point-in-time count when an assessment completes.
+
+**Pattern: Boolean Flag Toggle**
+- Condition: `[DORA Identification Code] != ""`
+- Value: `"Yes"`
+- Auto-sets a flag when a related field is populated.
+
+**Pattern: State Machine**
+- Condition: Watches multiple date fields via ValueChange
+- Value: Multi-branch CASE expression that derives status from which dates are populated
+- Example: Status progresses from "Prepare to Send" → "With Respondent" → "Analyst Review" → "Completed" based on sent/submitted/completion dates.
+
+## Color Coding Reference
+
+### Standard Color Palette
+
+| Hex | Usage | Context |
+|-----|-------|---------|
+| `#AE312E` | Critical / Very Weak / Red | Risk severity, failing scores |
+| `#d05656` | Very Weak (lighter red) | Risk index ratings |
+| `#F88438` | High / Orange | Second-tier risk |
+| `#F7CF47` | Medium / Yellow | Moderate risk |
+| `#f3e896` | Fair (light yellow) | Risk index ratings |
+| `#F5E33A` | Yellow / Moderate | Score thresholds |
+| `#85d581` | Strong (light green) | Good risk posture |
+| `#B5D551` | Good / Active | Active status, populated dates |
+| `#388E46` | Very Strong / Dark green | Excellent scores |
+| `#64B150` | Very Strong green | Top-tier rating |
+| `#008000` | Excellent | Score >= 90% |
+| `#F3F3F3` | Cancelled / Grey | Inactive records |
+| `#2C4D7F` | Advanced / Navy | BitSight top tier |
+
+### Common Color Expression Patterns
+
+**Text Rating (5-tier):**
+```
+CASEX([Value], "Very Weak","#d05656", "Weak","#fabd78", "Fair","#f3e896", "Strong","#85d581", "Very Strong","#64B150","")
+```
+
+**Numeric Score (5-tier):**
+```
+CASE([Value]>=80,"#388E46", [Value]>=70,"#85d581", [Value]>=60,"#f3e896", [Value]>=50,"#fabd78", [Value]>=0,"#d05656","")
+```
+
+**Percentage Score (4-tier):**
+```
+CASE([Value]>=90,"#008000", [Value]>=70,"#F5E33A", [Value]>=50,"#F88438", "#AE312E")
+```
+
+**Status Code by Prefix:**
+```
+CASEX(LEFT([Value],1), "1","#AE312E", "2","#F88438", "3","#F7CF47", "4","#66A515", "")
+```
+
+**Non-Zero Alert:**
+```
+IF([Value]="0", "", "#F7CF47")
+```
+
+**Populated/Empty Indicator:**
+```
+IF(!ISNULL([Value]), "#B5D551", "")
+```
+
 ## Best Practices for Property Design
 
 - Use Section Headers generously to organize the Details tab — it dramatically improves user adoption
 - Prefer Reference Data properties over static pick lists when values are shared across objects or may change
 - Use calculated properties for derived values rather than relying on users to compute them
-- Enable Track Changes sparingly (there's a per-object limit) — focus on critical fields
+- Enable Track Changes sparingly (there's a per-object limit of 50) — focus on critical fields
 - Write clear Tooltips explaining what each property means and how it should be used
 - Use Auto Update Rules to reduce manual data entry and ensure consistency
 - Use Validation Rules to catch data quality issues at the point of entry
+- Use Conditional Display to progressively disclose fields — hide complexity until it's relevant
+- Use the "External ID shadow" pattern for Reference Data relationships: create a hidden Text - Aggregate companion that stores the lookup code, so reports can output the code directly
+- Keep aggregate property count under 50 per object (hard limit) — plan carefully
