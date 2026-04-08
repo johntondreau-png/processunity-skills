@@ -409,31 +409,112 @@ The `DORA?` flag on a Vendor record should conditionally show the DORA sections 
 | Dashboard reports | `DASH: DORA {Subject}` | DASH: DORA Vendors |
 | Validators | `VALIDATOR - DORA` | On each DORA object |
 
+## Phase 5: Buttons and Workflow Actions
+
+Build 9 buttons that power the DORA data entry workflow. Each uses ProcessUnity's Workflow Action (WFA) system — paired reports that gather context data and create/update records on target objects.
+
+**See `references/buttons-and-workflows.md` for detailed WFA report chains.**
+
+### Button Build Order
+
+Build buttons AFTER properties and reports are in place (buttons reference WF reports + properties).
+
+| # | Object | Button Name | Gated By | What It Does |
+|---|--------|-------------|----------|-------------|
+| 1 | Agreement | Update and Relate Service | DORA? + VALIDATOR | Links Vendor Service to Agreement via "DORA Linked Service(s)" |
+| 2 | Agreement | Relate Legal Entity to Agreement | DORA? | Links Legal Entity to Agreement |
+| 3 | Legal Entity | Create Legal Entity Contract | — (system) | Creates Legal Entity Contract child record |
+| 4 | Questionnaire Response | Complete Fourth Party Review | Question ID + VALIDATOR-FP | Creates Fourth Party + Ref Data from questionnaire |
+| 5 | Vendor | Create New Fourth Party | — | Creates new Fourth Party + Reference Data |
+| 6 | Vendor | Relate Existing Fourth Party to Vendor | — | Links existing Fourth Party to Vendor |
+| 7 | Vendor | Relate Vendor to Legal Entity | DORA? | Links Legal Entity to Vendor |
+| 8 | Vendor Service | Create Service Add On | — | Creates Service Add On child record |
+| 9 | Vendor Service | Relate Fourth Party to Vendor Service | — | Links Fourth Party to Vendor Service |
+
+### WFA Technical Pattern
+
+Each button requires:
+1. **Data-gather WF report** — `EnableWFAContext=Yes`, role restricted to "Only Me", defines columns to collect
+2. **Import target WF report** — no WFA flags, no role restrictions, defines target object for record creation
+3. **Button property** — Custom Button type, with conditional display (DORA?) and conditional enable (VALIDATOR)
+
+Reports come in **paired oids** — same name appears twice with different configs. Buttons do NOT use standalone import templates; the 8 "DORA IMPORT" templates are separate bulk-load utilities.
+
+### Workflow Reports Required (11 total)
+
+| Report Name | Object | Serves Button |
+|-------------|--------|--------------|
+| BTN: AGREEMENT: 01. Link Service to Agreement | Agreement / Vendor Service | #1 |
+| BTN: AGREEMENT: 01. Relate Agreement to Legal Entity | Agreement | #2 |
+| BTN: AGREEMENT: 02. Legal Entity Information | Agreement | #2 |
+| BTN: AGREEMENT: SERVICE: 03. Relate Service to Agreement | Agreement | #1 |
+| BTN: QR: Create Fourth Party Record | QR / Fourth Party | #4 |
+| BTN: QR: Create Ref data | QR / Ref Data | #4 |
+| BTN: SERVICE: SAO: 1. Create Service Add On | Service Add On | #8 |
+| BTN: VENDOR: Create Fourth Party Record | Vendor / Fourth Party | #5 |
+| BTN: VENDOR: Create Fourth Party Reference Data | Vendor / Ref Data | #5 |
+| BTN: VENDOR: Relate Existing Fourth Party to Vendor | Vendor / Fourth Party | #6 |
+| BTN: VENDOR SERVICE: 01. Relate Fourth Party to Vendor Service | VS / Fourth Party | #9 |
+
+## Property Count Reconciliation
+
+Counts from the cwiedersheim reference implementation vs STAR sizing document:
+
+| Object | Reference Impl | STAR Target | Delta | Notes |
+|--------|---------------|-------------|-------|-------|
+| Vendor | 32 | 41 | -9 | Gap: additional workflow helpers |
+| Vendor Service | 27 | 30 | -3 | Gap: RT.05.02 aggregates |
+| Service Add On | 23 | 30 | -7 | Gap: additional RT.02.02 variants |
+| Agreement | 36 | 45 | -9 | Gap: RT.03/RT.04 export calcs |
+| Fourth Party | 10 | 12 | -2 | Gap: RT.05.01 mirror fields |
+| Legal Entity | **30** | **30** | **0** | MATCH |
+| Legal Entity Contract | 6 | 7 | -1 | 1 additional helper |
+| CIF | 19 | 18 | +1 | Exceeds target |
+| Reference Data | 3 | 2 | +1 | Exceeds target |
+| Questionnaire Response | 8 | 9 | -1 | 1 additional workflow field |
+| **TOTAL** | **194** | **224** | **-30** | Gaps are mostly export-only calcs |
+
+**See `references/property-inventory.md` for the complete per-object property listing.**
+
+The -30 delta represents properties the STAR scoped but the reference instance omitted — many are export-only calculated fields that exist as report column formulas rather than stored properties, or planned properties for future regulatory updates.
+
 ## Implementation Checklist
 
 - [ ] System settings verified (Agreements, Fourth Parties, Custom Objects enabled)
 - [ ] Custom Object One renamed to "Legal Entity"
 - [ ] Custom Object Three renamed to "CIF"
 - [ ] All DORA reference data types loaded with EBA codes in External ID
-- [ ] Legal Entity properties configured (RT.01.01, 01.02, 01.03)
-- [ ] CIF properties configured (RT.06.01)
-- [ ] Vendor properties configured (RT.05.01)
-- [ ] Vendor Service properties configured (RT.02.02, RT.07.01)
-- [ ] Service Add On properties configured (RT.02.02 detail)
-- [ ] Agreement properties configured (RT.02.01, RT.02.02, RT.03.03)
-- [ ] Legal Entity Contract properties configured (RT.02.03)
-- [ ] Fourth Party properties configured (RT.05.02)
+- [ ] Legal Entity properties configured (RT.01.01, 01.02, 01.03) — 30 props
+- [ ] CIF properties configured (RT.06.01) — 19 props
+- [ ] Vendor properties configured (RT.05.01, RT.02.02, RT.05.02) — 32 props
+- [ ] Vendor Service properties configured (RT.02.02, RT.05.02, RT.07.01) — 27 props
+- [ ] Service Add On properties configured (RT.02.02 detail) — 23 props
+- [ ] Agreement properties configured (RT.02.01, RT.02.02, RT.03.02, RT.03.03) — 36 props
+- [ ] Legal Entity Contract properties configured (RT.02.03) — 6 props
+- [ ] Fourth Party properties configured (RT.05.02, RT.05.01 mirror) — 10 props
+- [ ] Questionnaire Response Fourth Party workflow configured — 8 props
+- [ ] Reference Data concentration risk properties configured — 3 props
 - [ ] All object relationships verified (see Key Relationships table)
 - [ ] External ID shadow aggregates created and hidden
 - [ ] DORA? flag with conditional display on all Section Headers
-- [ ] Import reports built and tested (numbered sequence)
-- [ ] EXCEL export reports built (one per RTS template)
+- [ ] VALIDATOR - DORA calculated fields created on all objects
+- [ ] Workflow reports built (11 BTN: reports)
+- [ ] Buttons created and wired (9 buttons)
+- [ ] Import templates built and tested (8 DORA IMPORT reports, numbered sequence)
+- [ ] EXCEL export reports built (14 EXCEL_DORA_RT reports)
+- [ ] Operational/navigation reports built (DORA - A through G)
 - [ ] Dashboard reports and dashboard created
 - [ ] Sample data loaded and validated
 - [ ] Export reports produce correct EBA-coded output
 
-## Reference Skills
+## Reference Files
 
+### In this skill
+- **`references/property-inventory.md`** — Complete per-object property listing with types and notes
+- **`references/buttons-and-workflows.md`** — Detailed WFA report chains for all 9 buttons
+- **`manifests/dora-formulas.json`** — 75 calculated/aggregate field expressions (VALIDATOR patterns, External ID shadows, date sentinels)
+
+### Supporting skills
 - **pu-data-model** — Object types, property types, relationships, aggregate codes, platform limits
 - **pu-config-designer** — Configuration patterns, conditional display, auto-update rules, color coding
 - **pu-admin-navigator** — Browser automation for creating properties, reports, and navigating admin UI

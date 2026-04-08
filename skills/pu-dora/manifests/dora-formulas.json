@@ -1,0 +1,1341 @@
+{
+  "_meta": {
+    "source": "cwiedersheim_Metadata_Properties.csv",
+    "description": "DORA-relevant Calculated and Aggregate field formulas extracted from cwiedersheim ProcessUnity metadata",
+    "generatedAt": "2026-04-07",
+    "totalEntries": 75,
+    "objectCounts": {
+      "Agreement": 13,
+      "CIF": 6,
+      "Fourth Party": 4,
+      "Legal Entity": 8,
+      "Legal Entity Contract": 3,
+      "Questionnaire Response": 2,
+      "Reference Data": 2,
+      "Service Add On": 11,
+      "Vendor": 14,
+      "Vendor Service": 12
+    },
+    "validatorCount": 9,
+    "validatorObjects": [
+      {
+        "object": "Agreement",
+        "property": "VALIDATOR - DORA",
+        "expressionLength": 506
+      },
+      {
+        "object": "CIF",
+        "property": "VALIDATOR - DORA",
+        "expressionLength": 228
+      },
+      {
+        "object": "Fourth Party",
+        "property": "VALIDATOR - DORA",
+        "expressionLength": 154
+      },
+      {
+        "object": "Legal Entity",
+        "property": "VALIDATOR - DORA",
+        "expressionLength": 247
+      },
+      {
+        "object": "Legal Entity Contract",
+        "property": "VALIDATOR - DORA",
+        "expressionLength": 304
+      },
+      {
+        "object": "Questionnaire Response",
+        "property": "VALIDATOR - Fourth Party Review",
+        "expressionLength": 941
+      },
+      {
+        "object": "Service Add On",
+        "property": "VALIDATOR - DORA",
+        "expressionLength": 511
+      },
+      {
+        "object": "Vendor",
+        "property": "VALIDATOR - DORA",
+        "expressionLength": 138
+      },
+      {
+        "object": "Vendor Service",
+        "property": "VALIDATOR - DORA",
+        "expressionLength": 107
+      }
+    ],
+    "typeCounts": {
+      "Date - Calculated": 4,
+      "Text - Aggregate": 49,
+      "Text - Calculated": 22
+    }
+  },
+  "formulas": [
+    {
+      "object": "Agreement",
+      "property": "(DORA_02.01.0020) - Type of contractual arrangement - ExternalId",
+      "displayName": "(DORA_02.01.0020) - Type of contractual arrangement - ExternalId",
+      "type": "Text - Aggregate",
+      "customPropertyId": "102835",
+      "externalId": "cwiedersheim.102835",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_02.01.0020) - Type of contractual arrangement",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Agreement",
+      "property": "(DORA_02.01.0030) - Overarching contractual arrangement reference number - External ID",
+      "displayName": "(DORA_02.01.0030) - Overarching contractual arrangement reference number - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "102837",
+      "externalId": "cwiedersheim.102837",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_02.01.0030) - Overarching contractual arrangement reference number",
+        "type": "5",
+        "propertyId": "103162",
+        "sourceProperty": "(DORA_02.01.0010) - Contractual arrangement reference number",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Agreement",
+      "property": "(DORA_02.01.0040) - Currency of the amount reported in B.02.01.0050 - ExternalId",
+      "displayName": "(DORA_02.01.0040) - Currency of the amount reported in B.02.01.0050 - ExternalId",
+      "type": "Text - Aggregate",
+      "customPropertyId": "102839",
+      "externalId": "cwiedersheim.102839",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_02.01.0040) - Currency of the amount reported in B.02.01.0050",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Agreement",
+      "property": "(DORA_02.02.0010) - Contractual arrangement reference number",
+      "displayName": "(DORA_02.02.0010) - Contractual arrangement reference number",
+      "type": "Text - Calculated",
+      "customPropertyId": "102841",
+      "externalId": "cwiedersheim.102841",
+      "expression": "[(DORA_02.01.0010) - Contractual arrangement reference number]",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "Agreement",
+      "property": "(DORA_02.02.0070) - Start date of the contractual arrangement",
+      "displayName": "(DORA_02.02.0070) - Start date of the contractual arrangement",
+      "type": "Date - Calculated",
+      "customPropertyId": "102860",
+      "externalId": "cwiedersheim.102860",
+      "expression": "[Start of Agreement Date]",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "Agreement",
+      "property": "(DORA_02.02.0080) - End date of the contractual arrangement",
+      "displayName": "(DORA_02.02.0080) - End date of the contractual arrangement",
+      "type": "Text - Calculated",
+      "customPropertyId": "102864",
+      "externalId": "cwiedersheim.102864",
+      "expression": "IF([Indefinite Agreement?]!=\"No\",[End of Agreement Date],\"9999-12-31\")",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "Agreement",
+      "property": "(DORA_02.02.0090) - Reason of the termination or ending of the contractual arrangement - External ID",
+      "displayName": "(DORA_02.02.0090) - Reason of the termination or ending of the contractual arrangement - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "102866",
+      "externalId": "cwiedersheim.102866",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_02.02.0090) - Reason of the termination or ending of the contractual arrangement",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Agreement",
+      "property": "(DORA_03.02.0010) - Contractual arrangement reference number",
+      "displayName": "(DORA_03.02.0010) - Contractual arrangement reference number",
+      "type": "Text - Calculated",
+      "customPropertyId": "102875",
+      "externalId": "cwiedersheim.102875",
+      "expression": "[(DORA_02.01.0010) - Contractual arrangement reference number]",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "Agreement",
+      "property": "(DORA_03.02.0020) - Identification code of ICT third-party service provider",
+      "displayName": "(DORA_03.02.0020) - Identification code of ICT third-party service provider",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103143",
+      "externalId": "cwiedersheim.103143",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "Vendor",
+        "type": "5",
+        "propertyId": "102894",
+        "sourceProperty": "(DORA_05.01.0010) - Identification code of third-party service provider",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Agreement",
+      "property": "(DORA_03.02.0030) - Type of code to identify the ICT third-party service provider",
+      "displayName": "(DORA_03.02.0030) - Type of code to identify the ICT third-party service provider",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103145",
+      "externalId": "cwiedersheim.103145",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "Vendor",
+        "type": "5",
+        "propertyId": "102915",
+        "sourceProperty": "(DORA_05.01.0020) - Type of code of the third-party service provider",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Agreement",
+      "property": "(DORA_03.02.0030) - Type of code to identify the ICT third-party service provider - External ID",
+      "displayName": "(DORA_03.02.0030) - Type of code to identify the ICT third-party service provider - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103144",
+      "externalId": "cwiedersheim.103144",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "Vendor",
+        "type": "5",
+        "propertyId": "102921",
+        "sourceProperty": "(DORA_05.01.0020) - Type of code of the third-party service provider - External ID",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Agreement",
+      "property": "Legal Entities using Agreement + Branch \"|\"",
+      "displayName": "Legal Entities using Agreement + Branch \"|\"",
+      "type": "Text - Calculated",
+      "customPropertyId": "103080",
+      "externalId": "cwiedersheim.103080",
+      "expression": "REPLACE([Decision],\";\",\"|\")",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "Agreement",
+      "property": "VALIDATOR - DORA",
+      "displayName": "VALIDATOR - DORA",
+      "type": "Text - Calculated",
+      "customPropertyId": "103164",
+      "externalId": "cwiedersheim.103164",
+      "expression": "IF([DORA Linked Service(s)]=\"\",\"❌ DORA Linked Service(s) is required for DORA compliance.\"+CRLF(),\"\")+\n\nIF([(DORA_02.01.0010) - Contractual arrangement reference number]=\"\",\"❌ 02.01.0010 is required for DORA compliance.\"+CRLF(),\"\")+\n\nIF([(DORA_03.02.0010) - Contractual arrangement reference number]=\"\",\"❌ 03.02.0010 is required for DORA compliance.\"+CRLF(),\"\")+\n\nIF([(DORA_03.02.0020) - Identification code of ICT third-party service provider]=\"\",\"❌ 03.02.0020 is required for DORA compliance.\"+CRLF(),\"\")",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "CIF",
+      "property": "(DORA_06.01.0020) - Licenced activity - External ID",
+      "displayName": "(DORA_06.01.0020) - Licenced activity - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103086",
+      "externalId": "cwiedersheim.103086",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_06.01.0020) - Licensed Activity",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "CIF",
+      "property": "(DORA_06.01.0040) - LEI of the financial entity - External ID",
+      "displayName": "(DORA_06.01.0040) - LEI of the financial entity - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103087",
+      "externalId": "cwiedersheim.103087",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_06.01.0040) - LEI of the financial entity",
+        "type": "5",
+        "propertyId": "102822",
+        "sourceProperty": "(DORA_01.02.0010) - LEI of the entity",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "CIF",
+      "property": "(DORA_06.01.0050) - Criticality or importance assessment - External ID",
+      "displayName": "(DORA_06.01.0050) - Criticality or importance assessment - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103090",
+      "externalId": "cwiedersheim.103090",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_06.01.0050) - Criticality or importance assessment",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "CIF",
+      "property": "(DORA_06.01.0070) - Date of the last assessment of criticality or importance - BLANK DATE",
+      "displayName": "(DORA_06.01.0070) - Date of the last assessment of criticality or importance - BLANK DATE",
+      "type": "Date - Calculated",
+      "customPropertyId": "103091",
+      "externalId": "cwiedersheim.103091",
+      "expression": "IF([(DORA_06.01.0070) - Date of the last assessment of criticality or importance]=\"\",\"9999-12-31\",[(DORA_06.01.0070) - Date of the last assessment of criticality or importance])",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "CIF",
+      "property": "(DORA_06.01.0100) - Impact of discontinuing the function - External ID",
+      "displayName": "(DORA_06.01.0100) - Impact of discontinuing the function - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103093",
+      "externalId": "cwiedersheim.103093",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_06.01.0100) - Impact of discontinuing the function",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "CIF",
+      "property": "VALIDATOR - DORA",
+      "displayName": "VALIDATOR - DORA",
+      "type": "Text - Calculated",
+      "customPropertyId": "103165",
+      "externalId": "cwiedersheim.103165",
+      "expression": "IF([(DORA_06.01.0010) - Function Identifier]=\"\",\"❌ DORA_06.01.0010 is required for DORA compliance.\"+CRLF(),\"\")+\n\nIF([(DORA_06.01.0040) - LEI of the financial entity]=\"\",\"❌ 06.01.0040 is required for DORA compliance.\"+CRLF(),\"\")",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "Fourth Party",
+      "property": "(DORA_05.01.0010) - Vendor ID Code",
+      "displayName": "(DORA_05.01.0010) - Vendor ID Code",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103136",
+      "externalId": "cwiedersheim.103136",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "Vendors (Vendor Fourth Party)",
+        "type": "5",
+        "propertyId": "102894",
+        "sourceProperty": "(DORA_05.01.0010) - Identification code of third-party service provider",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Fourth Party",
+      "property": "(DORA_05.01.0020) - Vendor Code Type",
+      "displayName": "(DORA_05.01.0020) - Vendor Code Type",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103140",
+      "externalId": "cwiedersheim.103140",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "Select Vendor",
+        "type": "5",
+        "propertyId": "102915",
+        "sourceProperty": "(DORA_05.01.0020) - Type of code of the third-party service provider",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Fourth Party",
+      "property": "(DORA_05.02.0070) - Type of code to identify the recipient of sub-contracted ICT services - External ID",
+      "displayName": "(DORA_05.02.0070) - Type of code to identify the recipient of sub-contracted ICT services - External ID",
+      "type": "Text - Calculated",
+      "customPropertyId": "103141",
+      "externalId": "cwiedersheim.103141",
+      "expression": "CASE(\n[(DORA_05.02.0070) - Type of code to identify the recipient of sub-contracted ICT services]=\"\", \"\",\n[(DORA_05.02.0070) - Type of code to identify the recipient of sub-contracted ICT services]= \"Legal Entity Identfier (LEI)\", \"eba_qCO:qx2000\",\n[(DORA_05.02.0070) - Type of code to identify the recipient of sub-contracted ICT services]= \"European Unified ID (EUID)\", \"eba_qCO:qx2002\",\n[(DORA_05.02.0070) - Type of code to identify the recipient of sub-contracted ICT services]= \"National code\", \"eba_qCO:qx2001\",\n[(DORA_05.02.0070) - Type of code to identify the recipient of sub-contracted ICT services]= \"Company registration number (CRN)\", \"eba_qCO:qx2003\",\n[(DORA_05.02.0070) - Type of code to identify the recipient of sub-contracted ICT services]= \"Value added tax identification number (VAT)\", \"eba_qCO:qx2004\",\n[(DORA_05.02.0070) - Type of code to identify the recipient of sub-contracted ICT services]= \"Passport Number\", \"eba_qCO:qx2005\", \"Error\"\n \n)",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "Fourth Party",
+      "property": "VALIDATOR - DORA",
+      "displayName": "VALIDATOR - DORA",
+      "type": "Text - Calculated",
+      "customPropertyId": "103182",
+      "externalId": "cwiedersheim.103182",
+      "expression": "IF([(DORA_05.02.0060) - Identification code of the recipient of sub-contracted ICT services]=\"\",\"❌ 05.02.0060 is required for DORA compliance.\"+CRLF(),\"\")",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "Legal Entity",
+      "property": "(DORA_01.02.0020) - Name of the entity",
+      "displayName": "(DORA_01.02.0020) - Name of the entity",
+      "type": "Text - Calculated",
+      "customPropertyId": "102809",
+      "externalId": "cwiedersheim.102809",
+      "expression": "[Name]",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "Legal Entity",
+      "property": "(DORA_01.02.0030) - Country of the entity - External ID",
+      "displayName": "(DORA_01.02.0030) - Country of the entity - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "102811",
+      "externalId": "cwiedersheim.102811",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_01.02.0030) - Country of the entity",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Legal Entity",
+      "property": "(DORA_01.02.0040) - Type of Entity - External ID",
+      "displayName": "(DORA_01.02.0040) - Type of Entity - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "102823",
+      "externalId": "cwiedersheim.102823",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_01.02.0040) - Type of Entity",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Legal Entity",
+      "property": "(DORA_01.02.0050) - Hierarchy of the entity within the group (where applicable) - External ID",
+      "displayName": "(DORA_01.02.0050) - Hierarchy of the entity within the group (where applicable) - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "102814",
+      "externalId": "cwiedersheim.102814",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_01.02.0030) - Country of the entity",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Legal Entity",
+      "property": "(DORA_01.02.0090) - Date of deletion in the Register of information - BLANK DATE",
+      "displayName": "(DORA_01.02.0090) - Date of deletion in the Register of information - BLANK DATE",
+      "type": "Date - Calculated",
+      "customPropertyId": "103076",
+      "externalId": "cwiedersheim.103076",
+      "expression": "IF([(DORA_01.02.0090) - Date of deletion in the Register of information]=\"\",\"9999-12-31\",[(DORA_01.02.0090) - Date of deletion in the Register of information])",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "Legal Entity",
+      "property": "(DORA_01.02.0100) - Currency External ID",
+      "displayName": "(DORA_01.02.0100) - Currency External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "102820",
+      "externalId": "cwiedersheim.102820",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_01.02.0100) - Currency",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Legal Entity",
+      "property": "(DORA_01.03.0040) - Country of the branch - External ID",
+      "displayName": "(DORA_01.03.0040) - Country of the branch - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103046",
+      "externalId": "cwiedersheim.103046",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_01.03.0040) - Country of the branch",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Legal Entity",
+      "property": "VALIDATOR - DORA",
+      "displayName": "VALIDATOR - DORA",
+      "type": "Text - Calculated",
+      "customPropertyId": "103166",
+      "externalId": "cwiedersheim.103166",
+      "expression": "IF([(DORA_01.02.0010) - LEI of the entity]=\"\",\"❌ 01.02.0010 is required for DORA compliance.\"+CRLF(),\"\")+\n\nIF([Branch?]=\"Yes\" AND [(DORA_01.03.0010) - Identification code of the branch]=\"\",\"❌ 01.03.0010 is required for DORA compliance.\"+CRLF(),\"\")",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "Legal Entity Contract",
+      "property": "(DORA_02.03.0010) - Contractual arrangement reference number - External ID",
+      "displayName": "(DORA_02.03.0010) - Contractual arrangement reference number - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103102",
+      "externalId": "cwiedersheim.103102",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_02.03.0010) - Contractual arrangement reference number",
+        "type": "5",
+        "propertyId": "103162",
+        "sourceProperty": "(DORA_02.01.0010) - Contractual arrangement reference number",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Legal Entity Contract",
+      "property": "(DORA_02.03.0020) - Contractual arrangement linked to the contractual arrangement referred in RT.02.03.0010 - External ID",
+      "displayName": "(DORA_02.03.0020) - Contractual arrangement linked to the contractual arrangement referred in RT.02.03.0010 - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103104",
+      "externalId": "cwiedersheim.103104",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_02.03.0020) - Contractual arrangement linked to the contractual arrangement referred in RT.02.03.0010",
+        "type": "5",
+        "propertyId": "103162",
+        "sourceProperty": "(DORA_02.01.0010) - Contractual arrangement reference number",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Legal Entity Contract",
+      "property": "VALIDATOR - DORA",
+      "displayName": "VALIDATOR - DORA",
+      "type": "Text - Calculated",
+      "customPropertyId": "103167",
+      "externalId": "cwiedersheim.103167",
+      "expression": "IF([(DORA_02.03.0010) - Contractual arrangement reference number]=\"\",\"❌ 02.03.0010 is required for DORA compliance.\"+CRLF(),\"\")+\n\nIF([(DORA_02.03.0020) - Contractual arrangement linked to the contractual arrangement referred in RT.02.03.0010]=\"\",\"❌ 02.03.0020 is required for DORA compliance.\"+CRLF(),\"\")",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "Questionnaire Response",
+      "property": "Selected Vendor Fourth Party Id",
+      "displayName": "Selected Vendor Fourth Party Id",
+      "type": "Text - Aggregate",
+      "customPropertyId": "102991",
+      "externalId": "cwiedersheim.102991",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "Check if the Fourth Party Exists",
+        "type": "5",
+        "propertyId": "580",
+        "sourceProperty": "Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Questionnaire Response",
+      "property": "VALIDATOR - Fourth Party Review",
+      "displayName": "VALIDATOR - Fourth Party Review",
+      "type": "Text - Calculated",
+      "customPropertyId": "102993",
+      "externalId": "cwiedersheim.102993",
+      "expression": "IF([Fourth Party Disposition]=\"\", \"❌ Subcontractor Disposition\"+CRLF(),\"\")+\n\nIF([Check if the Fourth Party Exists]=\"*Not Found*\" AND LEFT([Fourth Party Disposition],2)=\"02\", \"❌ Select the correct Disposition.\"+CRLF(),\"\")+\n\nIF([Check if the Fourth Party Exists]!=\"*Not Found*\" AND LEFT([Fourth Party Disposition],2)=\"01\", \"❌ If you select an Existing Subcontractor, select the correct Disposition.\"+CRLF(),\"\")+\n\nIF(LEFT([Fourth Party Disposition],2)=\"01\" AND [Check if the Fourth Party relationship exists:]=\"\" AND [Please enter the standardized name of the Fourth Party to be created:]=\"\",\"❌ Please enter the standardized name of this Subcontractor.\"+CRLF(),\"\")+\n\nIF(LEFT([Fourth Party Disposition],2)=\"02\" AND [Check if the Fourth Party relationship exists:]!=\"\", \"❌ Select the correct Disposition.\"+CRLF(),\"\")+\n\nIF(LEFT([Fourth Party Disposition],2)=\"02\" AND [Selected Vendor Fourth Party Id]=\"\",\"❌ Select Subcontracted Entity.\"+CRLF(),\"\")",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "Reference Data",
+      "property": "Vendors whom Subcontract this Fourth Party",
+      "displayName": "Vendors whom Subcontract this Fourth Party",
+      "type": "Text - Calculated",
+      "customPropertyId": "103154",
+      "externalId": "cwiedersheim.103154",
+      "expression": "REPLACE([Vendors whom Subcontract this Fourth Party List],\";\",\" ,\")",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "Reference Data",
+      "property": "Vendors whom Subcontract this Fourth Party List",
+      "displayName": "Vendors whom Subcontract this Fourth Party List",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103012",
+      "externalId": "cwiedersheim.103012",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "Fourth Parties (Fourth Party Name)",
+        "type": "6",
+        "propertyId": "103020",
+        "sourceProperty": "Vendor",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Service Add On",
+      "property": "(DORA_02.02.0020) - LEI of the entity making use of the ICT service(s)",
+      "displayName": "(DORA_02.02.0020) - LEI of the entity making use of the ICT service(s)",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103159",
+      "externalId": "cwiedersheim.103159",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_02.02.0050) - Function Identifier",
+        "type": "5",
+        "propertyId": "103066",
+        "sourceProperty": "(DORA_06.01.0040) - LEI of the financial entity",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Service Add On",
+      "property": "(DORA_02.02.0020) - LEI of the entity making use of the ICT service(s) - External ID",
+      "displayName": "(DORA_02.02.0020) - LEI of the entity making use of the ICT service(s) - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103105",
+      "externalId": "cwiedersheim.103105",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_02.02.0050) - Function Identifier",
+        "type": "5",
+        "propertyId": "103087",
+        "sourceProperty": "(DORA_06.01.0040) - LEI of the financial entity - External ID",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Service Add On",
+      "property": "(DORA_02.02.0120) - Country of the governing law of the contractual arrangement - External ID",
+      "displayName": "(DORA_02.02.0120) - Country of the governing law of the contractual arrangement - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103096",
+      "externalId": "cwiedersheim.103096",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_02.02.0120) - Country of the governing law of the contractual arrangement",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Service Add On",
+      "property": "(DORA_02.02.0130) - Country of provision of the ICT services - External ID",
+      "displayName": "(DORA_02.02.0130) - Country of provision of the ICT services - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103053",
+      "externalId": "cwiedersheim.103053",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_02.02.0130) - Country of provision of the ICT services",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Service Add On",
+      "property": "(DORA_02.02.0140) - Storage of data - External ID",
+      "displayName": "(DORA_02.02.0140) - Storage of data - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103055",
+      "externalId": "cwiedersheim.103055",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_02.02.0140) - Storage of data",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Service Add On",
+      "property": "(DORA_02.02.0150) - Location of the data at rest (storage) - External ID",
+      "displayName": "(DORA_02.02.0150) - Location of the data at rest (storage) - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103057",
+      "externalId": "cwiedersheim.103057",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_02.02.0150) - Location of the data at rest (storage)",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Service Add On",
+      "property": "(DORA_02.02.0160) - Location of management of the data (processing) - External ID",
+      "displayName": "(DORA_02.02.0160) - Location of management of the data (processing) - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103059",
+      "externalId": "cwiedersheim.103059",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_02.02.0160) - Location of management of the data (processing)",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Service Add On",
+      "property": "(DORA_02.02.0170) - Sensitiveness of the data stored by the ICT third-party service provider - External ID",
+      "displayName": "(DORA_02.02.0170) - Sensitiveness of the data stored by the ICT third-party service provider - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103061",
+      "externalId": "cwiedersheim.103061",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_02.02.0170) - Sensitiveness of the data stored by the ICT third-party service provider",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Service Add On",
+      "property": "(DORA_02.02.180) - Level of reliance on the ICT service supporting the critical or important function - External ID",
+      "displayName": "(DORA_02.02.180) - Level of reliance on the ICT service supporting the critical or important function - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103063",
+      "externalId": "cwiedersheim.103063",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_02.02.180) - Level of reliance on the ICT service supporting the critical or important function",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Service Add On",
+      "property": "Branch ID",
+      "displayName": "Branch ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103083",
+      "externalId": "cwiedersheim.103083",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "Branch",
+        "type": "5",
+        "propertyId": "839",
+        "sourceProperty": "Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Service Add On",
+      "property": "VALIDATOR - DORA",
+      "displayName": "VALIDATOR - DORA",
+      "type": "Text - Calculated",
+      "customPropertyId": "103169",
+      "externalId": "cwiedersheim.103169",
+      "expression": "IF([(DORA_02.02.0020) - LEI of the entity making use of the ICT service(s)]=\"\",\"❌ 02.02.0020 is required for DORA compliance.\"+CRLF(),\"\")+\n\nIF([(DORA_02.02.0050) - Function Identifier]=\"\",\"❌ 02.02.0050 is required for DORA compliance.\"+CRLF(),\"\")+\n\nIF([(DORA_02.02.0150) - Location of the data at rest (storage)]=\"\",\"❌ 02.02.0150 is required for DORA compliance.\"+CRLF(),\"\")+\n\nIF([(DORA_02.02.0160) - Location of management of the data (processing)]=\"\",\"❌ 02.02.0160 is required for DORA compliance.\"+CRLF(),\"\")",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "Vendor",
+      "property": "(DORA_02.02.0030) - Identification code of the third-party service provider",
+      "displayName": "(DORA_02.02.0030) - Identification code of the third-party service provider",
+      "type": "Text - Calculated",
+      "customPropertyId": "102895",
+      "externalId": "cwiedersheim.102895",
+      "expression": "[(DORA_05.01.0010) - Identification code of third-party service provider]",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "Vendor",
+      "property": "(DORA_02.02.0040) - Type of code to identify the third-party service provider",
+      "displayName": "(DORA_02.02.0040) - Type of code to identify the third-party service provider",
+      "type": "Text - Calculated",
+      "customPropertyId": "102922",
+      "externalId": "cwiedersheim.102922",
+      "expression": "[(DORA_05.01.0020) - Type of code of the third-party service provider - External ID]",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "Vendor",
+      "property": "(DORA_05.01.0020) - Type of code of the third-party service provider - External ID",
+      "displayName": "(DORA_05.01.0020) - Type of code of the third-party service provider - External ID",
+      "type": "Text - Calculated",
+      "customPropertyId": "102921",
+      "externalId": "cwiedersheim.102921",
+      "expression": "CASE(\n[(DORA_05.01.0020) - Type of code of the third-party service provider]=\"\", \"\",\n[(DORA_05.01.0020) - Type of code of the third-party service provider]= \"Legal Entity Identifier (LEI)\", \"eba_qCO:qx2000\",\n[(DORA_05.01.0020) - Type of code of the third-party service provider]= \"European Unified ID (EUID)\", \"eba_qCO:qx2002\",\n[(DORA_05.01.0020) - Type of code of the third-party service provider]= \"National code\", \"eba_qCO:qx2001\",\n[(DORA_05.01.0020) - Type of code of the third-party service provider]= \"Company registration number (CRN)\", \"eba_qCO:qx2003\",\n[(DORA_05.01.0020) - Type of code of the third-party service provider]= \"Value added tax identification number (VAT)\", \"eba_qCO:qx2004\",\n[(DORA_05.01.0020) - Type of code of the third-party service provider]= \"Passport Number\", \"eba_qCO:qx2005\", \"Error\"\n\n)",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "Vendor",
+      "property": "(DORA_05.01.0040) - Type of additional identification code of the ICT third-party service provider - External ID",
+      "displayName": "(DORA_05.01.0040) - Type of additional identification code of the ICT third-party service provider - External ID",
+      "type": "Text - Calculated",
+      "customPropertyId": "103110",
+      "externalId": "cwiedersheim.103110",
+      "expression": "CASE(\n[(DORA_05.01.0040) - Type of additional identification code of the third-party service provider]=\"\", \"\",\n[(DORA_05.01.0040) - Type of additional identification code of the third-party service provider]= \"Legal Entity Identifier (LEI)\", \"eba_qCO:qx2000\",\n[(DORA_05.01.0040) - Type of additional identification code of the third-party service provider]= \"European Unified ID (EUID)\", \"eba_qCO:qx2002\",\n[(DORA_05.01.0040) - Type of additional identification code of the third-party service provider]= \"National code\", \"eba_qCO:qx2001\",\n[(DORA_05.01.0040) - Type of additional identification code of the third-party service provider]= \"Company registration number (CRN)\", \"eba_qCO:qx2003\",\n[(DORA_05.01.0040) - Type of additional identification code of the third-party service provider]= \"Value added tax identification number (VAT)\", \"eba_qCO:qx2004\",\n[(DORA_05.01.0040) - Type of additional identification code of the third-party service provider]= \"Passport Number\", \"eba_qCO:qx2005\", \n\n\"Error\"\n\n)",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "Vendor",
+      "property": "(DORA_05.01.0050) - Legal name of the third-party service provider",
+      "displayName": "(DORA_05.01.0050) - Legal name of the third-party service provider",
+      "type": "Text - Calculated",
+      "customPropertyId": "102897",
+      "externalId": "cwiedersheim.102897",
+      "expression": "[Vendor Name]",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "Vendor",
+      "property": "(DORA_05.01.0070) - Type of person of the third-party service provider - External ID",
+      "displayName": "(DORA_05.01.0070) - Type of person of the third-party service provider - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "102900",
+      "externalId": "cwiedersheim.102900",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_05.01.0070) - Type of person of the third-party service provider",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Vendor",
+      "property": "(DORA_05.01.0080) - Country of the ICT third-party service provider’s headquarters - External ID",
+      "displayName": "(DORA_05.01.0080) - Country of the ICT third-party service provider’s headquarters - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103151",
+      "externalId": "cwiedersheim.103151",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_05.01.0080) - Country of the third-party service provider’s headquarters",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Vendor",
+      "property": "(DORA_05.01.0090) - Currency of the amount reported in B.05.01.0100 - External ID",
+      "displayName": "(DORA_05.01.0090) - Currency of the amount reported in B.05.01.0100 - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "102902",
+      "externalId": "cwiedersheim.102902",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_05.01.0090) - Currency of the amount reported in B.05.01.0100",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Vendor",
+      "property": "(DORA_05.01.0110) - Identification code of the ICT third-party service provider’s ultimate parent undertaking - Agg",
+      "displayName": "(DORA_05.01.0110) - Identification code of the ICT third-party service provider’s ultimate parent undertaking - Agg",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103115",
+      "externalId": "cwiedersheim.103115",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_05.01.0110) - Identification code of the third-party service provider’s ultimate parent undertaking",
+        "type": "5",
+        "propertyId": "102894",
+        "sourceProperty": "(DORA_05.01.0010) - Identification code of third-party service provider",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Vendor",
+      "property": "(DORA_05.01.0120) - Type of code to identify the ICT third-party service provider’s ultimate parent undertaking - Agg",
+      "displayName": "(DORA_05.01.0120) - Type of code to identify the ICT third-party service provider’s ultimate parent undertaking - Agg",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103116",
+      "externalId": "cwiedersheim.103116",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_05.01.0110) - Identification code of the third-party service provider’s ultimate parent undertaking",
+        "type": "5",
+        "propertyId": "102915",
+        "sourceProperty": "(DORA_05.01.0020) - Type of code of the third-party service provider",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Vendor",
+      "property": "(DORA_05.01.0120) - Type of code to identify the ICT third-party service provider’s ultimate parent undertaking - Label",
+      "displayName": "(DORA_05.01.0120) - Type of code to identify the ICT third-party service provider’s ultimate parent undertaking - Label",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103117",
+      "externalId": "cwiedersheim.103117",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_05.01.0110) - Identification code of the third-party service provider’s ultimate parent undertaking",
+        "type": "5",
+        "propertyId": "102915",
+        "sourceProperty": "(DORA_05.01.0020) - Type of code of the third-party service provider",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Vendor",
+      "property": "(DORA_05.01.0120) - Type of code to identify the ICT third-party service provider’s ultimate parent undertaking - value",
+      "displayName": "(DORA_05.01.0120) - Type of code to identify the ICT third-party service provider’s ultimate parent undertaking - value",
+      "type": "Text - Calculated",
+      "customPropertyId": "103118",
+      "externalId": "cwiedersheim.103118",
+      "expression": "[(DORA_05.01.0120) - Type of code to identify the ICT third-party service provider’s ultimate parent undertaking - Agg]",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "Vendor",
+      "property": "Selected Vendor Fourth Party Id",
+      "displayName": "Selected Vendor Fourth Party Id",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103010",
+      "externalId": "cwiedersheim.103010",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "Check if the Fourth Party Exists",
+        "type": "5",
+        "propertyId": "580",
+        "sourceProperty": "Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Vendor",
+      "property": "VALIDATOR - DORA",
+      "displayName": "VALIDATOR - DORA",
+      "type": "Text - Calculated",
+      "customPropertyId": "103168",
+      "externalId": "cwiedersheim.103168",
+      "expression": "IF([(DORA_05.01.0010) - Identification code of third-party service provider]=\"\",\"❌ 05.01.0010 is required for DORA compliance.\"+CRLF(),\"\")",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "Vendor Service",
+      "property": "(DORA) - Third Party Name",
+      "displayName": "(DORA) - Third Party Name",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103172",
+      "externalId": "cwiedersheim.103172",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "Vendor (Parent)",
+        "type": "5",
+        "propertyId": "639",
+        "sourceProperty": "Vendor Name",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Vendor Service",
+      "property": "(DORA_02.02.0060) - Type of ICT services - External ID",
+      "displayName": "(DORA_02.02.0060) - Type of ICT services - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "102846",
+      "externalId": "cwiedersheim.102846",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_02.02.0060) - Type of ICT services",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Vendor Service",
+      "property": "(DORA_05.02.0010) - Contractual arrangement reference number",
+      "displayName": "(DORA_05.02.0010) - Contractual arrangement reference number",
+      "type": "Text - Aggregate",
+      "customPropertyId": "102931",
+      "externalId": "cwiedersheim.102931",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "Agreements (DORA Linked Service(s))",
+        "type": "5",
+        "propertyId": "102841",
+        "sourceProperty": "(DORA_02.02.0010) - Contractual arrangement reference number",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Vendor Service",
+      "property": "(DORA_07.01.0050) - Substitutability of the ICT third-party service provider - External ID",
+      "displayName": "(DORA_07.01.0050) - Substitutability of the ICT third-party service provider - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103120",
+      "externalId": "cwiedersheim.103120",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_07.01.0050) - Substitutability of the ICT third-party service provider",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Vendor Service",
+      "property": "(DORA_07.01.0060) - Reason if the ICT third-party service provider is considered not substitutable or difficult to be substitutable - External ID",
+      "displayName": "(DORA_07.01.0060) - Reason if the ICT third-party service provider is considered not substitutable or difficult to be substitutable - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103124",
+      "externalId": "cwiedersheim.103124",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_07.01.0060) - Reason if the ICT third-party service provider is considered not substitutable or difficult to be substitutable",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Vendor Service",
+      "property": "(DORA_07.01.0070) - Date of the last audit on the ICT third-party service provider - BLANK DATE",
+      "displayName": "(DORA_07.01.0070) - Date of the last audit on the ICT third-party service provider - BLANK DATE",
+      "type": "Date - Calculated",
+      "customPropertyId": "103125",
+      "externalId": "cwiedersheim.103125",
+      "expression": "IF([(DORA_07.01.0070) - Date of the last audit on the ICT third-party service provider]=\"\",\"9999-12-31\",[(DORA_07.01.0070) - Date of the last audit on the ICT third-party service provider])",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    },
+    {
+      "object": "Vendor Service",
+      "property": "(DORA_07.01.0080) - Existence of an exit plan - External ID",
+      "displayName": "(DORA_07.01.0080) - Existence of an exit plan - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103127",
+      "externalId": "cwiedersheim.103127",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_07.01.0080) - Existence of an exit plan",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Vendor Service",
+      "property": "(DORA_07.01.0090) - Possibility of reintegration of the contracted ICT service - External ID",
+      "displayName": "(DORA_07.01.0090) - Possibility of reintegration of the contracted ICT service - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103129",
+      "externalId": "cwiedersheim.103129",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_07.01.0090) - Possibility of reintegration of the contracted ICT service",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Vendor Service",
+      "property": "(DORA_07.01.0100) - Impact of discontinuing the ICT services - External ID",
+      "displayName": "(DORA_07.01.0100) - Impact of discontinuing the ICT services - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103131",
+      "externalId": "cwiedersheim.103131",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_07.01.0100) - Impact of discontinuing the ICT services",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Vendor Service",
+      "property": "(DORA_07.01.0110) - Are there alternative ICT third-party service providers identified? - External ID",
+      "displayName": "(DORA_07.01.0110) - Are there alternative ICT third-party service providers identified? - External ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103133",
+      "externalId": "cwiedersheim.103133",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "(DORA_07.01.0110) - Are there alternative ICT third-party service providers identified?",
+        "type": "5",
+        "propertyId": "579",
+        "sourceProperty": "External Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Vendor Service",
+      "property": "Selected Fourth Party ID",
+      "displayName": "Selected Fourth Party ID",
+      "type": "Text - Aggregate",
+      "customPropertyId": "103181",
+      "externalId": "cwiedersheim.103181",
+      "expression": null,
+      "autoUpdateExpression": null,
+      "aggregate": {
+        "itemType": "Select Fourth Party",
+        "type": "5",
+        "propertyId": "785",
+        "sourceProperty": "Id",
+        "dateProperty": null,
+        "filterProperty": null,
+        "filterValue": null,
+        "objectType": null
+      }
+    },
+    {
+      "object": "Vendor Service",
+      "property": "VALIDATOR - DORA",
+      "displayName": "VALIDATOR - DORA",
+      "type": "Text - Calculated",
+      "customPropertyId": "103184",
+      "externalId": "cwiedersheim.103184",
+      "expression": "IF([(DORA_02.02.0060) - Type of ICT services]=\"\",\"❌ 02.02.0060 is required for DORA compliance.\"+CRLF(),\"\")",
+      "autoUpdateExpression": null,
+      "aggregate": null
+    }
+  ]
+}
