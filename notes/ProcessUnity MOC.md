@@ -52,6 +52,9 @@ Deeper reference material lives in the `References` subfolder:
 - [[PU Ref - Create Report]] — Step-by-step UI guide for creating reports
 - [[PU Ref - Expression Standards]] — Syntax rules and patterns for PU expressions
 - [[PU Ref - UI Navigation]] — UI targeting strategy and common pitfalls
+- [[PU Ref - Function Library]] — Complete function reference: 63 functions with signatures, examples, and common patterns
+- [[PU Ref - Buttons and Workflow]] — Buttons, 11 workflow step types, Report Actions, BALI, External API connections
+- [[PU Ref - Automated Actions]] — Automated actions, notification rules, nightly job sequence, event types
 
 ## Quick Links
 

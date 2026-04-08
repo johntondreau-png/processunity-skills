@@ -103,6 +103,9 @@ Read these before performing specific tasks:
 - **`references/create-report.md`** — Step-by-step guide for creating custom reports.
 - **`references/ui-navigation.md`** — UI targeting strategy (3-tier), element anchors, focus recovery, and common pitfalls.
 - **`references/expression-standards.md`** — How to write expressions correctly (syntax rules, preferred patterns, functions).
+- **`references/function-library.md`** — Complete function reference: 63 functions (logical, text, number, date) with signatures, examples, gotchas, and common expression patterns.
+- **`references/buttons-and-workflow-steps.md`** — Buttons, Report Actions, Automated Actions, 11 workflow step types, BALI pattern, WFA report pairing, external API connections, button naming conventions.
+- **`references/automated-actions-and-notifications.md`** — Automated actions, notification rules, event types, nightly job sequence, recipient types, common automation patterns.
 
 ## Safe Operating Rules (ALWAYS follow)
 

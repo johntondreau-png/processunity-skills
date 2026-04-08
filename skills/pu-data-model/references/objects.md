@@ -167,15 +167,19 @@ These limits govern what can be configured per instance. Actual values vary by l
 | Max Active Vendor Records | 1,000-50,000+ | Per license tier |
 | Max Custom Properties | 1,000 | Global across all objects |
 | Max Custom Properties Per Object | 400 | Hard ceiling per object type |
+| Max Calculated Properties Per Object | 150 | Text/Number/Date - Calculated |
 | Max Aggregated Properties Per Object | 50 | Aggregate fields are expensive |
 | Max Track Changes Per Object | 50 | Audit trail fields |
 | Max Import Rows | 20,000 | Per import API call |
+| Max Import/Upload File Size | 20 MB | Per import or attachment |
 | Max Report Rows | 500,000 | Backend limit |
 | Max Report Cells Onscreen | 20,000 | Browser rendering limit |
+| Max Calculated Report Columns | 20 per type | 20 Text + 20 Number + 20 Date per report |
 | Max Export Size | ~50 MB | CSV/Excel export |
 | Web Service Rate Limit | 360 / 3,600 sec | 6 requests/minute for API |
 | Custom Report Cache | 5 days | Reports are cached, not real-time |
 | Max Notifications Per Object | 20 | Email/workflow notifications |
+| Max Notifications Per Instance | 200 | Total across all objects |
 | Max Automated Actions | 200 total, 20/object | Workflow automations |
 
 ## Solution Fingerprints (System Settings)

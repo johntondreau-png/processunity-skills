@@ -50,6 +50,9 @@ Read these before performing specific tasks:
 - **[[PU Ref - Create Report]]** — Step-by-step guide for creating custom reports
 - **[[PU Ref - UI Navigation]]** — UI targeting strategy (3-tier), element anchors, focus recovery, common pitfalls
 - **[[PU Ref - Expression Standards]]** — How to write expressions correctly (syntax, patterns, functions)
+- **[[PU Ref - Function Library]]** — Complete function reference: 63 functions with signatures, examples, and common patterns
+- **[[PU Ref - Buttons and Workflow]]** — Buttons, 11 workflow step types, Report Actions, BALI pattern, External API connections
+- **[[PU Ref - Automated Actions]]** — Automated actions, notification rules, nightly job sequence, event types
 
 ## Help System Research
 
