@@ -20,6 +20,7 @@ This is your entry point for all ProcessUnity platform knowledge. Each note cove
 | [[PU Report Builder]] | Design and build custom reports, charts, and dashboards |
 | [[PU Agentic Pipeline]] | Build AI-powered read → reason → write-back workflows |
 | [[PU Vendor Lookup]] | Look up a vendor's risk profile from the PU instance |
+| [[PU Instance Analyzer]] | Analyze an instance — fingerprint, connector inventory, gap analysis, data health |
 | [[PU DORA]] | Implement EU DORA compliance — Register of Information, RTS templates, EBA taxonomy |
 
 ## Learning Path
@@ -29,10 +30,11 @@ If you're getting oriented with the platform, a good order is:
 1. **[[PU Data Model]]** — understand what objects exist and the semantic data model
 2. **[[PU Report Builder]]** — reports are the primary way to surface and query data
 3. **[[PU Config Designer]]** — learn how requirements map to PU configuration
-4. **[[PU Admin Navigator]]** — the mechanics of actually making changes in the UI
-5. **[[PU Agentic Pipeline]]** — the advanced pattern for AI-driven workflows
-6. **[[PU Vendor Lookup]]** — a concrete, working example of querying PU data
-7. **[[PU DORA]]** — full DORA implementation guide (builds on all the above)
+4. **[[PU Instance Analyzer]]** — analyze what's already configured before making changes
+5. **[[PU Admin Navigator]]** — the mechanics of actually making changes in the UI
+6. **[[PU Agentic Pipeline]]** — the advanced pattern for AI-driven workflows
+7. **[[PU Vendor Lookup]]** — a concrete, working example of querying PU data
+8. **[[PU DORA]]** — full DORA implementation guide (builds on all the above)
 
 ## Key Concepts
 

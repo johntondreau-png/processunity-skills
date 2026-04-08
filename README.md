@@ -6,13 +6,14 @@ Built as a [Claude Code](https://claude.ai/code) plugin.
 
 ## What's Inside
 
-### Skills (11)
+### Skills (12)
 
 | Skill | Purpose |
 |-------|---------|
 | **pu-data-model** | ProcessUnity platform knowledge base -- objects, property types, reports, dashboards |
 | **pu-config-designer** | Translate requirements into configuration plans (human-readable + JSON execution plans) |
 | **pu-admin-navigator** | Drive the PU admin UI via browser automation to execute configuration changes |
+| **pu-instance-analyzer** | Analyze an instance -- fingerprint solution, inventory connectors/reports, gap analysis, data health checks |
 | **pu-import** | Bulk data import via the ProcessUnity Import API |
 | **pu-report-builder** | Design and build Custom Reports, Charts, and Dashboards |
 | **pu-agentic-pipeline** | BYOAI agentic workflows using PU's Reports + Import APIs as the AI data pipeline |
@@ -21,13 +22,14 @@ Built as a [Claude Code](https://claude.ai/code) plugin.
 | **pu-dora** | Implement EU DORA compliance -- Register of Information, 7 RTS templates, EBA taxonomy codes, full object/report pipeline |
 | **vendor-lookup** | Query your ProcessUnity vendor portfolio for risk profiles by name |
 
-### Commands (7)
+### Commands (8)
 
 | Command | Usage |
 |---------|-------|
 | `/pu-configure` | Design a configuration from requirements |
 | `/pu-implement` | Execute a configuration plan via browser automation |
 | `/pu-status` | Check current configuration state of a PU object |
+| `/pu-analyze` | Analyze an instance -- fingerprint, connectors, gap analysis, health |
 | `/pu-import` | Import data into ProcessUnity via API |
 | `/pu-enrich` | Run vendor data enrichment pipeline |
 | `/pu-dora` | Implement DORA compliance in a ProcessUnity instance |
@@ -127,6 +129,7 @@ processunity-skills/
 │   ├── pu-report-builder/       # Report & dashboard design
 │   ├── pu-agentic-pipeline/     # AI-powered read/reason/write workflows
 │   ├── pu-enrich/               # Vendor data enrichment from external APIs
+│   ├── pu-instance-analyzer/     # Instance fingerprint, gap analysis, data health
 │   ├── pu-configuration/        # Regulation trees, questions, threats, SCF
 │   ├── pu-dora/                 # DORA compliance implementation
 │   └── vendor-lookup/           # Vendor risk profile lookup

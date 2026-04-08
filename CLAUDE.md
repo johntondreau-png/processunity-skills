@@ -38,6 +38,7 @@ skills/              ← Authoritative SKILL.md files (Claude Code reads these)
   pu-agentic-pipeline/
   pu-enrich/
   pu-configuration/
+  pu-instance-analyzer/
   pu-dora/
   vendor-lookup/
 notes/               ← Obsidian browsing layer (wiki links, MOC, frontmatter)
