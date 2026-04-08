@@ -3,6 +3,9 @@ config.json
 .env
 .env.*
 
+# Obsidian
+.obsidian/
+
 # OS
 .DS_Store
 Thumbs.db
