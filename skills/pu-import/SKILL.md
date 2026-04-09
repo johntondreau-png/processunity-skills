@@ -1,3 +1,17 @@
+---
+name: pu-import
+description: >
+  Bulk create and update records in any ProcessUnity object via the Import API.
+  Use this skill when the user wants to push data into PU programmatically — regulation trees,
+  reference data, vendor records, threats, questions, or any object with an import template.
+  Triggers for: "import into PU", "push data to ProcessUnity", "bulk create records",
+  "load regulations", "import vendors", "upload data to PU", "automated import".
+  This skill is the programmatic counterpart to PU's browser-based import.
+depends_on:
+  - pu-data-model
+  - pu-admin-navigator
+---
+
 # PU Import Skill — Generic Data Import via ProcessUnity API
 
 ## Purpose

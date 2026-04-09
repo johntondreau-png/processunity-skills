@@ -21,13 +21,16 @@ This is your entry point for all ProcessUnity platform knowledge. Each note cove
 | [[PU Agentic Pipeline]] | Build AI-powered read → reason → write-back workflows |
 | [[PU Vendor Lookup]] | Look up a vendor's risk profile from the PU instance |
 | [[PU Instance Analyzer]] | Analyze an instance — fingerprint, connector inventory, gap analysis, data health |
+| [[PU Environment Setup]] | Connect a new PU instance — roles, service accounts, MCP config, report scaffolding |
+| [[PU Scaffold Reports]] | Auto-create one report per object type for full MCP read access |
 | [[PU DORA]] | Implement EU DORA compliance — Register of Information, RTS templates, EBA taxonomy |
 
 ## Learning Path
 
 If you're getting oriented with the platform, a good order is:
 
-1. **[[PU Data Model]]** — understand what objects exist and the semantic data model
+1. **[[PU Environment Setup]]** — connect a new instance (roles, credentials, MCP, reports)
+2. **[[PU Data Model]]** — understand what objects exist and the semantic data model
 2. **[[PU Report Builder]]** — reports are the primary way to surface and query data
 3. **[[PU Config Designer]]** — learn how requirements map to PU configuration
 4. **[[PU Instance Analyzer]]** — analyze what's already configured before making changes

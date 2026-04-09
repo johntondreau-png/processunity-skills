@@ -1,5 +1,5 @@
 ---
-name: processunity-configuration
+name: pu-configuration
 description: Use this skill when configuring ProcessUnity (PU) objects for third-party risk management. Covers regulation tree setup (Regulation > Category > Subcategory > Provision), question templates, threat catalogs, reference data, import template generation, and SCF crosswalk configuration. Trigger when user mentions PU configuration, regulation imports, framework setup, questionnaire mapping, or ProcessUnity integration.
 ---
 
