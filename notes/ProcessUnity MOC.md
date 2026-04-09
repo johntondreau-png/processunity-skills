@@ -23,6 +23,7 @@ This is your entry point for all ProcessUnity platform knowledge. Each note cove
 | [[PU Instance Analyzer]] | Analyze an instance — fingerprint, connector inventory, gap analysis, data health |
 | [[PU Environment Setup]] | Connect a new PU instance — roles, service accounts, MCP config, report scaffolding |
 | [[PU Scaffold Reports]] | Auto-create one report per object type for full MCP read access |
+| [[PU Word Templates]] | Build VBA-enabled Word templates with SVG visualizations for Word Connector reports |
 | [[PU DORA]] | Implement EU DORA compliance — Register of Information, RTS templates, EBA taxonomy |
 
 ## Learning Path
