@@ -8,8 +8,7 @@ description: >
   workflows. Triggers for: "connect to a new PU environment", "set up API access", "create a
   service account", "configure MCP for PU", "scaffold reports for API access".
 depends_on:
-  - pu-data-model
-  - pu-report-builder
+  - pu-app-guide
 ---
 
 # ProcessUnity Environment Setup

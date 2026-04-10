@@ -9,7 +9,7 @@ description: >
   "score gauge", "donut chart", "SVG badge", "Word Connector", ".dotm", "macro-enabled",
   "design system", "content control tags", "risk pill", "vendor report template".
 depends_on:
-  - pu-data-model
+  - pu-app-guide
 ---
 
 # PU Word Templates Skill
@@ -163,7 +163,7 @@ The Risk Index is PU's internal composite score (0-100) aggregating multiple dat
 ### Step 1: Design the Template
 
 1. Identify the PU object context (Third Party, Engagement, Issue, etc.)
-2. List the properties and reports needed (use `pu-data-model` skill)
+2. List the properties and reports needed (use `pu-app-guide` skill)
 3. Define sections and layout using design system components
 4. Map CC tags to PU property names
 

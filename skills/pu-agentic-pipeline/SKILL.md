@@ -8,7 +8,7 @@ description: >
   design any "AI reads data → reasons → writes action" pipeline. Triggers for: "analyze my
   vendors", "scope questions based on risk", "create issues from findings", "auto-triage",
   "AI-driven workflow", "based on this data...", "use AI to...". This skill defines the
-  patterns; use pu-report-builder to design the input reports and pu-data-model for object knowledge.
+  patterns; use pu-app-guide (references/report-builder.md) to design the input reports and pu-app-guide for object knowledge.
 ---
 
 # ProcessUnity Agentic Pipeline
@@ -211,7 +211,6 @@ await pu.imports.importData(templateId, records);
 ```
 
 ## Related Skills
-- **pu-report-builder** — Design and build the input reports
-- **pu-data-model** — Understand available objects, properties, relationships
+- **pu-app-guide** — Platform knowledge (objects, properties, relationships) and report design (references/report-builder.md)
 - **pu-admin-navigator** — Execute configuration changes in the PU UI
 - **pu-config-designer** — Design property configurations

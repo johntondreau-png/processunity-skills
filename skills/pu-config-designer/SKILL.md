@@ -35,7 +35,7 @@ a risk program, or a conversation about what the customer needs. Extract:
 
 ### Step 2: Map to PU Objects
 
-Consult the pu-data-model skill (specifically `references/objects.md`) to decide which Subject Areas
+Consult the pu-app-guide skill (specifically `references/objects.md`) to decide which Subject Areas
 and objects will hold each type of data. Key mapping decisions:
 
 - **Vendor/third-party data** → Vendors object (and its children: Services, Contacts, Agreements)
@@ -91,7 +91,7 @@ For each report the customer needs, specify:
 - **Totals** — which columns need sums, counts, averages
 - **Chart** — chart type, series, and whether it should be available for dashboards
 
-Consult `references/reports-and-dashboards.md` for all report configuration options.
+Consult `pu-app-guide/references/reports-and-dashboards.md` for all report configuration options.
 
 ### Step 6: Design Dashboards
 

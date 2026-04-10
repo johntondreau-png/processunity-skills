@@ -9,8 +9,7 @@ description: >
   "connect me to all the data".
 depends_on:
   - pu-environment-setup
-  - pu-report-builder
-  - pu-data-model
+  - pu-app-guide
 ---
 
 # ProcessUnity MCP Report Scaffolding

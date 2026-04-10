@@ -1,17 +1,4 @@
----
-name: pu-report-builder
-description: >
-  Design and build Custom Reports and Dashboards in ProcessUnity. Use this skill when the user wants
-  to create a new report, design a report for a specific use case, understand what data is available
-  for reporting, build reports that serve as AI data feeds, create dashboards, or configure charts
-  for visual storytelling. Triggers for: "create a report", "build me a report showing...",
-  "I need a report for...", "design a dashboard", "create a chart", "what can I report on?",
-  "make it visual", "tell the risk story". This skill handles both the design (choosing objects,
-  columns, filters, groups, charts) and the execution (browser automation). Always use alongside
-  pu-data-model for platform knowledge and pu-admin-navigator for UI automation details.
----
-
-# ProcessUnity Report Builder
+# Report Builder Reference
 
 Design and build Custom Reports, Charts, and Dashboards in ProcessUnity — from simple data views
 to sophisticated multi-level reports with visually compelling charts that tell a risk story.

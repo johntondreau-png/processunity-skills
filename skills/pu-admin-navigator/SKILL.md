@@ -9,7 +9,7 @@ description: >
   or any request to make actual changes in the ProcessUnity web interface. This skill works
   with browser automation tools (Claude in Chrome, OpenAI Agent Mode, Google Mariner, etc.)
   to navigate the PU admin UI and perform configuration steps safely. Always use this skill
-  alongside pu-data-model for platform knowledge.
+  alongside pu-app-guide for platform knowledge.
 ---
 
 # ProcessUnity Admin Navigator

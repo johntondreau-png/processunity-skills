@@ -7,10 +7,10 @@ description: >
   configuration, or audit what's deployed. Triggers for: "what's configured", "analyze this instance",
   "what's already there", "inventory", "fingerprint", "what solution is this", "gap analysis",
   "what's missing", "compare", "delta". This skill uses the ProcessUnity MCP server for live API
-  queries and can also parse metadata CSV exports. Always use alongside pu-data-model for platform
+  queries and can also parse metadata CSV exports. Always use alongside pu-app-guide for platform
   knowledge.
 depends_on:
-  - pu-data-model
+  - pu-app-guide
 ---
 
 # ProcessUnity Instance Analyzer
@@ -67,7 +67,7 @@ Determine which "solution" is running by examining what's configured.
 | `VendorShield - *` | VendorShield configuration present |
 | `[External API] *` | External API connections configured |
 
-**Step 3**: Match to solution fingerprint (from pu-data-model objects.md)
+**Step 3**: Match to solution fingerprint (from pu-app-guide references/objects.md)
 
 | Solution | Key Indicators |
 |----------|---------------|
@@ -240,6 +240,6 @@ When a metadata CSV export is available (like the cwiedersheim format), addition
 - **Color coding**: Which objects use expression-based colors
 
 ## Reference Skills
-- **pu-data-model** — Object types, property types, relationships, aggregate codes, platform limits, solution fingerprints
+- **pu-app-guide** — Object types, property types, relationships, aggregate codes, platform limits, solution fingerprints
 - **pu-dora** — DORA implementation checklist for gap analysis
 - **pu-config-designer** — Configuration patterns and generic capability requirements

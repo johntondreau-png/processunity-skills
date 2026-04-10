@@ -7,13 +7,12 @@ description: >
   with EBA taxonomy codes, build DORA-specific properties on objects, create DORA import/export
   report pipelines, or design DORA compliance dashboards. Triggers for: "add DORA", "implement DORA",
   "DORA compliance", "Register of Information", "RTS reporting", "EBA taxonomy", "DORA configuration",
-  "RT.01", "RT.02", "RT.05", "RT.06", "RT.07". This skill builds on pu-data-model, pu-config-designer,
-  pu-admin-navigator, pu-report-builder, and pu-import — always load those for platform knowledge.
+  "RT.01", "RT.02", "RT.05", "RT.06", "RT.07". This skill builds on pu-app-guide, pu-config-designer,
+  pu-admin-navigator, and pu-import — always load those for platform knowledge.
 depends_on:
-  - pu-data-model
+  - pu-app-guide
   - pu-config-designer
   - pu-admin-navigator
-  - pu-report-builder
   - pu-import
 ---
 
@@ -515,8 +514,7 @@ The -30 delta represents properties the STAR scoped but the reference instance o
 - **`manifests/dora-formulas.json`** — 75 calculated/aggregate field expressions (VALIDATOR patterns, External ID shadows, date sentinels)
 
 ### Supporting skills
-- **pu-data-model** — Object types, property types, relationships, aggregate codes, platform limits
+- **pu-app-guide** — Object types, property types, relationships, aggregate codes, platform limits, report design, chart types, multi-level report joins, dashboard design
 - **pu-config-designer** — Configuration patterns, conditional display, auto-update rules, color coding
 - **pu-admin-navigator** — Browser automation for creating properties, reports, and navigating admin UI
-- **pu-report-builder** — Report design, chart types, multi-level report joins, dashboard design
 - **pu-import** — Import API, column positional mapping, bulk data loading

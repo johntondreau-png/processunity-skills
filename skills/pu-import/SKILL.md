@@ -8,7 +8,7 @@ description: >
   "load regulations", "import vendors", "upload data to PU", "automated import".
   This skill is the programmatic counterpart to PU's browser-based import.
 depends_on:
-  - pu-data-model
+  - pu-app-guide
   - pu-admin-navigator
 ---
 

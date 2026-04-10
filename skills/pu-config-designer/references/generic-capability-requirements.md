@@ -144,7 +144,7 @@ Export reports frequently need 2-4 level joins:
 - Level 3+: Deeper relationships (e.g., Agreement → Vendor Service → Service Add On → Legal Entity)
 
 The generic skill must know:
-- Which relationships exist between objects (from `pu-data-model`)
+- Which relationships exist between objects (from `pu-app-guide`)
 - Exact relationship name strings (critical — PU uses these as join keys)
 - Column selection per level (which properties from which object)
 - Shadow property columns for coded exports
@@ -284,7 +284,7 @@ Based on the DORA exercise, these capabilities are **missing or incomplete** in 
 | **Import dependency graph** | Determine import order from object relationships | HIGH |
 | **Delta plan generation** | Compare desired state against existing instance, output only deltas | HIGH |
 
-### pu-report-builder
+### pu-app-guide (references/report-builder.md)
 
 | Gap | What's Needed | Priority |
 |-----|--------------|----------|
@@ -321,7 +321,7 @@ Any regulation or solution configuration follows this lifecycle:
 4. REFERENCE  — Load reference data types + values (pu-import)
 5. CONFIGURE  — Create properties in dependency order (pu-admin-navigator)
 6. RELATE     — Establish object relationships (pu-admin-navigator)
-7. REPORT     — Build import → operational → export → dashboard → WFA reports (pu-report-builder + pu-admin-navigator)
+7. REPORT     — Build import → operational → export → dashboard → WFA reports (pu-app-guide + pu-admin-navigator)
 8. BUTTON     — Wire WFA buttons to workflow reports (pu-admin-navigator)
 9. VALIDATE   — Verify everything works end-to-end (pu-instance-analyzer)
 10. LOAD      — Bulk import initial data (pu-import)
