@@ -62,6 +62,7 @@ When a question falls into one of these domains, **read the corresponding refere
 | Object catalog, traits, relationships | `references/objects.md` | Complete object catalog (52+ types), traits (Grid/Tree, Renamable, Stateful), standard properties, named relationships, aggregate types |
 | Regulation trees, SCF crosswalks, naming | `references/regulation-configuration.md` | Regulation → Category → Subcategory → Provision hierarchy, object schemas, SystemID conventions, SCF crosswalk mechanics, supported frameworks, questionnaire structure |
 | Report design, charts, relationship joins | `references/report-builder.md` | Multi-level report joins, relationship patterns, chart types (14), color control, design patterns, report pipeline pattern, column styling |
+| MCP data tools (13 tools) | `references/mcp-tools.md` | Tool inventory, parameters, composition patterns, authentication, CLI commands, data vs config plane |
 
 ## How to Use This Skill
 

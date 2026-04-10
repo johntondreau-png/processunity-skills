@@ -37,7 +37,6 @@ This is your entry point for all ProcessUnity platform knowledge. Start with **A
 | [[PU Environment Setup]] | Connect a new PU instance — roles, service accounts, MCP config, report scaffolding |
 | [[PU Instance Analyzer]] | Analyze an instance — fingerprint, connector inventory, gap analysis, data health |
 | [[PU Scaffold Reports]] | Auto-create one report per object type for full MCP read access |
-| [[PU Vendor Lookup]] | Look up a vendor's risk profile from the PU instance |
 
 ### Specialized
 | Skill | What It Does |
@@ -56,8 +55,7 @@ This is your entry point for all ProcessUnity platform knowledge. Start with **A
 7. **[[PU Import]]** — push data into PU programmatically via the Import API
 8. **[[PU Enrich]]** — pull external intelligence and push it back into PU
 9. **[[PU Agentic Pipeline]]** — the advanced pattern for AI-driven workflows
-10. **[[PU Vendor Lookup]]** — a concrete, working example of querying PU data
-11. **[[PU DORA]]** — full DORA implementation guide (builds on all the above)
+10. **[[PU DORA]]** — full DORA implementation guide (builds on all the above)
 
 ## Key Concepts
 
@@ -81,6 +79,7 @@ The [[PU App Guide]] skill is the single reference dispatcher:
 - [[PU Ref - App Integrations]] — Import/export, connectors, web services API, SSO
 - [[PU Ref - App Solutions]] — 20+ object types, VRM, issues, certs, contracts
 - [[PU Ref - App Best Practices]] — 61 recommendations for performance and configuration
+- [[PU Ref - App MCP Tools]] — 13 MCP data tools, composition patterns, CLI commands
 
 **Technical references:**
 - [[PU Ref - Objects]] — Complete object catalog with traits, tabs, and relationships
@@ -93,11 +92,15 @@ The [[PU App Guide]] skill is the single reference dispatcher:
 - [[PU Ref - Create Report]] — Step-by-step browser automation for creating reports
 - [[PU Ref - UI Navigation]] — UI targeting strategy and common pitfalls
 
-## Merged Skills
+## MCP Data Tools
 
-These former standalone skills have been absorbed into [[PU App Guide]]:
-- ~~PU Data Model~~ → `pu-app-guide/references/objects.md` + platform concepts in SKILL.md
-- ~~PU Report Builder~~ → `pu-app-guide/references/report-builder.md`
+Vendor lookup and all data operations are handled by the **ProcessUnity MCP server** (separate repo: [processunity-mcp](https://github.com/johntondreau-png/processunity-mcp)). See `pu-app-guide/references/mcp-tools.md` for the 13 available tools.
+
+## Merged / Moved Skills
+
+- ~~PU Data Model~~ → merged into [[PU App Guide]] (`references/objects.md`)
+- ~~PU Report Builder~~ → merged into [[PU App Guide]] (`references/report-builder.md`)
+- ~~PU Vendor Lookup~~ → moved to MCP server (CLI: `processunity lookup <name>`)
 
 ## Quick Links
 

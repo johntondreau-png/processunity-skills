@@ -99,13 +99,22 @@ Auth: OAuth token from `POST /ocean/token` (see config.json for credentials).
 
 Read these before performing specific tasks:
 
-- **`references/create-property.md`** — Step-by-step guide for creating properties in the admin UI, including the canonical UI workflow, type-ahead strategy, expression entry, and post-save verification.
-- **`references/create-report.md`** — Step-by-step guide for creating custom reports.
-- **`references/ui-navigation.md`** — UI targeting strategy (3-tier), element anchors, focus recovery, and common pitfalls.
+### UI Navigation
+- **`references/ui-navigation.md`** — 3-tier targeting strategy, element anchors, focus recovery, and common pitfalls.
 
-For expression syntax, function library, workflow, and automation reference, use the **pu-app-guide** skill which has comprehensive, up-to-date coverage:
+### Configuration Procedures (structured inputs → steps → verification)
+- **`references/create-property.md`** — Create a custom property on an object
+- **`references/create-report.md`** — Create a custom report with columns, groups, charts
+- **`references/create-reference-data.md`** — Create reference data types and values
+- **`references/create-import-template.md`** — Create an import template for API/bulk data loading
+- **`references/create-dashboard.md`** — Create a dashboard from existing report charts
+- **`references/configure-pick-list.md`** — Configure pick list values with optional colors for chart rendering
+
+### Platform Reference (in pu-app-guide)
+For expression syntax, function library, workflow, and automation reference, use the **pu-app-guide** skill:
 - Expressions → `pu-app-guide/references/expressions.md`
 - Workflow & automation → `pu-app-guide/references/workflow.md`
+- Properties → `pu-app-guide/references/properties.md`
 
 ## Safe Operating Rules (ALWAYS follow)
 

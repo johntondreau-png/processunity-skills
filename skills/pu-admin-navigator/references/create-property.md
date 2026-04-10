@@ -1,134 +1,132 @@
-# Creating Properties in ProcessUnity (Browser Automation Guide)
+# Procedure: create_property
 
-## Navigation Path
+Create a custom property on a ProcessUnity object type.
 
-Settings → General → Properties → [Select Object]
+## Inputs (required)
 
-## Canonical UI Workflow
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| object_name | string | Target object type (e.g., "Regulation", "Third Party", "Issues") |
+| name | string | System/API name. Use `snake_case` or short descriptive names (e.g., `issuing_body`, `effective_date`) |
+| property_type | string | PU type string from dropdown (e.g., "Text - Single Line", "Number - Calcs & Aggs", "Pick List - Select One", "Date - Date Only") |
 
-### Step 1: Navigate to Properties
-1. Click the **SETTINGS** tab in the main navigation
-2. In the left panel, find **General** → **Properties**
-3. The center panel shows a list of available Object Types with the number of custom properties each has
+## Inputs (optional)
 
-### Step 2: Select the Target Object
-1. Scroll to (or search for) the target object in the center panel
-2. Click to select it — the right panel will show all current properties for that object
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| label | string | Auto from name (Title Case) | User-facing display name (e.g., `Effective Date`) |
+| description | string | Auto-generated | Admin-facing explanation of the property's purpose |
+| tooltip | string | Auto-generated | End-user help text shown on hover |
+| report_label | string | Same as label | Column header when used in reports |
+| required | boolean | false | Whether the field is mandatory |
+| hidden | boolean | false | Hide from end users |
+| read_only | boolean | false | Prevent editing |
+| hide_in_edit_mode | boolean | false | Show in view mode only |
+| track_changes | boolean | false | Enable change tracking |
+| pick_list_values | string[] | — | Values for Pick List types, one per line |
+| expression | string | — | Validation or calculation expression (for calculated types) |
+| tooltip_display | string | "View and Edit Modes" | When to show tooltip |
+| layout | string | "Auto" | Width/layout setting |
 
-### Step 3: Enter Edit Mode
-1. Click **Edit** in the right panel (single click, wait for postback — do NOT double-click)
-2. Confirm Edit mode by verifying the **Add Property** button is visible
-3. Optionally click **Show Details** to see deeper property attributes
+## Prerequisites
 
-### Step 4: Add a New Property
-1. Click **Add Property**
-2. In the dialog that appears, fill in the **General** tab:
+- Logged into the target PU instance in the browser
+- Browser at 100% zoom, window maximized
+- Can see main navigation tabs (WORKSPACE, ASSESSMENTS, REPORTS, SETTINGS, HELP)
 
-   **Name** — The internal/system name. This is the identifier used in admin settings, API calls, expressions, and import templates. Use `snake_case` or short descriptive names (e.g., `issuing_body`, `effective_date`, `scf_control_ids`). Must be unique within the object.
+## Navigation
 
-   **Description** — A clear explanation of the property's purpose, what data it holds, and any relevant context. This helps administrators and future configurators understand the intent. **Always populate this field.**
+Settings > General > Properties > [object_name] > Edit
 
-3. **Select Property Type** using type-ahead:
-   - Click the Property Type dropdown
-   - Start typing the canonical type string (e.g., "Number - Calc", "Pick List - Select")
-   - Select the matching option
-   - If the expected type doesn't appear, STOP — the tenant may not support it
+## Steps
 
-4. For Pick List types, enter values one per line
+1. **Navigate to Properties**
+   - Click **SETTINGS** tab in main navigation
+   - In the left panel, click **General** > **Properties**
+   - Center panel shows the list of Object Types with custom property counts
 
-5. Configure flags:
-   - **Required** — true/false
-   - **Hidden** — true/false
-   - **Read Only** — true/false
-   - **Hide in Edit Mode** — true/false
-   - **Track Changes** — true/false
-   - **Capture History Monthly/Weekly** — true/false
+2. **Select the target object**
+   - Scroll or search for `object_name` in the center panel
+   - Click to select it — right panel shows current properties for that object
 
-### Step 5: Configure Display Tab
+3. **Enter Edit mode**
+   - Click **Edit** in the right panel (single click, wait for postback — do NOT double-click)
+   - Confirm Edit mode: the **Add Property** button must be visible
+   - Optionally click **Show Details** to see deeper property attributes
 
-> **MANDATORY**: Every property must have Label, Tooltip, and Description configured for completeness.
+4. **Click Add Property**
+   - Click the **Add Property** button in the properties panel header
+   - A dialog/modal appears with tabbed configuration
 
-- **Label** — The user-facing display name. This is what end users see on forms, detail views, and reports. Use proper casing and readable language (e.g., `Issuing Body`, `Effective Date`, `SCF Control IDs`). The Label should be visually appealing and self-explanatory to a non-technical user.
-- **Report Label** — Default column name when used in reports (defaults to Label if not set)
-- **Tooltip** — Descriptive help text shown to end users on hover. Should explain what the field is for and what kind of data to enter. **Always populate this field.**
-- **Tooltip Display** — "View and Edit Modes" (default)
-- **Layout** — "Auto" (default) or specific width
-- Font/background colors (expression-based for conditional coloring)
-- Display format (for numbers, dates)
-- Bold setting
+5. **Fill General tab**
+   - **Name**: Enter `name` value (system identifier)
+   - **Description**: Enter `description` value (or auto-generate: brief statement of what the property stores)
+   - **Property Type**: Click the dropdown, type-ahead search for `property_type`, select the match
+   - If Pick List type: enter `pick_list_values` one per line in the values area
+   - Configure flags: Required, Hidden, Read Only, Hide in Edit Mode, Track Changes as specified
 
-#### Name vs. Label — Key Distinction
+6. **Fill Display tab**
+   - **Label**: Enter `label` value (or auto-generate from name as Title Case)
+   - **Report Label**: Enter `report_label` if different from label
+   - **Tooltip**: Enter `tooltip` value (or auto-generate: instructional text for end users)
+   - **Tooltip Display**: Set to `tooltip_display` value
+   - **Layout**: Set to `layout` value
+   - Configure font/background colors and display format if specified
 
-| Attribute | Purpose | Where it appears | Convention |
-|-----------|---------|-----------------|------------|
-| **Name** | System identifier | Admin settings, API calls, expressions, import templates | `snake_case` or short technical names (e.g., `scf_mapped`, `display_id`) |
-| **Label** | User-facing display | Forms, detail views, reports, column headers | Title Case, readable (e.g., `SCF Mapped`, `Display ID`, `Issuing Body`) |
+7. **Fill Rules tab** (if applicable)
+   - **Validation Expression**: Enter `expression` if this is a calculated property
+   - Configure Copy/Paste behavior and Auto Update Rules if specified
 
-**Example:**
-- Name: `effective_date` → Label: `Effective Date`
-- Name: `scf_control_ids` → Label: `SCF Control IDs`
-- Name: `issuing_body` → Label: `Issuing Body`
-- Name: `last_synced_at` → Label: `Last Synced`
+8. **Fill View/Edit Access tabs** (if applicable)
+   - Restrict visibility or editability by condition, role, or team as specified
 
-### Step 6: Configure Rules Tab
-- **Copy/Paste behavior** — how value is handled when record is duplicated
-- **Validation Expression** — returns empty string if valid, or error message text
-  - For calculated properties, this is where the expression goes
-- **Auto Update Rule** — event type and condition/value expression
+9. **Save**
+   - Click **OK** or **Save** at bottom of the dialog
+   - If the modal reopens with blank fields, the property may have saved — check the property list
 
-### Step 7: Configure View/Edit Access Tabs (if needed)
-- Restrict visibility by condition or role/team
-- Restrict editability by condition or role/team
+## Verification
 
-### Step 8: Save
-- Click **OK** or **Save**
-- If the modal reopens with blank fields, the property may have saved successfully — check the list
-
-### Step 9: Post-Save Verification (REQUIRED)
-
-For every property created or modified, verify:
-- [ ] Property appears in the property list
-- [ ] **Name** matches spec (system/API name)
-- [ ] **Label** matches spec (user-facing display name, properly cased)
-- [ ] **Description** is populated (explains the property's purpose)
-- [ ] **Tooltip** is populated (help text for end users)
-- [ ] Type matches spec
-- [ ] Flags match spec (Required, Hidden, Read Only)
-- [ ] If calculated:
-  - [ ] Expression is saved correctly
-  - [ ] References resolve (no errors)
-  - [ ] Quick sanity test matches expected output
+- [ ] Property appears in the property list for the target object
+- [ ] **Name** matches the specified system name
+- [ ] **Label** matches the specified display name (properly cased)
+- [ ] **Description** is populated
+- [ ] **Tooltip** is populated
+- [ ] **Type** matches the specified property type
+- [ ] Flags match specification (Required, Hidden, Read Only)
+- [ ] If calculated: expression is saved, references resolve, quick sanity test passes
 
 ## Completeness Rule
 
-**Every property MUST have all four metadata fields populated:**
+Every property MUST have all four metadata fields populated:
 
-1. **Name** — System identifier (`snake_case`, used in API/expressions/import templates)
-2. **Description** — Admin-facing explanation of the property's purpose (General tab)
-3. **Label** — User-facing display name (Display tab) — use Title Case, make it readable and visually appealing
-4. **Tooltip** — End-user help text (Display tab) — explain what to enter and why
+| Field | Tab | Convention |
+|-------|-----|------------|
+| Name | General | `snake_case`, used in API/expressions/import templates |
+| Description | General | Admin-facing explanation of purpose |
+| Label | Display | Title Case, user-facing display name |
+| Tooltip | Display | End-user help text (what to enter and why) |
 
-If an execution plan or spec does not provide values for Description, Label, or Tooltip, generate reasonable defaults:
-- **Label**: Convert the Name to Title Case (e.g., `effective_date` → `Effective Date`)
-- **Description**: Brief statement of what the property stores (e.g., "The date this regulation became effective")
-- **Tooltip**: Instructional text for end users (e.g., "Enter the date this regulation went into effect")
+If the caller does not provide Description, Label, or Tooltip, generate reasonable defaults:
+- **Label**: Convert Name to Title Case (`effective_date` > `Effective Date`)
+- **Description**: Brief statement (`"The date this regulation became effective"`)
+- **Tooltip**: Instructional text (`"Enter the date this regulation went into effect"`)
 
-## Bulk Property Creation
+## Bulk Creation Notes
 
 When creating multiple properties from an execution plan:
-1. Stay in Edit mode throughout
-2. Create properties in dependency order (base properties before calculated properties that reference them)
-3. Ensure every property has Name, Description, Label, and Tooltip populated
-4. Verify each property after creation before moving to the next
-5. Produce a complete Change Log at the end
+1. Stay in Edit mode throughout (do not exit and re-enter between properties)
+2. Create in dependency order (base properties before calculated properties that reference them)
+3. Verify each property after creation before moving to the next
+4. Produce a complete Change Log at the end
 
-## Common Pitfalls
+## Common Errors
 
 | Symptom | Cause | Fix |
 |---------|-------|-----|
-| Add Property button missing | Not in Edit mode | Click Edit button |
-| Property type list is huge | — | Use type-ahead search |
-| Modal reopens blank after save | May have saved successfully | Check the property list |
-| Expression field missing | Wrong property type selected | Hard stop — check type |
-| Type not in dropdown | Tenant doesn't support it | Hard stop — report to user |
+| Add Property button missing | Not in Edit mode | Click Edit button in the right panel |
+| Property type list is huge | Normal behavior | Use type-ahead search — start typing the type name |
+| Modal reopens blank after save | May have saved successfully | Check the property list for the new property |
+| Expression field missing | Wrong property type selected | HARD STOP — verify the correct type before proceeding |
+| Type not in dropdown | Tenant doesn't support it | HARD STOP — report to user |
 | Expression won't save | Syntax error | Check function syntax (no spaces before parentheses) |
+| Duplicate name error | Name already exists on this object | Use a unique name or check existing properties first |

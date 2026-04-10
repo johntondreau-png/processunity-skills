@@ -1,127 +1,163 @@
-# Creating Custom Reports in ProcessUnity (Browser Automation Guide)
+# Procedure: create_report
 
-## Navigation Path
+Create a custom report in ProcessUnity.
 
-Reports → Administration → Custom Reports → +New
+## Inputs (required)
 
-## Step-by-Step Workflow
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| name | string | Report name (internal identifier, keep brief) |
+| level_1_type | string | Primary object type (e.g., "Third Parties", "Issues", "Risks", "Regulations") |
+| columns | string[] | List of property names to include as columns (always include "Name") |
 
-### Step 1: Create the Report Shell
-1. Navigate to **Reports → Administration → Custom Reports**
-2. Click **+New** in the middle panel toolbar
-3. Enter **Name** (keep brief — this is the internal identifier)
-4. Optionally enter **Report Title** (overrides Name in the report heading when run)
-5. Enter **Instructions** (shown at top of report — explain what the report shows and any actions available)
-6. Enter **Tooltip** (displays on hover in the nav panel when published)
-7. **Owner** defaults to you; reassign if needed
-8. Select a **Category** (optional, for organization)
+## Inputs (optional)
 
-### Step 2: Set Level 1 (Primary Object)
-1. Select **Type (Level 1)** — the primary object type
-   - For vendor reports → "Third Parties" or "Vendors"
-   - For issue reports → "Issues"
-   - For risk reports → "Risks"
-   - etc.
-2. Configure Level 1 options if applicable:
-   - **Display Owned Items Only** — restricts to report consumer's owned records
-   - **Allow Creation of New Items** — adds +New button to report toolbar
-   - **Historical Data Report** — enables access to historical property snapshots
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| report_title | string | Same as name | Display title shown in report heading when run |
+| instructions | string | — | Text shown at top of report explaining what it shows |
+| tooltip | string | — | Hover text in the nav panel when published |
+| category | string | — | Report category for organization |
+| owner | string | Current user | Report owner |
+| level_2_type | string | — | Secondary object type for multi-level reports |
+| level_3_type | string | — | Tertiary object type for multi-level reports |
+| groups | object[] | — | Grouping columns: `[{ column, background_color? }]` |
+| sort_columns | object[] | — | Sort order: `[{ column, direction }]` |
+| design_time_filters | object[] | — | Query-level filters: `[{ column, operator, value }]` |
+| run_time_filters | object[] | — | Interactive user filters: `[{ column, type, default? }]` |
+| calculated_columns | object[] | — | Calculated columns: `[{ name, type, expression }]` |
+| chart | object | — | Chart config: `{ series_column, chart_type, initial_display? }` |
+| access | object | `{ type: "Only Me" }` | Publish settings: `{ type, roles?, teams?, task_area?, report_group? }` |
+| display_grand_totals | boolean | false | Show grand total row |
+| display_detail_rows | boolean | true | Show individual data rows |
+| auto_refresh | boolean | true | Auto-refresh on open (disable for high-volume reports) |
+| enable_workflow_actions | boolean | false | Allow workflow actions from report |
+| enable_automated_export | boolean | false | Enable for web services / Excel connector |
+| owned_items_only | boolean | false | Restrict to report consumer's owned records |
+| allow_creation | boolean | false | Add +New button to report toolbar |
 
-### Step 3: Add Columns
-1. Click **Add Columns**
-2. Select properties to include (click to select, click again to deselect, Shift+Click for ranges)
-3. **Always include "Name"** as the primary identifier
-4. Click OK to add selected columns
-5. Columns appear in the right panel in selection order
+## Prerequisites
 
-### Step 4: Run and Preview
-1. Click **Run/Refresh** in the middle panel toolbar
-2. Review the report output
-3. Iterate: edit in right panel → Run in middle panel to see changes immediately
+- Logged into the target PU instance in the browser
+- Browser at 100% zoom, window maximized
+- Can see main navigation tabs (WORKSPACE, ASSESSMENTS, REPORTS, SETTINGS, HELP)
+- Know the exact property names that should be columns (use `pu-data-model` skill to look up)
 
-### Step 5: Add Calculated Columns (if needed)
-1. Click **Add Calculated Column**
-2. Choose type: Number, Date, or Text
-3. Write the expression (follows the same expression standards as properties)
-4. Up to 20 calculated columns per type
+## Navigation
 
-### Step 6: Reorder Columns
-Use up/down arrows or move-after icon to sequence columns as desired.
+Reports > Administration > Custom Reports > +New
 
-### Step 7: Configure Column Attributes
-Click each column to edit its attributes:
+## Steps
 
-**Display Tab:**
-- Column Name, Label, Group Label, Tooltip
-- Font Color, Background Color, Cell Background Color, Header Background Color (all expression-based)
-- Display Format (dates, numbers, currencies, hyperlinks)
-- Width, Bold, Alignment, Borders, Font Size, Rotate Label
-- Hide Column, Suppress Repeating Values
+1. **Navigate to Custom Reports**
+   - Click **REPORTS** tab in main navigation
+   - In the left panel, click **Administration** > **Custom Reports**
+   - Center panel shows the list of existing custom reports
 
-**Totals Tab:**
-- Total Type: Sum, Average, Count, Min, Max, First, Last, etc.
-- Total Display Format, colors, formatting
+2. **Create the report shell**
+   - Click **+New** in the middle panel toolbar
+   - Enter **Name**: `name`
+   - Enter **Report Title**: `report_title` (if provided, overrides Name in heading)
+   - Enter **Instructions**: `instructions` (shown at top of report output)
+   - Enter **Tooltip**: `tooltip` (shown on hover in nav panel)
+   - Set **Owner** if different from current user
+   - Select **Category** if provided
 
-**Filters Tab:**
-- **Design Time Filter** — reduces rows at query level (critical for performance with >1,000 rows)
-- **Run Time Filter** — interactive filter for end users
-- Run Time Filter Default and Type (Optional Post Filter vs. Required Pre-Filter)
+3. **Set Level 1 (primary object)**
+   - Select **Type (Level 1)**: `level_1_type`
+   - Configure Level 1 options:
+     - **Display Owned Items Only**: set to `owned_items_only`
+     - **Allow Creation of New Items**: set to `allow_creation`
 
-**Drilldown Tab:**
-- Drilldown Target: record Details tab or a Context Report
+4. **Set additional levels** (if multi-level report)
+   - Select **Type (Level 2)**: `level_2_type` if provided
+   - Select **Type (Level 3)**: `level_3_type` if provided
 
-### Step 8: Group the Report
-1. In the Groups area of the right panel, add grouping columns
-2. Groups create category rows with detail rows indented beneath
-3. Column subtotals display at each group level
-4. Apply background color to group columns for visual differentiation
-5. Recommended: no more than 3 groups
+5. **Add columns**
+   - Click **Add Columns**
+   - Select each property from `columns` list (click to select, Shift+Click for ranges)
+   - Always include "Name" as the primary identifier
+   - Click **OK** to add selected columns
+   - Columns appear in the right panel in selection order
 
-### Step 9: Filter the Report
-- Add **Design Time Filters** to reduce data volume and improve performance
-- Add **Run Time Filters** for interactive end-user filtering
-- For high-volume reports (>1,000 rows), always use design-time filters
+6. **Add calculated columns** (if specified)
+   - For each item in `calculated_columns`:
+     - Click **Add Calculated Column**
+     - Choose type (Number, Date, or Text)
+     - Enter column name and write the expression
+   - Limit: 20 calculated columns per type
 
-### Step 10: Sort Detail Rows
-Configure sort order in the Sort area of the right panel. Multiple sort columns are supported.
+7. **Reorder columns**
+   - Use up/down arrows or move-after icon to arrange columns in desired sequence
 
-### Step 11: Set Report Options
-- Display Grand Totals (with label)
-- Display Detail Rows (default expand/collapse state)
-- Automatic Refresh (disable for high-volume reports)
-- Enable for Workflow Actions (In Context / Other Object Types)
-- Enable for Automated Export (for web services / Excel connector)
+8. **Configure column attributes** (for each column needing customization)
+   - Click the column in the right panel to open its settings
+   - **Display tab**: Column Name, Label, Tooltip, colors (expression-based), display format, width, alignment
+   - **Totals tab**: Total Type (Sum, Average, Count, Min, Max, etc.), display format
+   - **Filters tab**: Design Time Filter and/or Run Time Filter
+   - **Drilldown tab**: Target (record Details tab or Context Report)
 
-### Step 12: Add Chart (if needed for dashboards)
-1. Go to the **Chart tab** in report configuration
-2. Select **Chart Series** (must have a column with totals)
-3. Select **Chart Type** (Bar, Column, Pie, Donut, Line, Area, Gauge, Number Box, Table)
-4. Configure chart properties (legend, colors, drawing style)
-5. Set **Initial Display** (report view or chart view)
+9. **Configure grouping** (if specified)
+   - For each item in `groups`:
+     - Add the column to the Groups area in the right panel
+     - Apply background color if specified
+   - Recommended: no more than 3 groups
 
-### Step 13: Publish / Share
-1. Click the **Access tab**
-2. Set access: Only Me, Selected Roles, Selected Teams, or All Users
-3. Publish to a specific task area and report group in the nav panel
+10. **Configure filters**
+    - Add **Design Time Filters** from `design_time_filters` (reduces data at query level)
+    - Add **Run Time Filters** from `run_time_filters` (interactive end-user filters)
+    - For high-volume reports (>1,000 rows), always use design-time filters
 
-## Multi-Level Reports
+11. **Configure sorting**
+    - Set sort order from `sort_columns` in the Sort area of the right panel
 
-To report across related objects:
-- Add Level 2 (and optionally Level 3, Level 4)
-- Each level allows columns from that object
-- Groups can span levels
-- Suppress repeating values on parent-level columns to avoid redundancy
+12. **Set report options**
+    - Display Grand Totals: `display_grand_totals`
+    - Display Detail Rows: `display_detail_rows`
+    - Automatic Refresh: `auto_refresh`
+    - Enable for Workflow Actions: `enable_workflow_actions`
+    - Enable for Automated Export: `enable_automated_export`
 
-## Report Appearance Settings
-- **Border Color** — lines between rows
-- **Header Background Default Color** — default column header color (can be overridden per column)
+13. **Run and preview**
+    - Click **Run/Refresh** in the middle panel toolbar
+    - Review the report output — iterate on column attributes and re-run as needed
 
-## Post-Creation Verification
+14. **Add chart** (if specified)
+    - Go to the **Chart tab** in report configuration
+    - Select **Chart Series**: `chart.series_column` (must have a column with totals)
+    - Select **Chart Type**: `chart.chart_type` (Bar, Column, Pie, Donut, Line, Area, Gauge, Number Box, Table)
+    - Configure chart properties (legend, colors, drawing style)
+    - Set **Initial Display**: `chart.initial_display` (report view or chart view)
+
+15. **Publish / share** (if specified)
+    - Click the **Access tab**
+    - Set access type: `access.type` (Only Me, Selected Roles, Selected Teams, All Users)
+    - If Selected Roles/Teams: specify `access.roles` or `access.teams`
+    - Publish to `access.task_area` and `access.report_group` in the nav panel
+
+## Verification
+
 - [ ] Report runs without errors
-- [ ] All expected columns appear
-- [ ] Filters work correctly (design-time and run-time)
-- [ ] Groups display properly
-- [ ] Totals calculate correctly
-- [ ] Chart renders (if configured)
+- [ ] All expected columns appear in correct order
+- [ ] Column labels and formatting are correct
+- [ ] Design-time filters reduce data correctly
+- [ ] Run-time filters work interactively
+- [ ] Groups display properly with correct background colors
+- [ ] Totals calculate correctly (if configured)
+- [ ] Chart renders correctly (if configured)
 - [ ] Drilldown works (if configured)
 - [ ] Published to correct audience (if sharing)
+- [ ] Report appears in the correct nav panel location (if published)
+
+## Common Errors
+
+| Symptom | Cause | Fix |
+|---------|-------|-----|
+| +New button missing | Not in Administration > Custom Reports | Navigate to Reports > Administration > Custom Reports |
+| Column not in Add Columns list | Property doesn't exist on this object type | Verify the property exists — may need to create it first |
+| Chart Series dropdown empty | No columns have Totals configured | Add a Total Type (Count, Sum, etc.) to at least one column |
+| Report timeout or slow | Too many rows without design-time filter | Add design-time filters; set auto_refresh to false |
+| Blank report output | Design-time filter too restrictive | Relax or remove design-time filters and re-run |
+| Calculated column error | Expression syntax error | Check expression syntax — same rules as property expressions |
+| Access tab not saving | Must select at least one role/team | Select roles or teams, or use "All Users" |
+| Groups not showing | Column not in Groups area | Drag the column into the Groups section of the right panel |
