@@ -102,10 +102,10 @@ Read these before performing specific tasks:
 - **`references/create-property.md`** — Step-by-step guide for creating properties in the admin UI, including the canonical UI workflow, type-ahead strategy, expression entry, and post-save verification.
 - **`references/create-report.md`** — Step-by-step guide for creating custom reports.
 - **`references/ui-navigation.md`** — UI targeting strategy (3-tier), element anchors, focus recovery, and common pitfalls.
-- **`references/expression-standards.md`** — How to write expressions correctly (syntax rules, preferred patterns, functions).
-- **`references/function-library.md`** — Complete function reference: 63 functions (logical, text, number, date) with signatures, examples, gotchas, and common expression patterns.
-- **`references/buttons-and-workflow-steps.md`** — Buttons, Report Actions, Automated Actions, 11 workflow step types, BALI pattern, WFA report pairing, external API connections, button naming conventions.
-- **`references/automated-actions-and-notifications.md`** — Automated actions, notification rules, event types, nightly job sequence, recipient types, common automation patterns.
+
+For expression syntax, function library, workflow, and automation reference, use the **pu-app-guide** skill which has comprehensive, up-to-date coverage:
+- Expressions → `pu-app-guide/references/expressions.md`
+- Workflow & automation → `pu-app-guide/references/workflow.md`
 
 ## Safe Operating Rules (ALWAYS follow)
 

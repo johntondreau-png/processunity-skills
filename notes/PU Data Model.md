@@ -27,9 +27,9 @@ Consult this when you need to:
 Read the appropriate reference based on what you need:
 
 - **[[PU Ref - Objects]]** — Complete object catalog (Subject Areas, Settings, Reporting objects), traits (Grid/Tree, Renamable, Stateful), standard tabs, standard properties, and key relationships. Read when deciding WHICH object(s) to configure.
-- **[[PU Ref - Property Types]]** — All property types (basic, advanced, calculated, aggregate, Reference Data, cascading pick lists), config options, and best practices. Read when deciding WHAT properties to add.
-- **[[PU Ref - Reports and Dashboards]]** — Custom reports (levels, columns, groups, filters, sorts, charts, transpose), dashboards, column attributes, report options, and publishing. Read when designing reports or dashboards.
 - **[[PU Ref - Exchange Intelligence]]** — GRX intelligence data: Risk Index methodology, Risk Monitoring & Alerting (Recorded Future), Findings methodology, Risk Navigator, and Advanced Reporting.
+
+For property types, reports, and dashboards, see the **[[PU App Guide]]** which has comprehensive, up-to-date references from the PU help system.
 
 ## Key Platform Concepts
 

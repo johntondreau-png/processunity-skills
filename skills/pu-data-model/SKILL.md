@@ -29,9 +29,9 @@ Read the appropriate reference file based on what you need:
 
 - **`references/objects.md`** — Complete object catalog (Subject Areas, Settings objects, Reporting objects), their traits (Grid/Tree, Renamable, Stateful, etc.), standard tabs, standard properties, and key relationships. Read this when you need to decide WHICH object(s) to configure.
 
-- **`references/property-types.md`** — All property types (basic, advanced, calculated, aggregate, Reference Data, cascading pick lists), configuration options (required, hidden, validation rules, auto-update rules, color coding), and best practices. Read this when you need to decide WHAT properties to add and HOW to configure them.
-
-- **`references/reports-and-dashboards.md`** — How to create custom reports (levels, columns, groups, filters, sorts, charts, transpose), dashboards (personal vs. custom), column attributes, report options, and publishing/sharing. Read this when you need to design reports or dashboards.
+For property types, reports, and dashboards reference, use the **pu-app-guide** skill which has comprehensive, up-to-date coverage:
+- Property types → `pu-app-guide/references/properties.md`
+- Reports & dashboards → `pu-app-guide/references/reports.md`
 
 ## Key Platform Concepts
 
