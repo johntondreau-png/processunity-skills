@@ -1,0 +1,339 @@
+{
+  "_meta": {
+    "totalReports": 39,
+    "generatedAt": "2026-04-12",
+    "breakdown": {
+      "importTemplates": 8,
+      "excelExportReports": 14,
+      "dashboardReports": 5,
+      "wfaReports": 11,
+      "adminReports": 1
+    }
+  },
+  "importTemplates": [
+    {
+      "name": "DORA: Reference Data Import",
+      "objectTypeId": 209,
+      "columns": [
+        "External ID",
+        "Name",
+        "Type"
+      ],
+      "keyColumn": "External ID",
+      "inserts": true,
+      "updates": true,
+      "templateId": 259034
+    },
+    {
+      "name": "DORA IMPORT 7: FOURTH PARTIES - REF DATA",
+      "objectTypeId": 209,
+      "columns": [
+        "External ID",
+        "Name",
+        "Type"
+      ],
+      "keyColumn": "External ID",
+      "inserts": true,
+      "updates": true
+    },
+    {
+      "name": "DORA IMPORT 1: LEGAL ENTITY",
+      "objectTypeId": 237,
+      "inserts": true,
+      "updates": true
+    },
+    {
+      "name": "DORA IMPORT 2: CIF",
+      "objectTypeId": 239,
+      "inserts": true,
+      "updates": true
+    },
+    {
+      "name": "DORA IMPORT 3: VENDOR",
+      "objectTypeId": 214,
+      "inserts": true,
+      "updates": true
+    },
+    {
+      "name": "DORA IMPORT 4: VENDOR SERVICE",
+      "objectTypeId": 216,
+      "inserts": true,
+      "updates": true
+    },
+    {
+      "name": "DORA IMPORT 5: SERVICE ADD ON",
+      "objectTypeId": 263,
+      "inserts": true,
+      "updates": true
+    },
+    {
+      "name": "DORA IMPORT 6: AGREEMENT",
+      "objectTypeId": 256,
+      "inserts": true,
+      "updates": true
+    }
+  ],
+  "excelExportReports": [
+    {
+      "name": "EXCEL_DORA_RT.01.01",
+      "objectTypeId": 237,
+      "rts": "RT.01.01",
+      "description": "Entity maintaining register",
+      "level2": null,
+      "relationship": null,
+      "scrollPct": 70
+    },
+    {
+      "name": "EXCEL_DORA_RT.01.02",
+      "objectTypeId": 237,
+      "rts": "RT.01.02",
+      "description": "Entity identification",
+      "level2": null,
+      "relationship": null,
+      "scrollPct": 70
+    },
+    {
+      "name": "EXCEL_DORA_RT.01.03",
+      "objectTypeId": 237,
+      "rts": "RT.01.03",
+      "description": "Branch information",
+      "level2": null,
+      "relationship": null,
+      "scrollPct": 70
+    },
+    {
+      "name": "EXCEL_DORA_RT.02.01",
+      "objectTypeId": 256,
+      "rts": "RT.02.01",
+      "description": "Contract general",
+      "level2": "Legal Entity",
+      "relationship": "Legal Entities Making Use of This Agreement",
+      "scrollPct": 70
+    },
+    {
+      "name": "EXCEL_DORA_RT.02.02",
+      "objectTypeId": 256,
+      "rts": "RT.02.02",
+      "description": "Contract ICT services",
+      "level2": "Vendor Service",
+      "relationship": "DORA Linked Service(s)",
+      "scrollPct": 70
+    },
+    {
+      "name": "EXCEL_DORA_RT.02.03",
+      "objectTypeId": 274,
+      "rts": "RT.02.03",
+      "description": "Contract entities",
+      "level2": null,
+      "relationship": null,
+      "scrollPct": 70
+    },
+    {
+      "name": "EXCEL_DORA_RT.03.01",
+      "objectTypeId": 256,
+      "rts": "RT.03.01",
+      "description": "Intragroup general",
+      "level2": "Legal Entity",
+      "relationship": "Legal Entities Making Use of This Agreement",
+      "scrollPct": 70
+    },
+    {
+      "name": "EXCEL_DORA_RT.03.02",
+      "objectTypeId": 256,
+      "rts": "RT.03.02",
+      "description": "Intragroup ICT",
+      "level2": "Legal Entity",
+      "relationship": "Legal Entities Making Use of This Agreement",
+      "scrollPct": 70
+    },
+    {
+      "name": "EXCEL_DORA_RT.03.03",
+      "objectTypeId": 256,
+      "rts": "RT.03.03",
+      "description": "Intragroup entities",
+      "level2": "Legal Entity",
+      "relationship": "(DORA_03.33.0020) - LEI of entity providing ICT services",
+      "scrollPct": 70
+    },
+    {
+      "name": "EXCEL_DORA_RT.04.01",
+      "objectTypeId": 256,
+      "rts": "RT.04.01",
+      "description": "Overview",
+      "level2": "Legal Entity",
+      "relationship": "Legal Entities Making Use of This Agreement",
+      "scrollPct": 70
+    },
+    {
+      "name": "EXCEL_DORA_RT.05.01",
+      "objectTypeId": 214,
+      "rts": "RT.05.01",
+      "description": "Provider details",
+      "level2": "Legal Entity",
+      "relationship": "Legal Entities (Legal Entity)",
+      "scrollPct": 70
+    },
+    {
+      "name": "EXCEL_DORA_RT.05.02",
+      "objectTypeId": 256,
+      "rts": "RT.05.02",
+      "description": "Subcontractor chain",
+      "level2": "Vendor Service",
+      "relationship": "DORA Linked Service(s)",
+      "scrollPct": 70
+    },
+    {
+      "name": "EXCEL_DORA_RT.06.01",
+      "objectTypeId": 239,
+      "rts": "RT.06.01",
+      "description": "Critical functions",
+      "level2": null,
+      "relationship": null,
+      "scrollPct": 70
+    },
+    {
+      "name": "EXCEL_DORA_RT.07.01",
+      "objectTypeId": 256,
+      "rts": "RT.07.01",
+      "description": "Assessment details",
+      "level2": "Vendor Service",
+      "relationship": "DORA Linked Service(s)",
+      "scrollPct": 70
+    }
+  ],
+  "dashboardReports": [
+    {
+      "name": "DASH: DORA Vendors",
+      "objectTypeId": 214,
+      "chartType": "Chart - Standard",
+      "chartTypeId": 1,
+      "scrollPct": 54
+    },
+    {
+      "name": "DASH: DORA Vendor Services",
+      "objectTypeId": 216,
+      "chartType": "Chart - Standard",
+      "chartTypeId": 1,
+      "scrollPct": 54
+    },
+    {
+      "name": "DASH: DORA Agreements",
+      "objectTypeId": 256,
+      "chartType": "Chart - Standard",
+      "chartTypeId": 1,
+      "scrollPct": 54
+    },
+    {
+      "name": "DASH: DORA Fourth Parties",
+      "objectTypeId": 226,
+      "chartType": "Chart - Standard",
+      "chartTypeId": 1,
+      "scrollPct": 54
+    },
+    {
+      "name": "DASH: DATA: Legal Entities",
+      "objectTypeId": 237,
+      "chartType": "Number Box",
+      "chartTypeId": 7,
+      "scrollPct": 54
+    }
+  ],
+  "wfaReports": [
+    {
+      "name": "BTN: AGREEMENT: 01. Link Service to Agreement",
+      "objectTypeId": 256,
+      "category": "Actions",
+      "wfaEnabled": true,
+      "servesButton": 1,
+      "scrollPct": 45
+    },
+    {
+      "name": "BTN: AGREEMENT: 01. Relate Agreement to Legal Entity",
+      "objectTypeId": 256,
+      "category": "Actions",
+      "wfaEnabled": true,
+      "servesButton": 2,
+      "scrollPct": 45
+    },
+    {
+      "name": "BTN: AGREEMENT: 02. Legal Entity Information",
+      "objectTypeId": 256,
+      "category": "Actions",
+      "wfaEnabled": true,
+      "servesButton": 2,
+      "scrollPct": 45
+    },
+    {
+      "name": "BTN: AGREEMENT: SERVICE: 03. Relate Service to Agreement",
+      "objectTypeId": 256,
+      "category": "Actions",
+      "wfaEnabled": true,
+      "servesButton": 1,
+      "scrollPct": 45
+    },
+    {
+      "name": "BTN: QR: Create Fourth Party Record",
+      "objectTypeId": 226,
+      "category": "Actions",
+      "wfaEnabled": true,
+      "servesButton": 4,
+      "scrollPct": 45
+    },
+    {
+      "name": "BTN: QR: Create Ref data",
+      "objectTypeId": 209,
+      "category": "Actions",
+      "wfaEnabled": true,
+      "servesButton": 4,
+      "scrollPct": 45
+    },
+    {
+      "name": "BTN: SERVICE: SAO: 1. Create Service Add On",
+      "objectTypeId": 263,
+      "category": "Actions",
+      "wfaEnabled": true,
+      "servesButton": 8,
+      "scrollPct": 45
+    },
+    {
+      "name": "BTN: VENDOR: Create Fourth Party Record",
+      "objectTypeId": 226,
+      "category": "Actions",
+      "wfaEnabled": true,
+      "servesButton": 5,
+      "scrollPct": 45
+    },
+    {
+      "name": "BTN: VENDOR: Create Fourth Party Reference Data",
+      "objectTypeId": 209,
+      "category": "Actions",
+      "wfaEnabled": true,
+      "servesButton": 5,
+      "scrollPct": 45
+    },
+    {
+      "name": "BTN: VENDOR: Relate Existing Fourth Party to Vendor",
+      "objectTypeId": 226,
+      "category": "Actions",
+      "wfaEnabled": true,
+      "servesButton": 6,
+      "scrollPct": 45
+    },
+    {
+      "name": "BTN: VENDOR SERVICE: 01. Relate Fourth Party to Vendor Service",
+      "objectTypeId": 216,
+      "category": "Actions",
+      "wfaEnabled": true,
+      "servesButton": 9,
+      "scrollPct": 45
+    }
+  ],
+  "adminReports": [
+    {
+      "name": "ADM: Delete Typeless Reference Data",
+      "objectTypeId": 209,
+      "hasDeleteAction": true,
+      "designTimeFilter": "Type = '' (empty)"
+    }
+  ]
+}

@@ -108,43 +108,205 @@ These relationships MUST exist for multi-level reports to work:
 
 Load all DORA reference data types with EBA taxonomy codes. Each value's **External ID** must store the EBA code for regulatory export.
 
-#### Reference Data Types to Create
+**Authoritative data source:** `/Users/johntondreau/Projects/dora-reference-data.json` — 643 records, 20 types, conflict-free External IDs. Generated from EBA taxonomy codes in `ciso-assistant/backend/core/dora.py`.
 
-| Type Name | Count | EBA Code Prefix | Example Values |
-|-----------|-------|-----------------|----------------|
-| **DORA - Country** | ~251 | `eba_GA:XX` | ALBANIA (eba_GA:AL), AUSTRIA (eba_GA:AT), UNITED STATES (eba_GA:US) |
-| **DORA - Currency** | ~166 | `eba_CU:XXX` | EUR (eba_CU:EUR), USD (eba_CU:USD), GBP (eba_CU:GBP) |
-| **DORA - Licensed Activity** | ~128 | `eba_TA:xxxx` | Credit institutions, Investment firms, Payment services |
-| **DORA - Type of Entity** | ~24 | `eba_CT:xxxx` | Credit institutions, Insurance undertakings, Payment institutions |
-| **DORA - ICT Service Type** | ~19 | `eba_TA:xxxx` | ICT Development (S02), Cloud IaaS (S17), Cloud PaaS (S18), Cloud SaaS (S19) |
-| **DORA - Group Hierarchy** | ~5 | `eba_RP:xxxx` | Ultimate parent (x53), Subsidiary (x56) |
-| **DORA - Binary** | 3 | `eba_BT:xxxx` | Yes (x28), No (x29), Assessment not performed (x21) |
-| **DORA - Type of Person** | 2 | `eba_CT:xxxx` | Legal person, Individual acting in business capacity |
-| **DORA - Level of Reliance** | 4 | `eba_ZZ:xxxx` | Not significant (x794), Low (x795), Material (x796), Full (x797) |
-| **DORA - Data Storage Sensitivity** | 3 | `eba_ZZ:xxxx` | Low (x791), Medium (x792), High (x793) |
-| **DORA - Impact of Discontinuing** | 4 | `eba_ZZ:xxxx` | Low, Medium, High, Assessment not performed |
-| **DORA - Substitutability** | 4 | `eba_ZZ:xxxx` | Not substitutable (x959), Easily (x962), Medium (x961), Highly complex (x960) |
-| **DORA - Inability to Substitute Reason** | 3 | `eba_ZZ:xxxx` | Lack of alternatives (x963), Migration difficulties (x964), Both (x965) |
-| **DORA - Reintegration Possibility** | 3 | `eba_ZZ:xxxx` | Easy (x798), Difficult (x966), Highly complex (x967) |
-| **DORA - Termination Reason** | 6 | `eba_CO:xxxx` | Expired (x4), Provider breach (x5), Impediments (x6), Data security (x7) |
-| **DORA - Type of Contractual Arrangement** | 3 | `eba_CO:xxxx` | Standalone (x1), Overarching (x2), Subsequent/associated (x3) |
-| **DORA - Nature of Entity** | 2 | `eba_ZZ:xxxx` | Branch of financial entity (x838), Not a branch (x839) |
-| **DORA - Criticality Assessment** | 3 | `eba_BT:xxxx` | Yes, No, Assessment not performed |
-| **DORA - Fourth Party** | varies | — | Instance-specific fourth party names for pick list |
-| **DORA - Exit Plan Existence** | 3 | `eba_BT:xxxx` | Yes, No, Assessment not performed |
-| **DORA - Alternative Providers** | 3 | `eba_BT:xxxx` | Yes, No, Assessment not performed |
-| **DORA - Data Storage Location** | varies | `eba_GA:XX` | Uses Country codes for storage/processing locations |
+#### Step 1.1: Add DORA Type Pick List Values (MUST DO FIRST)
 
-**Loading approach:** Use the pu-import skill's Reference Data import template. Each row needs: Name (display value), Type (e.g., "DORA - Country"), External ID (EBA code). Load in bulk via API or CSV import.
+**CRITICAL: Type values must exist in the Reference Data > Type pick list BEFORE importing records.** The Import API only assigns Type on INSERT (not UPDATE), and only if the Type value is a valid pick list option.
+
+Navigate to: **Settings > General > Properties > Reference Data > Edit > click "Type" property**
+
+Add all 20 DORA type names using the `btnAddItem` button (each click triggers an ASP.NET postback that creates an empty row — fill it, wait for postback, repeat):
+
+```
+DORA - Alternative Providers, DORA - Binary, DORA - Country,
+DORA - Criticality Assessment, DORA - Currency, DORA - Data Storage Sensitivity,
+DORA - Exit Plan Existence, DORA - Group Hierarchy, DORA - ICT Service Type,
+DORA - Impact of Discontinuing, DORA - Inability to Substitute Reason,
+DORA - Level of Reliance, DORA - Licensed Activity, DORA - Nature of Entity,
+DORA - Reintegration Possibility, DORA - Substitutability,
+DORA - Termination Reason, DORA - Type of Contractual Arrangement,
+DORA - Type of Entity, DORA - Type of Person
+```
+
+Click OK, then Done to save the property.
+
+#### Step 1.2: Create Import Template
+
+Create a Reference Data import template with 3 columns:
+- **External ID** (Key Column)
+- **Name**
+- **Type**
+
+Enable: Inserts + Updates, "Enable for Automated Import"
+
+See `pu-admin-navigator/references/create-import-template.md` for the full procedure. Use `btnAddItem` to add columns from the DataTable selection dialog (`dtReportColSelection`).
+
+#### Step 1.3: Import Reference Data
+
+Import all 643 records from the reference data JSON via the import template. Records are organized in 20 types:
+
+| Type Name | Count | EBA Prefix | Notes |
+|-----------|-------|------------|-------|
+| DORA - Country | 251 | `eba_GA:XX` | Uses PU common names (not ISO formal) |
+| DORA - Currency | 166 | `eba_CU:XXX` | Format: "CODE - Name" |
+| DORA - Licensed Activity | 131 | `eba_TA:xxxx` | Banking, insurance, CSD, CCP activities |
+| DORA - Type of Entity | 24 | `eba_CT:xxxx` | Financial entity classifications |
+| DORA - ICT Service Type | 19 | `eba_TA:S01-S19` | Cloud, hosting, dev, security services |
+| DORA - Termination Reason | 6 | `eba_CO:x4-x9` | Contract termination causes |
+| DORA - Group Hierarchy | 5 | `eba_RP:xxxx` | Parent/subsidiary/outsourcing |
+| DORA - Impact of Discontinuing | 4 | `eba_ZZ:x791_IOD` etc. | Low/Med/High + not performed |
+| DORA - Level of Reliance | 4 | `eba_ZZ:x794-x797` | Not significant to Full |
+| DORA - Substitutability | 4 | `eba_ZZ:x959-x962` | Substitutability levels |
+| DORA - Reintegration Possibility | 4 | `eba_ZZ:x798,x966,x967,x0` | Reintegration difficulty |
+| Others (9 types) | 30 | Various | Binary, Person, Nature, etc. |
+
+**Import in batches of 50** via `POST /api/importexport/Import/{templateId}` with payload `{ "Data": [...records] }`.
+
+**After import**, update 17 country name mismatches to PU common names (e.g., "Russian Federation" → "Russia").
+
+#### External ID Conflict Resolution
+
+6 EBA codes are shared across multiple types (e.g., `eba_BT:x28` = "Yes" in 4 types). Since External ID is the import key, duplicates are resolved with **type-specific suffixes**:
+
+| Suffix | Type | Example |
+|--------|------|---------|
+| `_BIN` | DORA - Binary | `eba_BT:x28_BIN` |
+| `_CA` | DORA - Criticality Assessment | `eba_BT:x28_CA` |
+| `_EP` | DORA - Exit Plan Existence | `eba_BT:x28_EP` |
+| `_AP` | DORA - Alternative Providers | `eba_BT:x28_AP` |
+| `_DSS` | DORA - Data Storage Sensitivity | `eba_ZZ:x791_DSS` |
+| `_IOD` | DORA - Impact of Discontinuing | `eba_ZZ:x791_IOD` |
+
+Export reports strip suffixes using calculated columns: `LEFT([External ID], FIND("_", [External ID] + "_") - 1)`
+
+#### Step 1.4: Verify
+
+Run: `list_reports` → `export_report` on the Reference Data MCP report. Group by Type and verify all 20 DORA types are populated with correct counts. Zero empty-type DORA records.
+
+#### Country Data Strategy
+
+PU has an existing "Country" type (180+ records, ISO3 External IDs, CPI scores, regions). DORA uses a separate "DORA - Country" type (251 records, `eba_GA:XX` External IDs). **Keep these as separate types** — different External ID formats serving different consumers (PU properties vs DORA regulatory export).
+
+#### Cleanup: Bulk Delete for Mistakes
+
+If records are imported without Types (happens if Step 1.1 is skipped), use a Bulk Delete report to clean up:
+1. Create a Custom Report on Reference Data with columns Name, Type, External ID
+2. Set Design Time Filter on Type = '' (empty)
+3. Add Report Action: Type = "Bulk Delete" (value 2), Require Confirmation = true
+4. Run report → click delete button → select all → confirm
+
+See `pu-admin-navigator/references/create-delete-report.md` for the full procedure.
 
 ### Phase 2: Object Configuration
 
-Configure properties on each DORA object. Use the patterns from pu-config-designer — especially **conditional display** (gated by `DORA?` flag), **Section Headers** (organized by RTS template), and **External ID shadow** (hidden aggregates for EBA codes).
+Create ~194 DORA properties across 10 objects. Properties are created via browser automation of the Properties admin UI.
+
+#### Step 2.1: Prerequisites
+
+- System settings enabled: Custom Object One, Custom Object Three, Vendor Custom Object One
+- **Custom Object One Child Objects** must also be enabled for Legal Entity Contract properties
+- Objects renamed: Legal Entity, CIF, Service Add On (via Subject Areas)
+
+#### Step 2.2: Property Creation Automation
+
+Navigate to: **Settings > General > Properties > [Object] > Edit**
+
+Use `paneDetail_customPropertiesView_btnAddItem` to open the Add Property dialog for each property.
+
+**Property Type IDs** (for the hidden `<select>` element `addCustomPropertyDialog_ddlType`):
+
+| Type ID | Property Type |
+|---------|---------------|
+| 3 | Section Header |
+| 17 | Text - Short (100 characters) |
+| 14 | Text - Long (4,000 characters) |
+| 13 | Text - Calculated |
+| 21 | Text - Aggregate |
+| 7 | Number - Integer |
+| 6 | Number - Decimal |
+| 20 | Number - Aggregate |
+| 2 | Date - Calendar |
+| 1 | Date - Calculated |
+| 11 | Pick List - Yes/No |
+| 10 | Pick List - Select One |
+| 1005 | Reference Data - Select One |
+| 1013 | Object - Select One |
+| 1014 | Object - Select Many |
+| 1007 | Third Party - Select One |
+
+**Two creation patterns:**
+
+**Pattern A — Simple types** (no postback needed): Set the hidden `<select>` value directly via `evaluate()`, dispatch a `change` event, click OK.
+```
+page.evaluate((t) => {
+  const s = document.getElementById('addCustomPropertyDialog_ddlType');
+  s.value = t; s.dispatchEvent(new Event('change', { bubbles: true }));
+}, typeId);
+```
+Works for: Section Header (3), Text-Short (17), Text-Long (14), Text-Calc (13), Text-Agg (21), Number (6/7/20), Date (1/2), Ref Data (1005), Object (1013/1014/1007).
+
+**Pattern B — Pick List types** (postback required): Must use the search combobox input + Enter to trigger the Semantic UI dropdown → ASP.NET postback → reveals `tbxList` textarea.
+```
+page.click('#addCustomPropertyDialog_ddlType_search');
+page.fill('#addCustomPropertyDialog_ddlType_search', '');
+page.type('#addCustomPropertyDialog_ddlType_search', 'Pick List - Select One');
+page.keyboard.press('Enter');
+page.waitForTimeout(5000);  // Wait for postback
+page.fill('#addCustomPropertyDialog_tbxList', 'Value1\nValue2\nValue3');
+```
+**Setting the hidden select directly does NOT trigger the postback** — the tbxList textarea never appears.
+
+**Timing guidelines:**
+- Light objects (0-20 existing props): 1500ms after AddProperty click, 1000ms before OK
+- Heavy objects (100+ existing props, e.g., Vendor): 2500ms after AddProperty click
+- Dialog close: poll `offsetWidth > 0` every 500ms, retry OK at iteration 6-7
+
+#### Step 2.3: Property Build Order
+
+Create properties per object in this order (dependencies flow down):
+
+| Order | Object | Props | PU Object Type ID | Notes |
+|-------|--------|-------|-------------------|-------|
+| 1 | Legal Entity | 30 | 237 (Custom Object One) | Must exist before CIF, Agreement references |
+| 2 | CIF | 19 | 239 (Custom Object Three) | References Legal Entity |
+| 3 | Vendor | 32 | 214 (Third Party) | Heavy object — use longer timeouts |
+| 4 | Vendor Service | 27 | 216 (Third-Party Service) | Child of Vendor |
+| 5 | Service Add On | 23 | 263 (Vendor Custom Object One) | Child of Vendor Service |
+| 6 | Agreement | 36 | 256 | References Vendor, LE, Vendor Service |
+| 7 | Fourth Party | 10 | 226 | Child of Vendor |
+| 8 | Legal Entity Contract | 6 | (child) | Requires Custom Object One Child Objects enabled |
+| 9 | Questionnaire Response | 8 | 153 | Fourth Party workflow properties |
+| 10 | Reference Data | 3 | 209 | Concentration risk helpers |
+
+#### Step 2.4: Post-Creation Configuration
+
+After creating all properties, a second pass configures:
+1. **Reference Data type filters** on all Ref Data properties (e.g., filter to "DORA - Country")
+2. **Aggregate lookup formulas** on all Text-Aggregate properties (source property, relationship, lookup type 5 for External ID)
+3. **Calculated field expressions** on all Text-Calculated properties (VALIDATOR patterns, External ID shadows, date sentinels)
+4. **Conditional display rules** on Section Headers (gate on `[DORA?] = "Yes"`)
+5. **Hidden flag** on all External ID shadow properties
+
+See `references/property-inventory.md` for the complete per-object property listing.
+See `manifests/dora-formulas.json` for all 75 calculated/aggregate expressions.
+
+**Post-creation automation for formulas:**
+
+For **Aggregate** properties (External ID shadows): Navigate to Properties > [Object] > Edit > click property link > set `addCustomPropertyDialog_ddlAggregateCustomProperty` to "External Id" > check Hidden > OK.
+
+For **Calculated** properties (validators, derivations): Click property link > click "Rules" tab > fill `addCustomPropertyDialog_txtValidationExpression` with expression > OK.
+
+**Heavy object warning:** Objects with 200+ existing properties (Vendor=202, Vendor Service=127) require:
+- Scroll detail pane to bottom before each property lookup
+- Use `scrollIntoView` then separate click `evaluate` (not combined)
+- Use `evaluate` clicks (not Playwright `page.click`) when busy shield (`divShield.active`) blocks
+- Allow 2.5s between dialog opens on heavy objects (vs 1.5s on light objects)
 
 #### Pattern: DORA Flag + Section Gating
 
 On every DORA-participating object, add:
-1. **`DORA?`** — Pick List (Reference Data type "DORA - Binary"). Values: Yes, No, Assessment not performed.
+1. **`DORA?`** — Pick List - Select One. Values: Yes, No, Assessment not performed.
 2. **Section Headers** named by RTS template (e.g., `DORA (RT.05.01)`) — conditional display on `[DORA?] = "Yes"`
 3. All DORA properties placed below their respective Section Header
 
@@ -306,6 +468,23 @@ This keeps DORA fields hidden on non-DORA records.
 
 Build reports in this order — import reports first, then operational, then export.
 
+#### Step 3.0: Report Creation Automation
+
+All reports are created via **REPORTS > Custom Reports > New** or **Settings > General > Import Templates > New**.
+
+**Import Template creation** (see Phase 1 for Reference Data template pattern):
+- Click `paneMaster_mtb_New` → set Name + Object Type (`paneDetail_importTemplateSetupView_ddlObjectType`) + Done
+- Edit → click `paneDetail_importTemplateSetupView_btnAddItem` → DataTable column selection → set Key Column (`paneDetail_importTemplateSetupView_ddlKey`) → enable Automated Import (`paneDetail_importTemplateSetupView_ddlImport`) → Done
+
+**Custom Report creation**:
+- Click `paneMaster_mtb_New` → set Name + Object Type (`paneDetail_customReportSetupView_ddlObjectType`) → Done
+- Edit → click Add Columns button (`[id*="addColumnMenu"]`) → DataTable column selection (`dtReportColSelection`) → OK → Done
+
+**Grid scroll for finding reports**: The Custom Reports grid is large. Use `MuiDataGrid-virtualScroller.scrollTop = scrollHeight * pct / 100`:
+- **EXCEL_DORA reports**: ~70% scroll position
+- **DASH: DORA reports**: ~54% scroll position
+- **BTN: reports**: ~45% scroll position
+
 #### Import Reports (Data Loading Sequence)
 
 **CRITICAL: Load reference data FIRST, then load records in dependency order.**
@@ -414,6 +593,24 @@ Build 9 buttons that power the DORA data entry workflow. Each uses ProcessUnity'
 
 **See `references/buttons-and-workflows.md` for detailed WFA report chains.**
 
+### Step 5.0: Button Creation Automation
+
+Buttons are created via **Settings > Notifications & Workflow > Buttons** (NOT under General or Properties).
+
+**Navigation**: `nav=/area/8/group/483/task/461/tab/122/`
+
+**Button creation pattern**:
+1. Select object type in the grid
+2. Click Edit (`paneDetail_dtb_Edit`)
+3. Click `paneDetail_CustomButtonsView_btnAddItem` → dialog opens with default name "-New Button-"
+4. Fill name via `evaluate` (find first visible text input with value containing "New Button", use native setter)
+5. Optionally set Conditional Display (`addCustomButtonsDialog_ddlConditionalDisplay`) to DORA? property
+6. Optionally set Conditional Enable (`addCustomButtonsDialog_ddlConditionalEnable`) to VALIDATOR property
+7. Configure Form/Steps tabs for WFA linkage
+8. Click OK → Done
+
+**Important**: Use `evaluate` for name fill, not `page.fill` — the dialog element ID changes between postbacks.
+
 ### Button Build Order
 
 Build buttons AFTER properties and reports are in place (buttons reference WF reports + properties).
@@ -512,9 +709,77 @@ The -30 delta represents properties the STAR scoped but the reference instance o
 - **`references/property-inventory.md`** — Complete per-object property listing with types and notes
 - **`references/buttons-and-workflows.md`** — Detailed WFA report chains for all 9 buttons
 - **`manifests/dora-formulas.json`** — 75 calculated/aggregate field expressions (VALIDATOR patterns, External ID shadows, date sentinels)
+- **`manifests/dora-properties.json`** — All 194 properties with types, formulas, filters, hidden flags (data-driven manifest for automation)
+- **`manifests/dora-reports.json`** — All 39 reports with columns, chart types, scroll positions
+- **`manifests/dora-buttons.json`** — All 9 buttons with conditional display, WFA step wiring
+- **`manifests/dora-validation.json`** — Pre-flight and post-flight validation checklists
+- **`automation/helpers.js`** — Reusable Playwright functions for all DORA configuration patterns
+- **`automation/pre-flight.js`** — Pre-flight validation script (run before starting DORA uplift)
+- **`automation/post-flight.js`** — Post-flight validation script (run after completing DORA uplift)
 
 ### Supporting skills
 - **pu-app-guide** — Object types, property types, relationships, aggregate codes, platform limits, report design, chart types, multi-level report joins, dashboard design
 - **pu-config-designer** — Configuration patterns, conditional display, auto-update rules, color coding
-- **pu-admin-navigator** — Browser automation for creating properties, reports, and navigating admin UI
+- **pu-admin-navigator** — Browser automation for creating properties, reports, and navigating admin UI. Includes `create-delete-report.md` for Bulk Delete pattern.
 - **pu-import** — Import API, column positional mapping, bulk data loading
+
+## Automation Quick Reference (Deterministic Patterns from Dry Run)
+
+### PU Admin URL Patterns
+| Page | Nav Path |
+|------|----------|
+| System Settings | `nav=/area/8/group/262/task/423/tab/48/` |
+| Subject Areas | `nav=/area/8/group/262/task/449/tab/9/` |
+| Properties | `nav=/area/8/group/417/task/265/tab/109/activeObject/{objectTypeId}/activeObjectType/2/` |
+| Import Templates | `nav=/area/8/group/417/task/429/tab/9/` |
+| Reference Data | `nav=/area/8/group/417/task/432/tab/9/` |
+| Buttons | `nav=/area/8/group/483/task/461/tab/122/activeObject/{objectTypeId}/activeObjectType/2/` |
+| Custom Reports | `nav=/area/12/group/421/task/257/tab/9/` |
+
+### PU Object Type IDs
+| ID | Object |
+|----|--------|
+| 209 | Reference Data |
+| 214 | Third Party (Vendor) |
+| 216 | Third-Party Service (Vendor Service) |
+| 237 | Custom Object One (Legal Entity) |
+| 239 | Custom Object Three (CIF) |
+| 256 | Agreement |
+| 263 | Service Add On |
+| 226 | Fourth Party |
+| 274 | Custom Object One Child (Legal Entity Contract) |
+| 153 | Questionnaire Response |
+
+### Property Type IDs
+| ID | Type | Postback? |
+|----|------|-----------|
+| 3 | Section Header | No |
+| 17 | Text - Short | No |
+| 14 | Text - Long | No |
+| 13 | Text - Calculated | No |
+| 21 | Text - Aggregate | No |
+| 7 | Number - Integer | No |
+| 6 | Number - Decimal | No |
+| 2 | Date - Calendar | No |
+| 1 | Date - Calculated | No |
+| 10 | Pick List - Select One | **YES — search+Enter** |
+| 11 | Pick List - Yes/No | No |
+| 1005 | Reference Data - Select One | No |
+| 1013 | Object - Select One | No |
+| 1014 | Object - Select Many | No |
+| 1007 | Third Party - Select One | No |
+
+### Critical Automation Rules (Learned from Failures)
+
+1. **Pick List type change**: Must use `#ddlType_search` → type name → `Enter`. Setting hidden `<select>` does NOT trigger postback.
+2. **Heavy objects (200+ props)**: Use 2500ms wait after AddProperty click. Scroll ALL containers to bottom before property lookups.
+3. **Property link clicks on heavy objects**: Two-step — `scrollIntoView` in one evaluate, then `click` in a separate evaluate with 300ms gap.
+4. **Busy shield**: PU shows `divShield.active` during postbacks. Use `evaluate(() => element.click())` instead of `page.click()` to bypass.
+5. **Dialog close detection**: Poll `[role="dialog"]` offsetWidth every 500ms. Retry OK click at iteration 7-10.
+6. **Save per object**: Batch ALL property changes per object into one edit session. Save with Done once at the end.
+7. **Ref Data type filter**: Click dropdown **wrapper** (`.ui.dropdown` parent), NOT the search input. Click exact "Type" menu item, wait 4s for postback.
+8. **Ref Data filter value**: Multi-select search at `#addCustomPropertyDialog_cboFilterValues_search`, type DORA type name, click matching `.menu .item`.
+9. **Reference Data Type pick list**: Must add values via `btnAddItem` button (postback per value). Hidden JSON field manipulation does NOT persist.
+10. **Import API Type assignment**: Only works on INSERT, not UPDATE. Delete orphans and re-import if Type is wrong.
+11. **Buttons**: Admin is at Settings > Notifications & Workflow > Buttons (`group/483/task/461`). Use evaluate for name fill (dialog ID changes between postbacks).
+12. **Report grid scroll**: Virtual scroller at `MuiDataGrid-virtualScroller.scrollTop`. EXCEL reports at ~70%, DASH at ~54%.

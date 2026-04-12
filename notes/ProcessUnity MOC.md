@@ -38,11 +38,16 @@ This is your entry point for all ProcessUnity platform knowledge. Start with **A
 | [[PU Instance Analyzer]] | Analyze an instance — fingerprint, connector inventory, gap analysis, data health |
 | [[PU Scaffold Reports]] | Auto-create one report per object type for full MCP read access |
 
+### Regulatory Uplift
+| Skill | What It Does |
+|-------|-------------|
+| [[PU Uplift Designer]] | **NEW** — Generate automation manifests from STAR docs for any regulatory framework |
+| [[PU DORA]] | DORA compliance data package — 194 properties, 39 reports, 9 buttons, 643 reference data records |
+
 ### Specialized
 | Skill | What It Does |
 |-------|-------------|
 | [[PU Word Templates]] | Build VBA-enabled Word templates with SVG visualizations for Word Connector reports |
-| [[PU DORA]] | Implement EU DORA compliance — Register of Information, RTS templates, EBA taxonomy |
 
 ## Learning Path
 
@@ -55,7 +60,8 @@ This is your entry point for all ProcessUnity platform knowledge. Start with **A
 7. **[[PU Import]]** — push data into PU programmatically via the Import API
 8. **[[PU Enrich]]** — pull external intelligence and push it back into PU
 9. **[[PU Agentic Pipeline]]** — the advanced pattern for AI-driven workflows
-10. **[[PU DORA]]** — full DORA implementation guide (builds on all the above)
+10. **[[PU Uplift Designer]]** — generate manifests from STAR docs for any regulatory framework
+11. **[[PU DORA]]** — full DORA implementation (the reference implementation for uplift automation)
 
 ## Key Concepts
 

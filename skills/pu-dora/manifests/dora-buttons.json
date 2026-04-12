@@ -1,0 +1,243 @@
+{
+  "_meta": {
+    "totalButtons": 9,
+    "generatedAt": "2026-04-12"
+  },
+  "buttons": [
+    {
+      "object": "Agreement",
+      "puObjectName": "Agreement",
+      "puObjectTypeId": 256,
+      "name": "Update and Relate Service",
+      "conditionalDisplay": "DORA?",
+      "conditionalEnable": "VALIDATOR - DORA",
+      "steps": [
+        {
+          "type": "Export/Import",
+          "reportName": "BTN: AGREEMENT: 01. Link Service to Agreement",
+          "sourceObject": "Agreement",
+          "wfaContext": true
+        },
+        {
+          "type": "Export/Import",
+          "reportName": "BTN: AGREEMENT: 01. Link Service to Agreement",
+          "sourceObject": "Vendor Service",
+          "wfaContext": false,
+          "wfaOther": true,
+          "wfaOtherTypes": 256
+        },
+        {
+          "type": "Export/Import",
+          "reportName": "BTN: AGREEMENT: SERVICE: 03. Relate Service to Agreement",
+          "sourceObject": "Agreement",
+          "wfaContext": false
+        }
+      ]
+    },
+    {
+      "object": "Agreement",
+      "puObjectName": "Agreement",
+      "puObjectTypeId": 256,
+      "name": "Relate Legal Entity to Agreement",
+      "conditionalDisplay": "DORA?",
+      "conditionalEnable": null,
+      "steps": [
+        {
+          "type": "Export/Import",
+          "reportName": "BTN: AGREEMENT: 01. Relate Agreement to Legal Entity",
+          "sourceObject": "Agreement",
+          "wfaContext": true
+        },
+        {
+          "type": "Export/Import",
+          "reportName": "BTN: AGREEMENT: LEGAL ENTITY: 01. Relate Legal Entity to Agreement",
+          "sourceObject": "Legal Entity",
+          "wfaContext": false
+        },
+        {
+          "type": "Export/Import",
+          "reportName": "BTN: AGREEMENT: 02. Legal Entity Information",
+          "sourceObject": "Agreement",
+          "wfaContext": false
+        }
+      ]
+    },
+    {
+      "object": "Legal Entity",
+      "puObjectName": "Custom Object One",
+      "puObjectTypeId": 237,
+      "name": "Create Legal Entity Contract",
+      "conditionalDisplay": null,
+      "conditionalEnable": null,
+      "steps": [
+        {
+          "type": "System Create Child",
+          "targetObject": "Legal Entity Contract"
+        }
+      ]
+    },
+    {
+      "object": "Questionnaire Response",
+      "puObjectName": "Questionnaire Response",
+      "puObjectTypeId": 153,
+      "name": "Complete Fourth Party Review",
+      "conditionalDisplay": "Question ID",
+      "conditionalEnable": "VALIDATOR - Fourth Party Review",
+      "steps": [
+        {
+          "type": "Export/Import",
+          "reportName": "BTN: QR: Create Fourth Party Record",
+          "sourceObject": "Questionnaire Response",
+          "wfaContext": true
+        },
+        {
+          "type": "Export/Import",
+          "reportName": "BTN: QR: Create Fourth Party Record",
+          "sourceObject": "Fourth Party",
+          "wfaContext": false
+        },
+        {
+          "type": "Export/Import",
+          "reportName": "BTN: QR: Create Ref data",
+          "sourceObject": "Questionnaire Response",
+          "wfaContext": false
+        }
+      ]
+    },
+    {
+      "object": "Vendor",
+      "puObjectName": "Third Party",
+      "puObjectTypeId": 214,
+      "name": "Create New Fourth Party",
+      "conditionalDisplay": null,
+      "conditionalEnable": null,
+      "steps": [
+        {
+          "type": "Export/Import",
+          "reportName": "BTN: VENDOR: Create Fourth Party Reference Data",
+          "sourceObject": "Vendor",
+          "wfaContext": true
+        },
+        {
+          "type": "Export/Import",
+          "reportName": "BTN: VENDOR: Create Fourth Party Reference Data",
+          "sourceObject": "Reference Data",
+          "wfaContext": false
+        },
+        {
+          "type": "Export/Import",
+          "reportName": "BTN: VENDOR: Create Fourth Party Record",
+          "sourceObject": "Vendor",
+          "wfaContext": true
+        },
+        {
+          "type": "Export/Import",
+          "reportName": "BTN: VENDOR: Create Fourth Party Record",
+          "sourceObject": "Fourth Party",
+          "wfaContext": false
+        }
+      ]
+    },
+    {
+      "object": "Vendor",
+      "puObjectName": "Third Party",
+      "puObjectTypeId": 214,
+      "name": "Relate Existing Fourth Party to Vendor",
+      "conditionalDisplay": null,
+      "conditionalEnable": null,
+      "steps": [
+        {
+          "type": "Export/Import",
+          "reportName": "BTN: VENDOR: Relate Existing Fourth Party to Vendor",
+          "sourceObject": "Vendor",
+          "wfaContext": false
+        },
+        {
+          "type": "Export/Import",
+          "reportName": "BTN: VENDOR: Relate Existing Fourth Party to Vendor",
+          "sourceObject": "Fourth Party",
+          "wfaContext": false
+        },
+        {
+          "type": "Export/Import",
+          "reportName": "BTN: VENDOR: Relate Existing Ref Data Fourth Party Record to Vendor",
+          "sourceObject": "Vendor",
+          "wfaContext": false
+        }
+      ]
+    },
+    {
+      "object": "Vendor",
+      "puObjectName": "Third Party",
+      "puObjectTypeId": 214,
+      "name": "Relate Vendor to Legal Entity",
+      "conditionalDisplay": "DORA?",
+      "conditionalEnable": null,
+      "steps": [
+        {
+          "type": "Export/Import",
+          "reportName": "BTN: VENDOR: LEGAL ENTITY: 01. Relate Legal Entity to Vendor",
+          "sourceObject": "Vendor",
+          "wfaContext": true
+        },
+        {
+          "type": "Export/Import",
+          "reportName": "BTN: VENDOR: LEGAL ENTITY: 01. Relate Legal Entity to Vendor",
+          "sourceObject": "Legal Entity",
+          "wfaContext": false
+        }
+      ]
+    },
+    {
+      "object": "Vendor Service",
+      "puObjectName": "Third-Party Service",
+      "puObjectTypeId": 216,
+      "name": "Create Service Add On",
+      "conditionalDisplay": null,
+      "conditionalEnable": null,
+      "steps": [
+        {
+          "type": "Export/Import",
+          "reportName": "BTN: SERVICE: SAO: 1. Create Service Add On",
+          "sourceObject": "Service Add On",
+          "wfaContext": false
+        },
+        {
+          "type": "Export/Import",
+          "reportName": "BTN: SERVICE: SAO: 1. Create Service Add On",
+          "sourceObject": "Service Add On",
+          "wfaContext": false
+        },
+        {
+          "type": "Export/Import",
+          "reportName": "BTN: SERVICE: SAO: 2. Relate Service Add On to Vendor",
+          "sourceObject": "Vendor Service",
+          "wfaContext": false
+        }
+      ]
+    },
+    {
+      "object": "Vendor Service",
+      "puObjectName": "Third-Party Service",
+      "puObjectTypeId": 216,
+      "name": "Relate Fourth Party to Vendor Service",
+      "conditionalDisplay": null,
+      "conditionalEnable": null,
+      "steps": [
+        {
+          "type": "Export/Import",
+          "reportName": "BTN: VENDOR SERVICE: 01. Relate Fourth Party to Vendor Service",
+          "sourceObject": "Vendor Service",
+          "wfaContext": true,
+          "wfaOther": true
+        },
+        {
+          "type": "Export/Import",
+          "reportName": "BTN: VENDOR SERVICE: 01. Relate Fourth Party to Vendor Service",
+          "sourceObject": "Fourth Party",
+          "wfaContext": false
+        }
+      ]
+    }
+  ]
+}

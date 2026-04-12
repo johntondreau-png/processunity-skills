@@ -10,6 +10,8 @@ related:
   - "[[PU Data Model]]"
   - "[[PU Config Designer]]"
   - "[[PU Report Builder]]"
+  - "[[PU Uplift Designer]]"
+  - "[[PU Admin Navigator]]"
 ---
 
 # PU DORA

@@ -109,6 +109,7 @@ Read these before performing specific tasks:
 - **`references/create-import-template.md`** — Create an import template for API/bulk data loading
 - **`references/create-dashboard.md`** — Create a dashboard from existing report charts
 - **`references/configure-pick-list.md`** — Configure pick list values with optional colors for chart rendering
+- **`references/create-delete-report.md`** — Create a report with Bulk Delete action for targeted record cleanup (the only way to bulk-delete in PU)
 
 ### Platform Reference (in pu-app-guide)
 For expression syntax, function library, workflow, and automation reference, use the **pu-app-guide** skill:

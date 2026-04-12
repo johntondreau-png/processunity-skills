@@ -89,6 +89,38 @@ After creating reference data, you may need to link it to properties:
 - Edit the target property (must be a reference-data-backed type)
 - In the property configuration, select this reference data type as the source
 
+## Bulk Loading via Import API
+
+Reference data can be bulk-loaded via the Import API, but requires specific setup:
+
+### Prerequisites for API Import
+
+1. **Type values must exist as pick list values FIRST** — Navigate to Settings > General > Properties > Reference Data > Edit > Type property. Add each new type name using the `btnAddItem` button (triggers ASP.NET postback per value). The Type property is a standard pick list on the Reference Data object.
+
+2. **Import template must exist** — Create an import template for Reference Data with columns: External ID (Key), Name, Type. Enable Inserts + Updates and "Enable for Automated Import". See `create-import-template` procedure.
+
+3. **Type is only set on INSERT, not UPDATE** — If a record already exists (matched by External ID), the Type field will NOT be updated. To fix typeless records, delete them first (see `create-delete-report` procedure) and re-import.
+
+### Import API Payload
+
+```json
+{
+  "Data": [
+    { "External ID": "eba_BT:x28", "Name": "Yes", "Type": "DORA - Binary" },
+    { "External ID": "eba_BT:x29", "Name": "No", "Type": "DORA - Binary" }
+  ]
+}
+```
+
+### Type Pick List Value Addition (Deterministic Pattern)
+
+When adding new type values to the Reference Data Type pick list:
+- Navigate to: Settings > General > Properties > Reference Data > Edit > click "Type" property link
+- In the dialog, click `addCustomPropertyDialog_btnAddItem` (triggers ASP.NET postback, creates empty row)
+- Fill the new empty text input with the type name using native setter + input/change/blur events
+- Must use Playwright `page.click()` + `waitForTimeout(1500)` between iterations — client-side loops break because each postback replaces the DOM
+- Click OK, then Done/Save to persist
+
 ## Common Errors
 
 | Symptom | Cause | Fix |
@@ -99,3 +131,6 @@ After creating reference data, you may need to link it to properties:
 | Values not saving | Did not click Save after adding | Click Save to persist before exiting Edit mode |
 | Type not appearing after creation | Page needs refresh | Refresh the browser and navigate back |
 | Cannot delete a value | Value is in use by records | Set the value to Inactive instead of deleting |
+| Import API "Invalid value (Type)" | Type value not in pick list | Add the type name to Reference Data > Type pick list property FIRST |
+| Import updates don't set Type | Type only settable on INSERT | Delete existing records and re-import fresh |
+| Client-side pick list manipulation doesn't persist | ASP.NET rebuilds from server state | Must use `btnAddItem` button (server postback) to add values, not hidden field manipulation |

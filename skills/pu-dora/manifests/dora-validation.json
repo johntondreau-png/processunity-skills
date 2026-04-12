@@ -1,0 +1,126 @@
+{
+  "_meta": {
+    "generatedAt": "2026-04-12",
+    "description": "Pre-flight and post-flight validation checks for DORA implementation"
+  },
+  "preFlight": {
+    "systemSettings": {
+      "required": [
+        "Vendors",
+        "Vendor Services",
+        "Agreements",
+        "Fourth Parties",
+        "Custom Object One",
+        "Custom Object Three",
+        "Vendor Custom Object One",
+        "Custom Object One Child Objects",
+        "Properties",
+        "Buttons",
+        "Custom Reports",
+        "Import Templates",
+        "Reference Data"
+      ],
+      "checkboxIds": {
+        "Vendors": "paneDetail_systemView_cbxVendors",
+        "Vendor Services": "paneDetail_systemView_cbxVendorServices",
+        "Agreements": "paneDetail_systemView_cbxAgreements",
+        "Fourth Parties": "paneDetail_systemView_cbxFourthParties",
+        "Custom Object One": "paneDetail_systemView_cbxCustomObjectOne",
+        "Custom Object Three": "paneDetail_systemView_cbxCustomObjectThree",
+        "Vendor Custom Object One": "paneDetail_systemView_cbxVendorCustomObjectOne",
+        "Custom Object One Child Objects": "paneDetail_systemView_cbxCustomObjectOneChildObjects",
+        "Properties": "paneDetail_systemView_cbxProperties",
+        "Buttons": "paneDetail_systemView_cbxButtons",
+        "Custom Reports": "paneDetail_systemView_cbxCustomReports",
+        "Import Templates": "paneDetail_systemView_cbxImportTemplates",
+        "Reference Data": "paneDetail_systemView_cbxReferenceData"
+      },
+      "navPath": "nav=/area/8/group/262/task/423/tab/48/"
+    },
+    "subjectAreaRenames": {
+      "Custom Object One": {
+        "singular": "Legal Entity",
+        "plural": "Legal Entities"
+      },
+      "Custom Object Three": {
+        "singular": "CIF",
+        "plural": "CIFs"
+      },
+      "Vendor Custom Object One": {
+        "singular": "Service Add On",
+        "plural": "Service Add Ons"
+      }
+    },
+    "referenceDataTypes": 20,
+    "referenceDataTypeNames": [
+      "DORA - Alternative Providers",
+      "DORA - Binary",
+      "DORA - Country",
+      "DORA - Criticality Assessment",
+      "DORA - Currency",
+      "DORA - Data Storage Sensitivity",
+      "DORA - Exit Plan Existence",
+      "DORA - Group Hierarchy",
+      "DORA - ICT Service Type",
+      "DORA - Impact of Discontinuing",
+      "DORA - Inability to Substitute Reason",
+      "DORA - Level of Reliance",
+      "DORA - Licensed Activity",
+      "DORA - Nature of Entity",
+      "DORA - Reintegration Possibility",
+      "DORA - Substitutability",
+      "DORA - Termination Reason",
+      "DORA - Type of Contractual Arrangement",
+      "DORA - Type of Entity",
+      "DORA - Type of Person"
+    ],
+    "referenceDataRecords": 643,
+    "referenceDataImportTemplateId": 259034
+  },
+  "postFlight": {
+    "propertyCountsByObject": {
+      "Custom Object One": 30,
+      "Custom Object Three": 19,
+      "Third Party": 32,
+      "Third-Party Service": 27,
+      "Service Add On": 23,
+      "Agreement": 36,
+      "Fourth Party": 10,
+      "Custom Object One Child Object": 6,
+      "Questionnaire Response": 8,
+      "Reference Data": 3
+    },
+    "totalProperties": 194,
+    "reportCounts": {
+      "importTemplates": 8,
+      "excelExports": 14,
+      "dashboards": 5,
+      "wfaReports": 11,
+      "buttons": 9,
+      "adminReports": 1,
+      "totalReports": 39
+    },
+    "formulaCounts": {
+      "textCalculated": 22,
+      "textAggregate": 49,
+      "dateCalculated": 4,
+      "total": 75
+    },
+    "conditionalDisplaySections": 14,
+    "refDataTypeFilters": 30,
+    "validators": {
+      "total": 9,
+      "objects": [
+        "Agreement",
+        "CIF",
+        "Fourth Party",
+        "Legal Entity",
+        "Legal Entity Contract",
+        "Questionnaire Response",
+        "Service Add On",
+        "Vendor",
+        "Vendor Service"
+      ]
+    }
+  }
+}
