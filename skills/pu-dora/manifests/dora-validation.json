@@ -39,16 +39,42 @@
     },
     "subjectAreaRenames": {
       "Custom Object One": {
-        "singular": "Legal Entity",
-        "plural": "Legal Entities"
+        "subjectAreaName": "Legal Entities",
+        "relatedItemSingular": "Legal Entity",
+        "relatedItemPlural": "Legal Entities",
+        "relatedObjectTypes": [
+          {
+            "originalSingular": "Custom Object One",
+            "originalPlural": "Custom Object Ones",
+            "newSingular": "Legal Entity",
+            "newPlural": "Legal Entities"
+          },
+          {
+            "originalSingular": "Custom Object One Child Object",
+            "originalPlural": "Custom Object One Child Objects",
+            "newSingular": "Legal Entity Contract",
+            "newPlural": "Legal Entity Contracts"
+          }
+        ]
       },
       "Custom Object Three": {
-        "singular": "CIF",
-        "plural": "CIFs"
+        "subjectAreaName": "CIFs",
+        "relatedItemSingular": "CIF",
+        "relatedItemPlural": "CIFs",
+        "relatedObjectTypes": [
+          {
+            "originalSingular": "Custom Object Three",
+            "originalPlural": "Custom Object Threes",
+            "newSingular": "CIF",
+            "newPlural": "CIFs"
+          }
+        ]
       },
       "Vendor Custom Object One": {
-        "singular": "Service Add On",
-        "plural": "Service Add Ons"
+        "subjectAreaName": "Service Add Ons",
+        "relatedItemSingular": "Service Add On",
+        "relatedItemPlural": "Service Add Ons",
+        "_note": "This is a child object of Third Parties — rename via Third Parties subject area, not its own"
       }
     },
     "referenceDataTypes": 20,

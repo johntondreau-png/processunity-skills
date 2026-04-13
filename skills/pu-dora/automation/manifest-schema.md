@@ -199,6 +199,20 @@ Plus a data file:
 | GRX Integration | GRX connector action |
 | Copy Files | Copy file attachments |
 
+## Subject Area Renames (Three Levels)
+
+Custom Objects need renaming at **three levels** in Subject Areas (Settings > System Administration > Subject Areas):
+
+| Level | What It Changes | Field IDs |
+|-------|----------------|-----------|
+| **Subject Area Name** | Nav menu, workspace tab | `tbxName` |
+| **Related Item Name** | Relationship labels (singular + plural) | `tbxRelatedItemNameSingular`, `tbxRelatedItemNamePlural` |
+| **Related Object Types** | Object type names in the child table | `tbxSingularName_{objectTypeId}`, `tbxPluralName_{objectTypeId}` |
+
+Level 3 is easy to miss — click Edit on the Subject Area, scroll down to the "Related Object Types" table. Each row has its own rename fields with the objectTypeId appended (e.g., `tbxSingularName_263` for Service Add On).
+
+**Vendor Custom Object One** (Service Add On) is renamed from the **Third Parties** subject area — it appears as a child object type in Third Parties' Related Object Types table.
+
 ## Validation Manifest Schema
 
 ```json
