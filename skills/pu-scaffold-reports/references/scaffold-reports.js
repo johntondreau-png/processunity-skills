@@ -341,9 +341,9 @@ async function fixExistingReport(page, reportName, objectType) {
  *   async (page) => {
  *     // paste this entire file, then:
  *     return await scaffoldAll(page, {
- *       url: 'https://app.processunity.net/desert',
- *       username: 'web.service',
- *       password: 'APi123!WS$@*',
+ *       url: 'https://app.processunity.net/<your-tenant>',
+ *       username: '<your-service-account>',
+ *       password: '<your-password>',
  *       roleName: 'MCP - Model Context Protocol',
  *       existingReportNames: ['[MCP - Agreement]', '[MCP - Assessment]'], // from list_reports API
  *     });
